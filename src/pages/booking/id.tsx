@@ -1,0 +1,152 @@
+import { FC, useEffect, useState } from "react"
+import { MainLayout } from "../../shared/layouts/layout"
+import { EBookingStatus, useBooking } from "@/entities/booking"
+import { useParams } from "react-router-dom"
+import { BookingUpdateDto } from "@/entities/booking/model/dto/update-dto"
+import { Flex, Form, Select, Input, InputNumber, Button } from "antd"
+import { useHotel } from "@/entities/hotel/api"
+import RoomSelect from "@/entities/booking/ui/form/room-select"
+import { YurtaDatePicker } from "@/entities/booking/ui/form/range-picker"
+import { YurtaUserSelect } from "@/entities/booking/ui/form/user-select"
+import { DetailsHeader } from "@/shared/layouts/layout/main/header"
+
+const BookingDetailPage: FC = () => {
+  const { id } = useParams()
+  const { currentBooking, findById, update } = useBooking()
+  const [booking, setBooking] = useState<BookingUpdateDto>(new BookingUpdateDto(currentBooking))
+  const { currentHotel, setCurrentHotel } = useHotel()
+
+  useEffect(() => {
+    if (id) {
+      setCurrentHotel()
+      findById(id)
+    }
+  }, [])
+
+  useEffect(() => {
+    setBooking(new BookingUpdateDto(currentBooking))
+  }, [currentBooking])
+
+  return (
+    <MainLayout
+      header={<DetailsHeader
+        title={`#${id}`}
+        onSave={() => { }}
+      />
+      }
+      footer={<></>}
+    >
+      <Form layout="vertical" size="large">
+        <Flex vertical gap={2}>
+
+          <Form.Item label="Идентификатор">
+            <Input
+              disabled
+              placeholder="id"
+              value={booking.id}
+              color={"white"}
+            />
+          </Form.Item>
+
+          <Form.Item label="Сумма">
+            <InputNumber
+              placeholder="id"
+              disabled
+              value={booking.amount}
+              color={"white"}
+              onChange={(e) => {
+                setBooking((prev) => {
+                  if (e)
+                    return {
+                      ...prev,
+                      amount: e
+                    }
+
+                  return prev
+                })
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item label="Статус">
+            <Select
+              value={booking.status}
+              options={Object.keys(EBookingStatus).map((status) => ({
+                value: status,
+                label: status
+              }))}
+              onChange={(e) => {
+                setBooking((prev) => ({
+                  ...prev,
+                  status: e
+                }))
+              }}>
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="Количество гостей">
+            <InputNumber value={booking.capacity} onChange={(e) => {
+              setBooking((prev) => {
+                if (e)
+                  return {
+                    ...prev,
+                    capacity: e
+                  }
+                return prev
+              })
+            }} />
+          </Form.Item>
+
+          {
+            booking.user &&
+            < YurtaUserSelect
+              value={booking.user}
+              onChange={(e) => {
+                setBooking((prev) => {
+                  return {
+                    ...prev,
+                    user: e
+                  }
+                })
+              }} />
+
+          }
+
+          {booking.check_in && booking.check_out &&
+            <YurtaDatePicker
+              label="Даты"
+              value={[booking.check_in, booking.check_out]}
+              onChange={(e) => {
+                setBooking((prev) => ({
+                  ...prev,
+                  check_in: e[0],
+                  check_out: e[1]
+                }))
+              }}
+            />
+          }
+
+          {
+            currentHotel && <RoomSelect
+              value={booking.rooms}
+              rooms={currentHotel.rooms}
+              onChange={(e) => setBooking((prev) => ({
+                ...prev,
+                rooms: e
+              }))
+              }
+            />
+          }
+
+          <Button onClick={() => {
+            update(booking)
+          }}>
+            Сохранить
+          </Button>
+        </Flex>
+      </Form>
+    </MainLayout >
+  )
+}
+
+export { BookingDetailPage }

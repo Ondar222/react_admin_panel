@@ -1,0 +1,5 @@
+class HotelCreationDto {
+  
+}
+
+export { HotelCreationDto };

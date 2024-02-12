@@ -1,0 +1,79 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 !important;
+}
+
+html,
+body {
+  /* overflow: hidden; */
+}
+
+.container {
+  min-height: 100vh;
+  height: 100%;
+}
+
+.container__workspace {
+}
+
+.container__workspace__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  color: white;
+  background: rgb(145, 146, 147);
+  padding: 20px 50px;
+}
+
+.container__workspace__content {
+  padding: 20px 50px;
+}
+
+.container__workspace__footer {
+  
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  padding: 10px 15px;
+}
+
+.ant-form {
+  min-width: 40%;
+  width: auto;
+  max-width: 100%;
+}
+
+.ant-picker,
+.ant-input-number {
+  width: 100%;
+}
+
+
+
+/* .ant-form-item-label label {
+  font-size: 18px !important;
+  color: aliceblue !important;
+}
+
+.ant-typography {
+  color: aliceblue !important;
+} */
+
+.ant-picker-calendar-date {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.brm-cell {
+  /* max-height: 100px !important; */
+}
