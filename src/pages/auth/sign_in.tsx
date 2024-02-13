@@ -86,7 +86,7 @@ const SignInPage: FC = () => {
                         </Col>
                     </Row>}
                     {
-                        open && (
+                        isAuth && (
                             <Row style={{display: "flex", position: "fixed", width: "100%", background: "#1677ff", top: "0", height: "20vh"}}>
 
                                 <Col style={{display: "flex", flexDirection: "column", width: "100%", justifyContent: "center", position: "absolute"}}>

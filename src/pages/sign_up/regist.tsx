@@ -1,125 +1,42 @@
-import { Col, Flex, Input, Row,  Typography, Checkbox, message } from "antd"
+import { Col, Flex, Input, Row,  Typography, Checkbox, message, Layout } from "antd"
 import { FC }  from "react"
 import {SubmitHandler, useForm} from "react-hook-form"
 // import { ISippingField } from "./regist.interface"
 import { useState } from "react"
 import { useAccount } from "@/entities/account/api"
 import { useAuth } from "../../features/auth"
+import { SignUpFormUI } from "@/features/sing_up/ui"
 
 
 
-const RegistrPage: FC = () => {
-  const [password, setPassword] = useState<string>()
-  // const {register, handleSubmit, formState: {errors}, reset, resetField } = useForm<ISippingField>()
-  const [email, setEmail] = useState<string>()
-  const [name, setName] = useState<string>()
-  const { isAuth, login} = useAuth()
-  const { me } = useAccount()
+const SignUpPage: FC = () => {
 
-const {
-  register,
-  formState: { errors },
-  handleSubmit
-} = useForm()
+    return ( 
+      <Layout style={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: '#001529'
+      }}>
+        <Flex vertical align="center" justify="center">
+          <SignUpFormUI user={
+        {
+          name: "",
+          surname: "",
+          phone: "",
+          email: "",
+          password: ""
 
-const onSubmit = (data) => {
-  alert(JSON.stringify(data))
-}
-
-//   const onSubmit:SubmitHandler<ISippingField> = (data) => {
-//     alert(`Your name ${data.name}`)
-//     reset() 
-//   }
-//   const handleClick = async () => {
-//     await login(email, password)
-//     await me()
-
-//     if (isAuth) {
-     
-//     }
-// }
-
-    return ( <Flex vertical className="container_registr">
-    <form className="form_registr" onSubmit={handleSubmit(onSubmit)}>
-      <Col>
-    <Row>
-                        <Col className="header_registr_urta">
-                            <Typography.Title>
-                                Регистрация
-                            </Typography.Title>
-                        </Col>
-
-                    </Row>
-      </Col>
-      <Col className="first_form_col_registr"> 
-      <Input 
-                                type="name"
-                                // isNameInvalid={isNameInvalid}
-                                placeholder="Имя"
-                                // value={}
-                                onChange={(e) => {
-                                    // setIsNameInvalid(e.target.value)
-                                  }}
-                                  />
-                               
-          <Input 
-                                type="surname"
-                                // isInvalid={isEmailInvalid}
-                                placeholder="Фамилия"
-                                // value={surname}
-                                onChange={(e) => {
-                                    // setEmail(e.target.value)
-                                }}
-                            /> 
-                               {/* <Col style={{width: "100%", color: "red", position: "absolute", bottom: "0", left: "10px", top: "48px"}}>
-                                    {errors?.firstName && <p>{errors?.firstName?.message || "Error!"}</p>}                             
-                                    </Col>            */}
-                        
-      </Col>
-      <Input
-                                type="phoneNumber"
-                                // isInvalid={isEmailInvalid}
-                                placeholder="Номер телефона"
-                                // value={phoneNumber}
-                                onChange={(e) => {
-                                    // setEmail(e.target.value)
-                                }}
-                            />
-
-      <Input
-                                  type="email"
-                                // isInvalid={isEmailInvalid}
-                                placeholder="электронная почта"
-                                value={email}
-                                onChange={(e) => {
-                                    setEmail(e.target.value)
-                                }}
-                            />
-                            
-               <Input {...register("password", {
-        required: "Поле обязательно к заполнению",
-    })}
-                                type="password"
-                                placeholder="пароль"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                              <Col style={{width: "100%", color: "red", position: "relative", bottom: "0"}}>
-                                    {errors?.password && <p>{errors?.password?.message || "Error!"}</p>}                             
-                                    </Col>  
-
-         <Checkbox className="agreement_div">
-          Я согласен с условиями <a href="#">Пользовательского соглашения</a>
-        </Checkbox>
-      <Flex className="button_registr">
-     <button>Зарегистрироваться</button>
-      </Flex>
-    </form>
-    </Flex>
+        }
+      } />
+        </Flex>
+      </Layout>
     )
 }
 
-export { RegistrPage }
+export { SignUpPage }
 
 
 
