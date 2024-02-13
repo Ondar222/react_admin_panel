@@ -5,6 +5,7 @@ import {
 import App from "../../pages";
 import { NotAuthorizedPage, SignInPage } from "../../pages/auth";
 import { BookingPage } from "../../pages/booking";
+import { RegistrPage } from "@/pages/registrasiya/regist";
 import { BookingDetailPage } from "../../pages/booking/id";
 import BookingCreationPage from "@/pages/booking/create";
 import HotelDetailsPage from "@/pages/hotel/id";
@@ -22,6 +23,7 @@ const Router = () =>
 
     <Route path="/auth" element={<SignInPage />} />
     <Route path="/auth-error" element={<NotAuthorizedPage />} />
+    <Route path="/registrasiya" element={<RegistrPage />} />
 
     <Route path="/booking" element={<BookingPage />} />
     <Route path="/booking/:id" element={<BookingDetailPage />} />
