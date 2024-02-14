@@ -38,7 +38,9 @@ const RoomDetailsPage: FC = () => {
           <RoomUpdateForm
             room={room}
             setRoom={setRoom}
-            onSaveButtonClick={() => update(room)} />
+            onSaveButtonClick={() => {
+              update(room)
+            }} />
         </Col>
 
         <Col span={12}>

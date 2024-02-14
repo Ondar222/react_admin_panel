@@ -4,7 +4,7 @@ import { StaticRouter } from "react-router-dom/server";
 import { ConfigProvider } from "antd"
 import ru_RU from "antd/lib/locale/ru_RU"
 import { ServerStyleSheet } from "styled-components"
-import App from "./pages";
+import App from "./widget";
 
 interface IRenderProps {
   path: string;

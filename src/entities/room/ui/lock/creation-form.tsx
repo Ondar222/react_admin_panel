@@ -57,6 +57,7 @@ const RoomLockCreationForm: FC = () => {
         selectedRooms.forEach((room) => {
           create(room.id, roomLock.start, roomLock.end, roomLock.reason)
         })
+        
       }}>Забронировать</Button>
     </Form>
   )

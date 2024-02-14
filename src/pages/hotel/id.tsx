@@ -3,11 +3,9 @@ import { MainLayout } from "@/shared/layouts/layout";
 import { DetailsPageHeader } from "@/shared/observer/ui/details/header";
 import { FC, useEffect } from "react";
 import { Form, Select, Input, Flex, Row, Col } from "antd"
-import useIsSsr from "@/utils/hooks/useIsSsr";
 
 const HotelDetailsPage: FC = () => {
   const { currentHotel, setCurrentHotel } = useHotel()
-  const isSsr = useIsSsr()
 
   useEffect(() => {
 
@@ -31,9 +29,6 @@ const HotelDetailsPage: FC = () => {
                 <Input value={12} color="white" />
               </Form.Item>
               <Form.Item label="Название">
-                {
-                  String(isSsr)
-                }
                 <Input />
               </Form.Item>
 

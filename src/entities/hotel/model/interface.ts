@@ -8,6 +8,11 @@ interface Hotel {
   rooms: Array<Room>;
   administrator: User;
   options: Array<number>;
+  address: {
+    [fieldName: string]: string;
+  };
+  images: Array<string>;
+  cover: string;
 }
 
 export default Hotel;

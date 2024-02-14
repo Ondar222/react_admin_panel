@@ -23,6 +23,7 @@ interface IUseBrm {
     item: V2_Booking | RoomLock;
   }[];
   getAll: () => void;
+  addRoomLock: (lock: RoomLock) => void;
 }
 
 export type { IUseCalendar, IUseBrm };

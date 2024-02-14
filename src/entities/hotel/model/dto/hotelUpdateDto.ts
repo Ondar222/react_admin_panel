@@ -1,3 +1,5 @@
+import { UploadFile } from "antd";
+
 class HotelUpdateDto {
   constructor(dto: {
     id: number;
@@ -18,6 +20,9 @@ class HotelUpdateDto {
   description: string;
   rooms: Array<number>;
   address: number;
+
+  images: Array<UploadFile>;
+  cover: UploadFile;
 }
 
 export { HotelUpdateDto };

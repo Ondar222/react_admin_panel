@@ -9,6 +9,8 @@ import RoomSelect from "@/entities/booking/ui/form/room-select"
 import { YurtaDatePicker } from "@/entities/booking/ui/form/range-picker"
 import { YurtaUserSelect } from "@/entities/booking/ui/form/user-select"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
+import { YurtaInput } from "@/shared/components/form/ui/input/text"
+import { YurtaSelect } from "@/shared/components/form/ui/select/default"
 
 const BookingDetailPage: FC = () => {
   const { id } = useParams()
@@ -38,68 +40,67 @@ const BookingDetailPage: FC = () => {
     >
       <Form layout="vertical" size="large">
         <Flex vertical gap={2}>
+          <YurtaInput
+            label="Идентификатор"
+            disabled
+            placeholder="id"
+            value={booking.id}
+            color={"white"} />
 
-          <Form.Item label="Идентификатор">
-            <Input
-              disabled
-              placeholder="id"
-              value={booking.id}
-              color={"white"}
-            />
-          </Form.Item>
-
-          <Form.Item label="Сумма">
-            <InputNumber
-              placeholder="id"
-              disabled
-              value={booking.amount}
-              color={"white"}
-              onChange={(e) => {
-                setBooking((prev) => {
-                  if (e)
-                    return {
-                      ...prev,
-                      amount: e
-                    }
-
-                  return prev
-                })
-              }}
-            />
-          </Form.Item>
-
-          <Form.Item label="Статус">
-            <Select
-              value={booking.status}
-              options={Object.keys(EBookingStatus).map((status) => ({
-                value: status,
-                label: status
-              }))}
-              onChange={(e) => {
-                setBooking((prev) => ({
-                  ...prev,
-                  status: e
-                }))
-              }}>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label="Количество гостей">
-            <InputNumber value={booking.capacity} onChange={(e) => {
+          <YurtaInput
+            label="Сумма"
+            placeholder="id"
+            disabled
+            value={booking.amount}
+            color={"white"}
+            onChange={(e) => {
               setBooking((prev) => {
                 if (e)
                   return {
                     ...prev,
-                    capacity: e
+                    amount: Number(e.target.value)
+                  }
+
+                return prev
+              })
+            }}
+          />
+
+          <YurtaSelect
+            disabled
+            label="Статус"
+            value={booking.status}
+            options={Object.keys(EBookingStatus).map((status) => ({
+              value: status,
+              label: status
+            }))}
+            onChange={(e) => {
+              setBooking((prev) => ({
+                ...prev,
+                status: e
+              }))
+            }}
+          />
+
+          <YurtaInput
+            label="Количество гостей"
+            type="number"
+            value={booking.capacity}
+            onChange={(e) => {
+              setBooking((prev) => {
+                if (e)
+                  return {
+                    ...prev,
+                    capacity: Number(e.target.value)
                   }
                 return prev
               })
-            }} />
-          </Form.Item>
+            }}
+          />
 
           {
             booking.user &&
-            < YurtaUserSelect
+            <YurtaUserSelect
               value={booking.user}
               onChange={(e) => {
                 setBooking((prev) => {
