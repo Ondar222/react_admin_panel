@@ -13,10 +13,10 @@ const RoomLockCreationForm: FC = () => {
   const [selectedRooms, setSelectedRooms] = useState<Array<Pick<Room, "id">>>([])
   const { create } = useRoomLock()
 
-  const { currentHotel: hotel, setCurrentHotel } = useHotel()
+  const { hotel: hotel, setHotel } = useHotel()
 
   useEffect(() => {
-    setCurrentHotel()
+    setHotel()
   }, [])
 
   return (

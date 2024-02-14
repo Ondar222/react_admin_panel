@@ -4,6 +4,7 @@ import axios from "axios";
 import { IDirectusResponse } from "../../../shared/directus/model/interface";
 import useCredentails from "./useCredentails";
 import Cookies from "js-cookie";
+import { useHotel } from "@/entities/hotel/api";
 
 const useAuth = create<IUseAuth>((set) => ({
   isAuth: false,
@@ -21,9 +22,11 @@ const useAuth = create<IUseAuth>((set) => ({
       set({
         isAuth: true,
       });
-    }
-    else {
-      const { } = await axios.post("https://yurta.site/api/cms/auth/refresh", data)
+    } else {
+      const {} = await axios.post(
+        "https://yurta.site/api/cms/auth/refresh",
+        data
+      );
     }
   },
 
@@ -38,16 +41,19 @@ const useAuth = create<IUseAuth>((set) => ({
         `${import.meta.env.VITE_API}/auth/login/password`,
         data
       )
-      .then((res) => res.data.data);
+      .then((res) => {
+        useHotel.getState().setHotel()
+        return res.data.data;
+      });
 
-    const { access_token, refresh_token, expires } = authResponse
+    const { access_token, refresh_token, expires } = authResponse;
 
     if (access_token && refresh_token) {
       Cookies.set("refresh_token", refresh_token, {
         expires: 1000 * 60 * 60 * 24 * 30 * 12, // 1 year refresh token
       });
       Cookies.set("access_token", access_token, {
-        expires: expires
+        expires: expires,
       });
       useCredentails.getState().actions.setCredentails(authResponse);
       set({ isAuth: true });

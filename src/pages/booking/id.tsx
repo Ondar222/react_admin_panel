@@ -16,11 +16,11 @@ const BookingDetailPage: FC = () => {
   const { id } = useParams()
   const { currentBooking, findById, update } = useBooking()
   const [booking, setBooking] = useState<BookingUpdateDto>(new BookingUpdateDto(currentBooking))
-  const { currentHotel, setCurrentHotel } = useHotel()
+  const { hotel, setHotel } = useHotel()
 
   useEffect(() => {
     if (id) {
-      setCurrentHotel()
+      setHotel()
       findById(id)
     }
   }, [])
@@ -128,9 +128,9 @@ const BookingDetailPage: FC = () => {
           }
 
           {
-            currentHotel && <RoomSelect
+            hotel && <RoomSelect
               value={booking.rooms}
-              rooms={currentHotel.rooms}
+              rooms={hotel.rooms}
               onChange={(e) => setBooking((prev) => ({
                 ...prev,
                 rooms: e

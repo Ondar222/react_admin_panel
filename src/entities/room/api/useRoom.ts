@@ -25,14 +25,12 @@ const useRoom = create<IUseRoom>((set) => ({
     formData.append("price", String(room.price));
 
     if (room.images)
-
       formData.append(
         "images",
         room.images[0]?.originFileObj as unknown as Blob,
         room.images[0].name
       );
 
-    console.log(room.cover)
     formData.append(
       "cover",
       room.cover?.originFileObj as unknown as Blob,
@@ -74,23 +72,23 @@ const useRoom = create<IUseRoom>((set) => ({
         return res;
       });
 
-    0
-    4
+    0;
+    4;
   },
-  delete: () => { },
+  delete: () => {},
 
   findAll: async () => {
-    const { access_token } = useCredentails.getState()
+    const { access_token } = useCredentails.getState();
     await axios
       .get<ApiResponse<Array<Room>>>(`${import.meta.env.VITE_API}/room`, {
         headers: {
-          Authorization: `Bearer ${access_token}`
-        }
+          Authorization: `Bearer ${access_token}`,
+        },
       })
       .then((res) => res.data)
       .then((res) => {
-        console.log(res)
-        set({ rooms: res.data })
+        console.log(res);
+        set({ rooms: res.data });
       });
   },
 
@@ -124,7 +122,8 @@ const useRoom = create<IUseRoom>((set) => ({
   ) => {
     await axios
       .get<ApiResponse<Array<any>>>(
-        `${import.meta.env.VITE_API
+        `${
+          import.meta.env.VITE_API
         }/roomlock?room_id=${room_id}&status=${status}`
       )
       .then((res) => res.data)
