@@ -1,0 +1,87 @@
+.container_registr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background: #001529
+}
+
+.header_registr_yurta {
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    cursor: pointer;
+    font-family: "Protest Guerrilla", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.form_registr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #caeaee;
+    border-radius: 10px;
+    padding: 20px 20px;
+    font-family: 'Rubik', sans-serif;
+}
+
+.first_form_col_registr {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    height: 50px;
+    width: 100%;
+}
+
+.first_form_col_registr>input {
+    border-radius: 20px;
+}
+
+.form_registr>input {
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+
+}
+
+.first_form_col_registr>input:hover {
+    color: #8583ee;
+    transform: scale(1.0);
+}
+
+.form_registr>input:hover {
+    color: #8583ee;
+    transform: scale(1.0);
+}
+
+.agreement_div {
+    font-size: 13.5px;
+    text-align: center;
+    width: 100%;
+}
+
+.button_registr {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.button_registr>button {
+    width: 100%;
+    height: 100%;
+    background: #1677ff;
+    border-radius: 20px;
+    font-family: 'Rubik', sans-serif;
+    font-style: inherit;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+
+}
