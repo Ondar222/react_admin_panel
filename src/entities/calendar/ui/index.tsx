@@ -48,7 +48,7 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
     dayCellClassNames: 'brm-cell',
     weekends: true,
     headerToolbar: {
-      left: 'prev,next,list',
+      left: 'prev,next,listWeek,list',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
