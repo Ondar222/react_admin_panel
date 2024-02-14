@@ -2,13 +2,12 @@ import {
   Route,
   Routes
 } from "react-router-dom";
-import App from "../../pages";
+import App from "../../widget";
 import { NotAuthorizedPage, SignInPage } from "../../pages/auth";
 import { BookingPage } from "../../pages/booking";
 import { BookingDetailPage } from "../../pages/booking/id";
 import BookingCreationPage from "@/pages/booking/create";
 import HotelDetailsPage from "@/pages/hotel/id";
-import { YurtaCalendarPage } from "@/pages/calendar";
 import { YurtaCalendarDateDetailsPage } from "@/pages/calendar/[date]";
 import { RoomDetailsPage } from "@/pages/room/id";
 import RoomPage from "@/pages/room";
@@ -34,7 +33,7 @@ const Router = () =>
     <Route path="/room/:id" element={<RoomDetailsPage />} />
     <Route path="/room/+" element={<RoomCreationPage />} />
 
-    <Route path="/calendar" element={<YurtaCalendarPage />} />
+    <Route path="/calendar" element={<YurtaCalendarDateDetailsPage />} />
     <Route path="/calendar/:date" element={<YurtaCalendarDateDetailsPage />} />
 
     <Route path="/account" element={<AccountPage />} />

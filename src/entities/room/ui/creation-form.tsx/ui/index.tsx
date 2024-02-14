@@ -403,7 +403,7 @@ export { RoomCreateForm, RoomUpdateForm }
 
 
 // надо закинуть в утилс
-const getBase64 = (file: RcFile): Promise<string> =>
+export const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

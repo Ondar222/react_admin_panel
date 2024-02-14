@@ -30,7 +30,9 @@ const useHotel = create<IUseHotel>((set) => ({
   updateHotel: async (dto: HotelUpdateDto) => {
     return dto
   },
+
   createHotel: async () => { },
+  
   updateCurrentHotel() { },
 }));
 

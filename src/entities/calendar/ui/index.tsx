@@ -57,7 +57,6 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
 
         }
       }
-      console.log(brm.type)
       if (brm.type === 'room_lock') {
         const room_lock = brm.item as RoomLock
         return {
@@ -79,7 +78,6 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
   return (
     <FullCalendar
       {...rtp}
-
     />
   )
 }
