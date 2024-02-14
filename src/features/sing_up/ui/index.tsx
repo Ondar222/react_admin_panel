@@ -16,25 +16,25 @@ const SignUpFormUI: FC<any> = (props) => {
                 <Divider />
                 <Row gutter={[16, 16]}>
                     <Col span={12}>
-                        <YurtaInput label="Имя" value={props.user.name} />
+                        <YurtaInput  placeholder="Имя" value={props.user.name} />
                     </Col>
                     <Col span={12}>
-                        <YurtaInput label="Фамилия" value={props.user.surname} />
+                        <YurtaInput placeholder="Фамилия" value={props.user.surname} />
                     </Col>
                 </Row>
                 <Row>
                     <Col span={24}>
-                        <YurtaInput type="phone" label="Номер телефона" value={props.user.phone} />
+                        <YurtaInput type="phone" placeholder="Номер телефона" value={props.user.phone} />
                     </Col>
                 </Row>
                 <Row>
                     <Col span={24}>
-                        <YurtaInput type="email" label="Электронная почта" value={props.user.email} />
+                        <YurtaInput type="email"  placeholder="Электронная почта" value={props.user.email} />
                     </Col>
                 </Row>
                 <Row>
                     <Col span={24}>
-                        <YurtaInput type="password" label="Пароль" value={props.user.password} />
+                        <YurtaInput type="password" placeholder="Пароль" value={props.user.password} />
                     </Col>
                 </Row>
                 <Row style={{ width: "100%", color: "red", position: "relative", bottom: "0" }}>
@@ -49,9 +49,9 @@ const SignUpFormUI: FC<any> = (props) => {
 
                 <Row gutter={[16, 16]}>
                     <Col span={12} >
-                        <Button>Зарегистрироваться</Button>
+                        <Button type="primary">Зарегистрироваться</Button>
                     </Col>
-                    <Col  span={12}>
+                    <Col  span={12} style={{display: "flex", justifyContent: "right"}}>
                         <Button>Забыли пароль?</Button>
                     </Col>
                 </Row>

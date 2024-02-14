@@ -9,6 +9,7 @@ import { SignUpFormUI } from "@/features/sing_up/ui"
 
 
 
+
 const SignUpPage: FC = () => {
 
     return ( 

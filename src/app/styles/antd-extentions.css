@@ -30,11 +30,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20vh;
+    margin-top: 8rem;
 }
 .col_yurta {
     background: #caeaee;
-    border-radius: 10px;
+    border-radius: 5px;
     position: relative;
     margin: 0 auto;
    height: 500px;
@@ -50,7 +50,7 @@
 
 .col_yurta>input{
     height: 50px;
-    border-radius: 15px;
+    border-radius: 10px;
     margin: 10px auto;
     cursor: pointer;
     transition: color  500ms ease;
@@ -60,6 +60,7 @@
 .bottom_block_account {
     display: flex;
     width: 85%;
+    gap: 8px;
     padding-bottom: 20px;
     justify-content: center;
     text-align: center;
@@ -133,6 +134,50 @@
 .bottom_block_sign_in_yurta>Button {
     background: #002140;
     
+}
+
+.sign_in_button {
+    width: 100%;
+    background: #1677ff;
+    color: #fff;
+  
+}
+
+.forgot_your_password_button {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+
+}
+
+
+.modal_signIn_yurta {
+    display: flex;
+    justify-content: center;
+    background: #caeaee;
+    width: 25vw;
+    height: 25vh;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    margin-top: 20px;
+}
+
+.modal_container_signIn_yurta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal_container_signIn_yurta_title {
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.modal_container_signIn_yurta_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
 }
 
 
