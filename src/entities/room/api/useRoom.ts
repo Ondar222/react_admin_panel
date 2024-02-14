@@ -60,8 +60,6 @@ const useRoom = create<IUseRoom>((set) => ({
     formData.append("description", room.description);
     formData.append("price", String(room.price));
 
-    console.log(room.cover);
-
     if (room.cover) {
       formData.append(
         "cover",
@@ -91,8 +89,6 @@ const useRoom = create<IUseRoom>((set) => ({
         console.log(res);
         return res;
       });
-
-    console.log(data);
   },
   delete: () => {},
 

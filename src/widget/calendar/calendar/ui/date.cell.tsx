@@ -4,7 +4,7 @@ import { List } from "antd";
 
 const DateCellUI: FC<IDateCellUI> = ({ items }) =>
   <List>
-    {items.map((item: string) => <DateCellUIListItem data={item} />)}
+    {items.map((item: string) => <DateCellUIListItem key={item} data={item} />)}
   </List>
 
 const DateCellUIListItem: FC<{ data: string }> = ({ data }) => <List.Item>{data}</List.Item>

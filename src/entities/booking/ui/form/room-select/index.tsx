@@ -7,8 +7,6 @@ const RoomSelect: FC<IYurtaRoomSelectProps> = (props) => {
 
     const { value, options, onChange } = RoomSelectPresenter(props)
 
-    console.log(options)
-
     return (
         <YurtaRoomSelectUI
             options={options}

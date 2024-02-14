@@ -1,6 +1,5 @@
 import { useHotel } from "@/entities/hotel/api";
 import { AddressBuilderPresenter } from "@/entities/hotel/ui/form/address-builder/presenter";
-import { AddressBuilderUI } from "@/entities/hotel/ui/form/address-builder/ui";
 import { RoomUpdateDto } from "@/entities/room";
 import { getBase64 } from "@/entities/room/ui/creation-form.tsx/ui";
 import { YurtaUpload } from "@/shared/components/form/ui/input/file";
@@ -21,7 +20,7 @@ const HotelPage: FC = () => {
 
   useEffect(() => {
     setUpdate({
-      images: hotel?.images.map((image) => ({
+      images: hotel?.images?.map((image) => ({
         uid: image,
         name: image,
         thumbUrl: image
@@ -105,7 +104,6 @@ const HotelPage: FC = () => {
                 cover: update.cover,
                 images: update.images,
                 name: hotel.name,
-                rooms: [],
 
                 address: 2,
                 description: ""

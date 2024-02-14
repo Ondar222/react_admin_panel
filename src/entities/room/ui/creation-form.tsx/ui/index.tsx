@@ -388,7 +388,7 @@ const RoomUpdateForm: FC<IRoomUpdateForm> = ({ room, setRoom, onSaveButtonClick 
         listType="picture-card"
         fileList={room?.images}
         itemRender={handleItemRender}
-        maxCount={10}
+        maxCount={100}
         onChange={handleFilesChange}
       />
 

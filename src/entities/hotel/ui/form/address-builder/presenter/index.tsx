@@ -12,13 +12,17 @@ const AddressBuilderPresenter: FC<IAddressBuilderPresenter> = (props) => {
   const [address, setAddress] = useState<{ [fieldName: string]: string }>(props.address)
 
   return (
-    <AddressBuilderUI
-      {...props}
-      open={open}
-      address={address}
-      onClose={() => setOpen(false)}
-      onInputClick={() => setOpen(true)}
-    />
+    <>
+      {props.address && <AddressBuilderUI
+        {...props}
+        open={open}
+        address={address}
+        onClose={() => setOpen(false)}
+        onInputClick={() => setOpen(true)}
+      />}
+
+    </>
+
   )
 };
 
