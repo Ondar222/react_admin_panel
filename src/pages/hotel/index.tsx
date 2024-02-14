@@ -22,25 +22,29 @@ const editorConfiguration = {
 };
 
 const HotelPage: FC = () => {
-  const { currentHotel, setCurrentHotel } = useHotel()
-  const [addressKeys, setAddressKeys] = useState<{ [key: string]: string }>()
-  const [update, setUpdate] = useState<{ cover: UploadFile, images: Array<UploadFile> }>({
-    images: currentHotel?.images.map((image) => ({
-      uid: image,
-      name: image,
-      thumbUrl: image
-    })),
-    cover: {
-      uid: currentHotel?.cover,
-      name: currentHotel?.cover,
-      thumbUrl: currentHotel?.cover
-    }
-  })
+  const { hotel, setHotel } = useHotel()
 
   useEffect(() => {
-    if (!currentHotel)
-      setCurrentHotel()
+    setHotel()
   }, [])
+
+  useEffect(() => {
+    setUpdate({
+      images: hotel?.images.map((image) => ({
+        uid: image,
+        name: image,
+        thumbUrl: image
+      })),
+      cover: {
+        uid: hotel?.cover,
+        name: hotel?.cover,
+        thumbUrl: hotel?.cover
+      }
+    })
+  }, [hotel?.images, hotel?.cover])
+
+  const [addressKeys, setAddressKeys] = useState<{ [key: string]: string }>()
+  const [update, setUpdate] = useState<{ cover: UploadFile, images: Array<UploadFile> }>()
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const fieldname = e.target.name
@@ -77,15 +81,15 @@ const HotelPage: FC = () => {
     <MainLayout header={<Typography.Title level={2}>Мой отель</Typography.Title>} footer="">
       <Col span={12}>
         {
-          currentHotel &&
+          hotel &&
           <Form layout="vertical" size="large">
-            <YurtaInput label="Название" value={currentHotel.name} />
+            <YurtaInput label="Название" value={hotel.name} />
 
-            {currentHotel &&
+            {hotel.description &&
               <CKEditor
                 editor={ClassicEditor}
                 config={editorConfiguration}
-                data={currentHotel.description}
+                data={hotel.description}
                 onReady={editor => {
                   // You can store the "editor" and use when it is needed.
                   console.log('Editor is ready to use!', editor);
@@ -102,9 +106,9 @@ const HotelPage: FC = () => {
               />
             }
 
-            {currentHotel && <AddressBuilderPresenter address={currentHotel?.address} />}
+            {hotel && <AddressBuilderPresenter address={hotel?.address} />}
 
-            {currentHotel.images && <YurtaUpload
+            {update && <YurtaUpload
               label="Изображения"
               multiple={true}
               listType="picture-card"
@@ -114,20 +118,19 @@ const HotelPage: FC = () => {
             />}
 
 
-            {currentHotel.cover && <YurtaUpload
-              label="Превью"
-              multiple={true}
-              listType="picture-card"
-              fileList={[update?.cover]}
-              itemRender={handleItemRender}
-              onChange={handleFileChange}
-            />}
+            {update && (
+              <YurtaUpload
+                label="Превью"
+                multiple={true}
+                listType="picture-card"
+                fileList={[update?.cover]}
+                itemRender={handleItemRender}
+                onChange={handleFileChange}
+              />
+            )}
           </Form>
         }
       </Col>
-
-
-      {JSON.stringify(currentHotel)}
     </MainLayout>
   )
 }

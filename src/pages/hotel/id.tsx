@@ -5,11 +5,11 @@ import { FC, useEffect } from "react";
 import { Form, Select, Input, Flex, Row, Col } from "antd"
 
 const HotelDetailsPage: FC = () => {
-  const { currentHotel, setCurrentHotel } = useHotel()
+  const { hotel, setHotel } = useHotel()
 
   useEffect(() => {
 
-    setCurrentHotel()
+    setHotel()
   }, [])
 
   return (
@@ -48,7 +48,7 @@ const HotelDetailsPage: FC = () => {
                 <Select
                   showSearch
                   mode="multiple"
-                  options={currentHotel?.rooms.map((room: any) => ({ value: room.id, label: room.name }))} />
+                  options={hotel?.rooms.map((room: any) => ({ value: room.id, label: room.name }))} />
               </Form.Item>
             </Flex>
           </Form>

@@ -2,7 +2,7 @@ import {
   Route,
   Routes
 } from "react-router-dom";
-import App from "../../widget";
+import App from "../../pages";
 import { NotAuthorizedPage, SignInPage } from "../../pages/auth";
 import { BookingPage } from "../../pages/booking";
 import { BookingDetailPage } from "../../pages/booking/id";

@@ -1,15 +1,14 @@
+import { HotelUpdateDto } from "../model/dto/update.dto";
 import Hotel from "../model/interface";
 
 interface IUseHotel {
-  hotel: Hotel;
-  currentHotel: Hotel | undefined;
-  relatedHotels: Hotel | undefined;
+  hotel: Hotel | undefined;
 
-  setHotels: () => void;
-  setCurrentHotel: () => void;
+  setHotel: () => void;
 
-  updateCurrentHotel: () => void;
   createHotel: () => void;
+  updateHotel: (dto: HotelUpdateDto) => Promise<void>;
+  deleteHotel: () => void;
 }
 
 export type { IUseHotel };

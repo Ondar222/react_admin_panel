@@ -15,7 +15,7 @@ import { useBrm } from "@/entities/calendar/api/useBrm";
 
 const RoomLockCreationForm: FC = (props) => {
   const [api, contextHolder] = notification.useNotification();
-  const { currentHotel, setCurrentHotel } = useHotel()
+  const { hotel, setHotel } = useHotel()
   const { create } = useRoomLock()
   const { addRoomLock } = useBrm()
 
@@ -24,8 +24,8 @@ const RoomLockCreationForm: FC = (props) => {
   const [room, setRoom] = useState<number>(0)
 
   useEffect(() => {
-    if (!currentHotel)
-      setCurrentHotel()
+    if (!hotel)
+      setHotel()
   }, [])
 
   const openNotification = (placement: NotificationPlacement) => {
@@ -58,7 +58,7 @@ const RoomLockCreationForm: FC = (props) => {
     <>
       {contextHolder}
       <RoomLockCreationFormUI
-        hotel={currentHotel}
+        hotel={hotel}
         onDatePickerChange={handleDatePickerChange}
         onSaveButtonClick={handleSaveButtonClick}
         onRoomSelect={handleRoomSelectChange}

@@ -43,7 +43,7 @@ const Context = React.createContext({ name: 'Default' });
 const BookingPage: FC = () => {
   const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar)
   const [api, contextHolder] = notification.useNotification();
-  const { currentHotel: hotel } = useHotel()
+  const { hotel: hotel } = useHotel()
 
 
   const openNotification = (placement: NotificationPlacement) => {
