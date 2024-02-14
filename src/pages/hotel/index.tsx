@@ -6,14 +6,14 @@ import { getBase64 } from "@/entities/room/ui/creation-form.tsx/ui";
 import { YurtaUpload } from "@/shared/components/form/ui/input/file";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { MainLayout } from "@/shared/layouts/layout";
-import { Col, Form, Input, Typography, UploadProps, Image, UploadFile } from "antd";
+import { Col, Form, Input, Typography, UploadProps, Image, UploadFile, Button } from "antd";
 import { RcFile } from "antd/es/upload";
 import { ItemRender } from "antd/es/upload/interface";
 import { FC, useEffect, useState } from "react";
 
 
 const HotelPage: FC = () => {
-  const { hotel, setHotel } = useHotel()
+  const { hotel, setHotel, updateHotel } = useHotel()
 
   useEffect(() => {
     setHotel()
@@ -98,10 +98,23 @@ const HotelPage: FC = () => {
                 onChange={handleFileChange}
               />
             )}
+
+            <Button onClick={() => {
+              updateHotel({
+                id: hotel.id,
+                cover: update.cover,
+                images: update.images,
+                name: hotel.name,
+                rooms: [],
+
+                address: 2,
+                description: ""
+              })
+            }}>Сохранить</Button>
           </Form>
         }
       </Col>
-    </MainLayout>
+    </MainLayout >
   )
 }
 

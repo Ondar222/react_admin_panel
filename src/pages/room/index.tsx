@@ -28,17 +28,10 @@ const RoomPage: FC = () => {
               <Col key={index} span={8}>
                 <Card
                   title={
-                    <Flex justify="space-between">
-                      <Typography.Title level={4}>{room.name} #{room.id}</Typography.Title>
-                      <IconButton icon={DeleteIcon} />
-                    </Flex>
+                    <Typography.Title level={4}>{room.name}</Typography.Title>
                   }
 
                   actions={[
-                    <IconButton
-                      type="text"
-                      icon={DeleteIcon}
-                    />,
 
                     <Link to={`/room/${room.id}`}>
                       <IconButton
@@ -71,15 +64,6 @@ const RoomPage: FC = () => {
                         </Row>
                       </Col>
 
-                    </Row>
-
-                    <Row gutter={[16, 16]}>
-                      <Col span={12}>
-                        <Button>Расписание номера</Button>
-                      </Col>
-                      <Col span={12}>
-                        <Button onClick={() => navigate(`/room/${room.id}`)}>Закрыть</Button>
-                      </Col>
                     </Row>
                   </Flex>
                 </Card>

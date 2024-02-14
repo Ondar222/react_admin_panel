@@ -8,7 +8,6 @@ const HotelDetailsPage: FC = () => {
   const { hotel, setHotel } = useHotel()
 
   useEffect(() => {
-
     setHotel()
   }, [])
 
@@ -16,7 +15,6 @@ const HotelDetailsPage: FC = () => {
     <MainLayout
       header={<DetailsPageHeader heading={"Отель"} />}
       footer={<></>} >
-
       <Row>
         <Col span={6}>
           <Form

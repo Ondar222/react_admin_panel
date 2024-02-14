@@ -35,11 +35,12 @@ const useHotel = create<IUseHotel>((set, get) => ({
 
     if (dto.images)
       for (let i = 0; i < dto.images.length; i++) {
-        formData.append(
-          "images",
-          dto.images[i].originFileObj as unknown as Blob,
-          dto.images[i].name
-        );
+        if (dto.images[i].originFileObj)
+          formData.append(
+            "images",
+            dto.images[i].originFileObj as unknown as Blob,
+            dto.images[i].name
+          );
       }
 
     if (dto.cover) {

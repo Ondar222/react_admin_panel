@@ -12,9 +12,6 @@ const UserSearchForm: FC = () => {
 
   return (
     <Row>
-      {
-        JSON.stringify(users)
-      }
       <Button onClick={() => getUsers()}>получить пользоватей</Button>
       <Input placeholder="номер пользователя" value={search} onChange={(e) => { setSearch(e.target.value) }} />
 

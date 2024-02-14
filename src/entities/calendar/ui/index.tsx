@@ -50,7 +50,7 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
         return {
           item_id: booking.id,
           type: brm.type,
-          title: `booking id ${booking.id}`,
+          title: `${booking.status}`,
           start: moment(booking.check_in * 1000).tz(tz).toDate(),
           end: moment(booking.check_out * 1000).tz(tz).toDate(),
           // url: `/partners/booking/${booking.id}`
@@ -62,7 +62,7 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
         return {
           item_id: room_lock.id,
           type: brm.type,
-          title: `lock id ${room_lock.id} status ${room_lock.status}`,
+          title: `${room_lock.status}`,
           start: moment(room_lock.start * 1000).tz(tz).toDate(),
           end: moment(room_lock.end * 1000).tz(tz).toDate(),
           // url: `/partners/room_lock/${room_lock.id}`

@@ -47,7 +47,7 @@ const RoomLockCreationForm: FC = (props) => {
     openNotification('top')
 
     create(room, dates[0], dates[1], reason)
-    
+
   }
 
   const handleLockReason = (e) => {
@@ -110,7 +110,6 @@ const RoomLockCreationFormUI: FC<IRoomLockCreationFormUI> = (props) =>
       value={[moment.now() / 1000, moment.now() / 1000]}
       onChange={props.onDatePickerChange}
     />
-
     {
       props.hotel && <RoomSelect
         value={[]}
