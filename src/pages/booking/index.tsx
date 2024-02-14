@@ -43,8 +43,6 @@ const Context = React.createContext({ name: 'Default' });
 const BookingPage: FC = () => {
   const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar)
   const [api, contextHolder] = notification.useNotification();
-  const { hotel: hotel } = useHotel()
-
 
   const openNotification = (placement: NotificationPlacement) => {
     api.info({
@@ -70,8 +68,7 @@ const BookingPage: FC = () => {
     <MainLayout
       header={
         <DetailsHeader
-          title="Активные брони"
-          onCreateButtonClick={() => navigate("/booking/+")} />
+          title="Активные брони" />
       }
       footer={<></>}
     >

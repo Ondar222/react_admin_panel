@@ -16,13 +16,9 @@ const RoomDetailsPage: FC = () => {
   const { update } = useRoom()
   const [room, setRoom] = useState<RoomUpdateDto>(new RoomUpdateDto())
 
-  // room-lock data
-  const { locks, findByRoomId } = useRoomLock()
-
   useEffect(() => {
     if (id) {
       findById(id)
-      findByRoomId(Number(id), "active")
     }
   }, [])
 
@@ -41,11 +37,6 @@ const RoomDetailsPage: FC = () => {
             onSaveButtonClick={() => {
               update(room)
             }} />
-        </Col>
-
-        <Col span={12}>
-          <RoomLockCreationForm
-          />
         </Col>
       </Row>
     </MainLayout >

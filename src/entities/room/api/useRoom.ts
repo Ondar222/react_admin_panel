@@ -4,8 +4,6 @@ import axios from "axios";
 import { Room, RoomCreationDto, RoomUpdateDto } from "..";
 import { ApiResponse } from "@/app/types";
 import { useCredentails } from "@/features/auth";
-import { RcFile } from "antd/es/upload";
-import { UploadFile } from "antd/lib";
 
 const useRoom = create<IUseRoom>((set) => ({
   rooms: undefined,
@@ -52,6 +50,7 @@ const useRoom = create<IUseRoom>((set) => ({
 
   update: async (room: RoomUpdateDto) => {
     const formData = new FormData();
+    const { access_token } = useCredentails.getState();
 
     formData.append("name", room.name);
     formData.append("number", room.number);
@@ -61,19 +60,39 @@ const useRoom = create<IUseRoom>((set) => ({
     formData.append("description", room.description);
     formData.append("price", String(room.price));
 
-    const { access_token } = useCredentails.getState();
+    console.log(room.cover);
+
+    if (room.cover) {
+      formData.append(
+        "cover",
+        room.cover.originFileObj as unknown as Blob,
+        room.cover.name
+      );
+    }
+
+    if (room.images) {
+      for (let i = 0; i < room.images.length; i++) {
+        if (room.images[i].originFileObj)
+          formData.append(
+            "images",
+            room.images[i].originFileObj as unknown as Blob,
+            room.images[i].name
+          );
+      }
+    }
+
     const data = await axios
-      .put(`${import.meta.env.VITE_API}/room`, formData, {
+      .patch(`${import.meta.env.VITE_API}/room/${room.id}`, formData, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
       .then((res) => {
+        console.log(res);
         return res;
       });
 
-    0;
-    4;
+    console.log(data);
   },
   delete: () => {},
 
