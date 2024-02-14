@@ -10,16 +10,7 @@ import { Col, Form, Input, Typography, UploadProps, Image, UploadFile } from "an
 import { RcFile } from "antd/es/upload";
 import { ItemRender } from "antd/es/upload/interface";
 import { FC, useEffect, useState } from "react";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
-import { Essentials } from '@ckeditor/ckeditor5-essentials';
-import { Bold, Italic } from '@ckeditor/ckeditor5-basic-styles';
-import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
 
-const editorConfiguration = {
-  plugins: [Essentials, Bold, Italic, Paragraph],
-  toolbar: ['bold', 'italic']
-};
 
 const HotelPage: FC = () => {
   const { hotel, setHotel } = useHotel()
@@ -84,27 +75,6 @@ const HotelPage: FC = () => {
           hotel &&
           <Form layout="vertical" size="large">
             <YurtaInput label="Название" value={hotel.name} />
-
-            {/* {hotel.description &&
-              <CKEditor
-                editor={ClassicEditor}
-                config={editorConfiguration}
-                data={hotel.description}
-                onReady={editor => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log('Editor is ready to use!', editor);
-                }}
-                onChange={(event) => {
-                  console.log(event);
-                }}
-                onBlur={(event, editor) => {
-                  console.log('Blur.', editor);
-                }}
-                onFocus={(event, editor) => {
-                  console.log('Focus.', editor);
-                }}
-              />
-            } */}
 
             {hotel && <AddressBuilderPresenter address={hotel?.address} />}
 

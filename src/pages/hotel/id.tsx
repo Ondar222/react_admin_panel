@@ -33,14 +33,6 @@ const HotelDetailsPage: FC = () => {
               </Form.Item>
 
               <Form.Item label="Описание">
-
-                {/* <CKEditor
-                  editor={ClassicEditor}
-                  config={{
-                    language: "ru"
-                  }}
-                /> */}
-
                 <Input />
               </Form.Item>
 
