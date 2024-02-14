@@ -85,7 +85,7 @@ const HotelPage: FC = () => {
           <Form layout="vertical" size="large">
             <YurtaInput label="Название" value={hotel.name} />
 
-            {hotel.description &&
+            {/* {hotel.description &&
               <CKEditor
                 editor={ClassicEditor}
                 config={editorConfiguration}
@@ -104,7 +104,7 @@ const HotelPage: FC = () => {
                   console.log('Focus.', editor);
                 }}
               />
-            }
+            } */}
 
             {hotel && <AddressBuilderPresenter address={hotel?.address} />}
 
