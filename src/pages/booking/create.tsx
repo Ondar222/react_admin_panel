@@ -6,6 +6,7 @@ import { useBooking } from "@/entities/booking";
 import { YurtaCreateForm } from "@/entities/booking/ui/form/create";
 import { RoomLockCreationForm } from "@/entities/room/ui/lock/creation-form";
 
+
 const BookingCreationPage: FC = React.memo(() => {
   const { hotel, setHotel } = useHotel()
   const { create } = useBooking()
@@ -20,6 +21,7 @@ const BookingCreationPage: FC = React.memo(() => {
       footer={<></>}
     >
       <RoomLockCreationForm />
+      
     </MainLayout >
   )
 })
