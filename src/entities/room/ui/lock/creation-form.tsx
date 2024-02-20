@@ -1,11 +1,11 @@
-import { YurtaDatePicker } from "@/entities/booking/ui/form/range-picker";
+import { YurtaDatePicker } from "@/shared/range-picker";
 import { Button, Flex, Form, Select, Typography } from "antd";
 import moment from "moment";
 import { FC, useEffect, useState } from "react";
 import { RoomLockCreationDto } from "../../model/dto/RoomLockCreateDto";
 import { useRoomLock } from "../../api/useRoomLock";
 import { Room } from "../../model/interface";
-import RoomSelect from "@/entities/booking/ui/form/room-select";
+import RoomSelect from "@/widget/room/room-select";
 import { useHotel } from "@/entities/hotel/api";
 
 const RoomLockCreationForm: FC = () => {

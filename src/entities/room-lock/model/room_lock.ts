@@ -1,4 +1,4 @@
-import { IRangePicker } from "@/entities/booking/ui/form/range-picker/model";
+import { IRangePicker } from "@/shared/range-picker/model";
 import Hotel from "@/entities/hotel/model/interface";
 import { Room } from "@/entities/room/model";
 

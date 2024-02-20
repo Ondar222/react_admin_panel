@@ -1,6 +1,7 @@
 import { Upload, UploadFile } from "antd";
 import { Room, RoomTypes } from "../interface";
 import { url } from "inspector";
+import { IImage } from "@/app/types";
 
 class RoomUpdateDto {
   constructor(
@@ -9,7 +10,11 @@ class RoomUpdateDto {
       price: 0,
       description: "",
       type: RoomTypes.standard,
-      cover: "",
+      cover: {
+        id: "",
+        link: "",
+      },
+      visibility: false,
       name: "",
       number: "",
       capacity: 0,
@@ -25,24 +30,32 @@ class RoomUpdateDto {
     this.number = dto.number;
     this.capacity = dto.capacity;
     this.hotel_id = dto.hotel_id;
+    this.visibility = dto.visibility;
     this.cover = {
-      uid: dto.cover,
-      name: dto.cover,
-      url: dto.cover,
-      thumbUrl: dto.cover,
+      uid: dto.cover.id,
+      name: dto.cover.id,
+      url: dto.cover.link,
+      thumbUrl: dto.cover.link,
     } || {
-      uid: `${import.meta.env.VITE_API}/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
-      name: `${import.meta.env.VITE_API}/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
-      url: `${import.meta.env.VITE_API}/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
-      thumbUrl:
-      `${import.meta.env.VITE_API}/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
+      uid: `${
+        import.meta.env.VITE_API
+      }/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
+      name: `${
+        import.meta.env.VITE_API
+      }/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
+      url: `${
+        import.meta.env.VITE_API
+      }/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
+      thumbUrl: `${
+        import.meta.env.VITE_API
+      }/files/8e1aacb6-2ee5-4ffe-a335-9c98e0c38280`,
     };
-    this.images = dto.images.map<UploadFile>((item: string) => {
+    this.images = dto.images.map<UploadFile>((item: IImage) => {
       return {
-        uid: item,
-        name: item,
-        url: item,
-        thumbUrl: item,
+        uid: item.id,
+        name: item.id,
+        url: item.link,
+        thumbUrl: item.link,
       };
     });
   }
@@ -53,6 +66,7 @@ class RoomUpdateDto {
   type: RoomTypes;
   number: string;
   capacity: number;
+  visibility: boolean;
   hotel_id: number;
   cover: UploadFile;
   images?: Array<UploadFile>;

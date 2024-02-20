@@ -1,3 +1,5 @@
+import { IImage } from "@/app/types";
+
 enum RoomTypes {
   economy = "Эконом",
   standard = "Стандарт",
@@ -14,17 +16,18 @@ interface BaseRoom {
   name: string;
   number: string;
   capacity: number;
+  visibility: boolean;
 }
 
 interface ApiRoom extends BaseRoom {
   hotel_id: number;
-  cover: string;
-  images: Array<string>;
+  cover: IImage;
+  images: Array<IImage>;
 }
 
 interface RoomLock {
   id: number;
-  
+
   start: number;
   end: number;
   status: string;

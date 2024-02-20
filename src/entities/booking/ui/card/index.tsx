@@ -86,7 +86,7 @@ const BookingCard: FC<V2_Booking> = (booking) => {
             label: "Информация о номере",
             children: (
               <Flex>
-                <Image src={booking.rooms[0].cover} width={50} height={50} />
+                <Image src={booking.rooms[0].cover.link} width={50} height={50} />
                 <Flex vertical>
                   <Text>
                     {

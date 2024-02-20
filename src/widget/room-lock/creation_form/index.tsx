@@ -1,16 +1,16 @@
 import { FC, useEffect, useState } from "react";
-import { IRoomLockCreateFormPresenter, IRoomLockCreationForm, IRoomLockCreationFormUI } from "../../model/room_lock";
-import RoomSelect from "@/entities/booking/ui/form/room-select";
-import { YurtaDatePicker } from "@/entities/booking/ui/form/range-picker";
+import { IRoomLockCreateFormPresenter, IRoomLockCreationForm, IRoomLockCreationFormUI } from "../../../entities/room-lock/model/room_lock";
+import RoomSelect from "@/widget/room/room-select";
+import { YurtaDatePicker } from "@/shared/range-picker";
 import { Form, Typography, Select, Button, notification } from "antd";
 import moment from "moment";
-import { IRangePicker } from "@/entities/booking/ui/form/range-picker/model";
+import { IRangePicker } from "@/shared/range-picker/model";
 import { Room } from "@/entities/room";
 import { useHotel } from "@/entities/hotel/api";
 import { NotificationPlacement } from "antd/es/notification/interface";
-import { useRoomLock } from "../../api/useRoomLock";
+import { useRoomLock } from "../../../entities/room-lock/api/useRoomLock";
 import { Dayjs } from "dayjs";
-import { LockReasonSelect } from "./reason-select";
+import { LockReasonSelect } from "../../../shared/reason-select";
 import { useBrm } from "@/entities/calendar/api/useBrm";
 
 const RoomLockCreationForm: FC = (props) => {

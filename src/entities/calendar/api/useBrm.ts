@@ -4,7 +4,7 @@ import axios from "axios";
 import { useCredentails } from "@/features/auth";
 import { IDirectusResponse } from "@/shared/directus/model/interface";
 import { IBrm } from "../model/interface";
-import { RoomLock } from "@/entities/room_lock/model/room_lock";
+import { RoomLock } from "@/entities/room-lock/model/room_lock";
 
 const useBrm = create<IUseBrm>((set, get) => ({
   brm: [],
