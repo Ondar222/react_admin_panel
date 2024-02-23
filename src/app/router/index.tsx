@@ -16,6 +16,7 @@ import { RoomCreationPage } from "@/pages/room/create";
 import { AccountPage } from "@/pages/account";
 import { HotelPage } from "@/pages/hotel";
 import { BookingList } from "@/widget/booking/list-view";
+import { BookingBrickUI } from "@/widget/booking/tiles";
 
 const Router = () =>
   <Routes>
@@ -25,6 +26,7 @@ const Router = () =>
     <Route path="/auth-error" element={<NotAuthorizedPage />} />
     <Route path="/sign_up" element={<SignUpPage />} />
     <Route path="/list-view" element={<BookingList />}/>
+    <Route path="/tiles" element={<BookingBrickUI />}/>
 
     <Route path="/booking" element={<BookingPage />} />
     <Route path="/booking/:id" element={<BookingDetailPage />} />

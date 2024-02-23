@@ -222,3 +222,11 @@
     width: 100%;
     text-align: center;
 }
+
+.container_brick {
+    
+}
+
+.container_brick.Card {
+    border: 1px solid red;
+}

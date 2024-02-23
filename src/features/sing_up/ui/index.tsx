@@ -14,6 +14,8 @@ const SignUpFormUI: FC<any> = (props) => {
                     </Col>
                 </Row>
                 <Divider />
+                <Row style={{display: "flex",flexDirection: "column", gap: "20px"}}>
+
                 <Row gutter={[16, 16]}>
                     <Col span={12}>
                         <Input placeholder="Имя" value={props.user.name} />
@@ -22,7 +24,7 @@ const SignUpFormUI: FC<any> = (props) => {
                         <Input placeholder="Фамилия" value={props.user.surname} />
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{display: "flex", flexDirection: "column", gap: "20px"}}>
                     <Col span={24}>
                         <Input type="phone" placeholder="Номер телефона" value={props.user.phone} />
                     </Col>
@@ -39,6 +41,7 @@ const SignUpFormUI: FC<any> = (props) => {
                 </Row>
                 <Row style={{ width: "100%", color: "red", position: "relative", bottom: "0" }}>
                     {props.errors?.password && <p>{props.errors?.password?.message || "Error!"}</p>}
+                </Row>
                 </Row>
                 <Row>
                     <Checkbox>

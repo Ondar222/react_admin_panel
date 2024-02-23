@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react"
-import { Button, Flex, Space, Table, Tag, Typography, Col, Row, Divider } from 'antd';
+import { Space, Table, Divider } from 'antd';
 import type { TableProps } from 'antd';
 import { V2_Booking } from "@/entities/booking";
 import { RoomLock } from "@/entities/room/model/interface";
@@ -52,11 +52,9 @@ const columns: TableProps<{
       render: (item) => <a>{item.status}</a>,
     },
     {
-      // title: 'Action',
-      // key: 'action',
+     
       render: (_, record) => (
         <Space size="middle" style={{ background: "#7B68EE", width: "75px", display: "flex", justifyContent: "center", borderRadius: "0.1rem" }}>
-          {/* <a>Invite {record.name}</a> */}
           <Link style={{ color: "#fff" }} to={`/booking/${record.item.id}`}>Изменить</Link>
         </Space>
       ),
