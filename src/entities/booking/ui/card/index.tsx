@@ -1,4 +1,3 @@
-import DateFormatter from "@/utils/date-formatter"
 import { FC } from "react"
 import { V2_Booking } from "../.."
 import { Link } from "react-router-dom"
@@ -6,11 +5,11 @@ import { Button, Card, Collapse, Flex, Image, Tag, Typography } from "antd"
 import { DeleteButton, EditButton, IconButton } from "@/shared/components/button/action-buttons"
 import { EditIcon } from "@/assets/icons/edit"
 import { DeleteIcon } from "@/assets/icons/delete"
+import moment from "moment"
 
 const BookingCard: FC<V2_Booking> = (booking) => {
   const { Panel } = Collapse
   const { Text } = Typography
-  const dateFormatter = new DateFormatter()
 
   return (
     <Card
@@ -21,7 +20,7 @@ const BookingCard: FC<V2_Booking> = (booking) => {
         >
           Бронь №{booking.id}
           <Flex justify={"space-between"}>
-            <Tag>{dateFormatter.toDateString(booking.check_in)}</Tag>
+            <Tag>{moment(booking.check_in).date()}</Tag>
             <Tag>{booking.status}</Tag>
           </Flex>
         </Flex>
@@ -74,10 +73,10 @@ const BookingCard: FC<V2_Booking> = (booking) => {
             children: (
               <div>
                 <Text>
-                  Заезд: {dateFormatter.toDateString(booking.check_in)}
+                  Заезд: {moment(booking.check_in).toDate().toDateString()}
                 </Text>
                 <Text>
-                  Отъезд: {dateFormatter.toDateString(booking.check_out)}
+                  Отъезд: {moment(booking.check_out).toDate().toDateString()}
                 </Text>
               </div>
             )
@@ -87,7 +86,7 @@ const BookingCard: FC<V2_Booking> = (booking) => {
             label: "Информация о номере",
             children: (
               <Flex>
-                <Image src={booking.rooms[0].cover} width={50} height={50} />
+                <Image src={booking.rooms[0].cover.link} width={50} height={50} />
                 <Flex vertical>
                   <Text>
                     {

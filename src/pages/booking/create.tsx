@@ -7,11 +7,11 @@ import { YurtaCreateForm } from "@/entities/booking/ui/form/create";
 import { RoomLockCreationForm } from "@/entities/room/ui/lock/creation-form";
 
 const BookingCreationPage: FC = React.memo(() => {
-  const { currentHotel, setCurrentHotel } = useHotel()
+  const { hotel, setHotel } = useHotel()
   const { create } = useBooking()
 
   useEffect(() => {
-    setCurrentHotel()
+    setHotel()
   }, [])
 
   return (

@@ -1,16 +1,16 @@
-import { FC, useState } from "react"
+import { FC, useMemo, useState } from "react"
 import { MainLayout } from "../../shared/layouts/layout"
 import { useEffect } from "react"
-import { BookingCard, useBooking } from "@/entities/booking"
-import { useCalendar } from "@/entities/calendar"
-import { ICalendar } from "@/entities/calendar/model/interface"
-import { Button, Col, Collapse, Layout, Row, Select } from "antd"
+import { useBooking } from "@/entities/booking"
+import { Col, NotificationArgsProps, Row, Select, notification } from "antd"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
 import { useNavigate } from "react-router-dom"
-import { YurtaCalendarPage } from "../calendar"
 import { CalendarUI } from "@/entities/calendar/ui"
 import { useBrm } from "@/entities/calendar/api/useBrm"
-import { RoomLockCreationForm } from "@/entities/room/ui/lock/creation-form"
+import React from "react"
+import { RoomLockCreationForm } from "@/widget/room-lock/creation_form"
+import { useHotel } from "@/entities/hotel/api"
+import { Room } from "@/entities/room"
 
 enum BookingPageVM {
   calendar = 'calendar',
@@ -36,8 +36,24 @@ const BookingPageVMDecoder = [
   }
 ]
 
+type NotificationPlacement = NotificationArgsProps['placement'];
+
+const Context = React.createContext({ name: 'Default' });
+
 const BookingPage: FC = () => {
   const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar)
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (placement: NotificationPlacement) => {
+    api.info({
+      message: `Notification ${placement}`,
+      description: <Context.Consumer>{({ name }) => `Hello, ${name}!`}</Context.Consumer>,
+      placement,
+    });
+  };
+
+  const contextValue = useMemo(() => ({ name: 'Ant Design' }), []);
+
   const { booking, findAll } = useBooking()
   // const { calendar, getAll } = useCalendar()
   const { brm, getAll } = useBrm()
@@ -52,8 +68,7 @@ const BookingPage: FC = () => {
     <MainLayout
       header={
         <DetailsHeader
-          title="Активные брони"
-          onCreateButtonClick={() => navigate("/booking/+")} />
+          title="Активные брони" />
       }
       footer={<></>}
     >
@@ -65,37 +80,10 @@ const BookingPage: FC = () => {
       >
         {
           BookingPageVMDecoder.map((mode) => {
-            return <option value={mode.name}>{mode.label_ru}</option>
+            return <option key={mode.name} value={mode.name}>{mode.label_ru}</option>
           })
         }
       </Select>
-
-      {/* <Collapse
-        items={calendar.map((calendar: ICalendar, index) => ({
-          key: index,
-          label: calendar.date,
-          children: <Row gutter={[16, 16]} >
-            {
-              [...calendar.booking].map((booking) => {
-                return (
-                  <Col key={booking.id} span={6}>
-                    <BookingCard
-                      id={booking.id}
-                      amount={booking.amount}
-                      status={booking.status}
-                      check_in={booking.check_in}
-                      check_out={booking.check_out}
-                      capacity={booking.capacity}
-                      user={booking.user}
-                      rooms={booking.rooms} />
-                  </Col>
-                )
-              })
-            }
-          </Row>
-        }))
-        }
-      /> */}
 
       {mode === BookingPageVM.calendar &&
         <Row gutter={[16, 16]}>
@@ -103,11 +91,13 @@ const BookingPage: FC = () => {
             <RoomLockCreationForm />
           </Col>
           <Col span={18}>
-            <CalendarUI brm={brm} onClick={(e) => {
-              const id = e.event.extendedProps.item_id
-              const entity = e.event.extendedProps.type
-              navigate(`/${entity}/${id}`)
-            }} />
+            <CalendarUI
+              brm={brm}
+              onClick={(e) => {
+                const id = e.event.extendedProps.item_id
+                const entity = e.event.extendedProps.type
+                navigate(`/${entity}/${id}`)
+              }} />
           </Col>
         </Row>
       }

@@ -1,37 +1,87 @@
 import { create } from "zustand";
-import { HotelUpdateDto } from "../model/dto/hotelUpdateDto";
+import { HotelUpdateDto } from "../model/dto/update.dto";
 import axios from "axios";
 import Hotel from "../model/interface";
 import { useCredentails } from "@/features/auth";
 import { ApiResponse } from "@/app/types";
 import { IUseHotel } from ".";
 
-const useHotel = create<IUseHotel>((set) => ({
+const useHotel = create<IUseHotel>((set, get) => ({
   hotel: undefined,
-  currentHotel: undefined,
-  relatedHotels: undefined,
 
-  setHotels: async () => { },
-  setCurrentHotel: async () => {
+  setHotel: async () => {
     const { access_token } = useCredentails.getState();
-    const data = await axios
+    const hotel = await axios
       .get<ApiResponse<Hotel>>(`${import.meta.env.VITE_API}/hotel/my`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
-      .then((res) => res.data.data);
+      .then((res) => {
+        console.log(res.data.data);
+        return res.data.data;
+      });
 
     set({
-      currentHotel: data
-    })
+      hotel,
+    });
   },
+  createHotel: () => {},
 
   updateHotel: async (dto: HotelUpdateDto) => {
-    return dto
+    const { access_token } = useCredentails.getState();
+    const { images, cover, ...update_dto } = dto;
+    const formData = new FormData();
+
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].originFileObj) {
+          formData.append(
+            "images",
+            images[i].originFileObj as unknown as Blob,
+            images[i].name
+          );
+        }
+      }
+    }
+
+    if (cover) {
+      if (cover.originFileObj)
+        formData.append(
+          "cover",
+          cover.originFileObj as unknown as Blob,
+          cover.name
+        );
+    }
+
+    console.log(formData);
+
+    const hotel = await axios
+      .patch<ApiResponse<Hotel>>(
+        `${import.meta.env.VITE_API}/hotel/my`,
+        update_dto,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .then((res) => res.data.data);
+
+    const hotel_files = await axios
+      .patch<ApiResponse<Hotel>>(
+        `${import.meta.env.VITE_API}/hotel/my/files`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .then((res) => res.data.data);
   },
-  createHotel: async () => { },
-  updateCurrentHotel() { },
+
+  deleteHotel: () => {},
 }));
 
 export { useHotel };

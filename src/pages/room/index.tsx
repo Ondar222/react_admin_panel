@@ -4,16 +4,17 @@ import { useHotel } from "@/entities/hotel/api";
 import { useRoom } from "@/entities/room";
 import { IconButton } from "@/shared/components/button/action-buttons";
 import { MainLayout } from "@/shared/layouts/layout";
-import { Button, Card, Col, Flex, Image, Row, Typography } from "antd";
+import RoomCardUI from "@/shared/room/card";
+import { Button, Card, Col, Flex, Image, Row, Switch, Typography } from "antd";
 import { FC, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const RoomPage: FC = () => {
-  const { rooms, findAll } = useRoom()
+  const { rooms, findMyRooms, changeVisibility } = useRoom()
   const navigate = useNavigate()
 
   useEffect(() => {
-    findAll()
+    findMyRooms()
   }, [])
 
   return (
@@ -21,68 +22,12 @@ const RoomPage: FC = () => {
       header={<Typography.Title level={2}>Номера</Typography.Title>}
       footer="Пагинация"
     >
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} wrap={true} justify="space-between">
         {
           rooms?.map((room, index) => {
             return (
-              <Col key={index} span={8}>
-                <Card
-                  title={
-                    <Flex justify="space-between">
-                      <Typography.Title level={4}>{room.name} #{room.id}</Typography.Title>
-                      <IconButton icon={DeleteIcon} />
-                    </Flex>
-                  }
-
-                  actions={[
-                    <IconButton
-                      type="text"
-                      icon={DeleteIcon}
-                    />,
-
-                    <Link to={`/room/${room.id}`}>
-                      <IconButton
-                        type="text"
-                        icon={EditIcon}
-                      />
-                    </Link>
-
-                  ]}>
-                  <Flex vertical gap={16}>
-                    <Row gutter={[16, 16]}>
-                      <Col span={12}>
-                        <Image src={room.cover} height={100} width={"100%"} style={{
-                          borderRadius: 8,
-                          objectFit: "cover"
-                        }} />
-                      </Col>
-                      <Col span={12}>
-                        <Row>
-                          <Typography.Text>Цена {room.price}</Typography.Text>
-                        </Row>
-                        <Row>
-                          <Typography.Text>Тип {room.type}</Typography.Text>
-                        </Row>
-                        <Row>
-                          <Typography.Text>Номер {room.number}</Typography.Text>
-                        </Row>
-                        <Row>
-                          <Typography.Text>Вместимость {room.capacity}</Typography.Text>
-                        </Row>
-                      </Col>
-
-                    </Row>
-
-                    <Row gutter={[16, 16]}>
-                      <Col span={12}>
-                        <Button>Расписание номера</Button>
-                      </Col>
-                      <Col span={12}>
-                        <Button onClick={() => navigate(`/room/${room.id}`)}>Закрыть</Button>
-                      </Col>
-                    </Row>
-                  </Flex>
-                </Card>
+              <Col key={index} xs={24} sm={24} md={12} lg={8} xl={6}>
+                <RoomCardUI {...room} />
               </Col>
             )
           })

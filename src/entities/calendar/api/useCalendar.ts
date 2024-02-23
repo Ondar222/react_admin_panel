@@ -19,8 +19,6 @@ const useCalendar = create<IUseCalendar>((set) => ({
       })
       .then((res) => res.data.data);
 
-    console.log(calendar)
-
     return set({
       calendar: calendar
     })

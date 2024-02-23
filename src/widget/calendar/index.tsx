@@ -16,8 +16,6 @@ const CalendarWidget: FC = ({ calendar }: { calendar: ICalendar[] }) => {
       <CalendarUI
         cellRender={cellRender}
         onSelect={(date, info) => {
-          console.log(date)
-          console.log(info)
         }}
       />
       <CalendarDrawerUI />

@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import momentPlugin from "@fullcalendar/moment"
+import listPlugin from '@fullcalendar/list'
 import dayjs from "dayjs";
 import { ICalendar } from "..";
 import { CalendarOptions, EventClickArg, EventInput, EventSourceInput } from "@fullcalendar/core/index.js";
@@ -14,6 +15,9 @@ import timezone from 'dayjs/plugin/timezone'
 import moment from "moment-timezone";
 import { Button } from "antd";
 import { RoomLock } from "@/entities/room/model/interface";
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import ruLocale from '@fullcalendar/core/locales/ru';
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -39,31 +43,36 @@ interface ICalendarUI {
 
 const CalendarUI: FC<ICalendarUI> = (props) => {
   const rtp: CalendarOptions = {
-    plugins: [dayGridPlugin, momentPlugin],
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, momentPlugin, listPlugin],
     initialView: 'dayGridMonth',
     dayCellClassNames: 'brm-cell',
     weekends: true,
-
+    headerToolbar: {
+      left: 'prev,next,listWeek,list',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    locales: [ruLocale],
+    dayMaxEvents: true,
     events: props.brm.map((brm) => {
       const booking = brm.item as V2_Booking
       if (brm.type === 'booking') {
         return {
           item_id: booking.id,
           type: brm.type,
-          title: `booking id ${booking.id}`,
+          title: `${booking.status}`,
           start: moment(booking.check_in * 1000).tz(tz).toDate(),
           end: moment(booking.check_out * 1000).tz(tz).toDate(),
           // url: `/partners/booking/${booking.id}`
 
         }
       }
-      console.log(brm.type)
       if (brm.type === 'room_lock') {
         const room_lock = brm.item as RoomLock
         return {
           item_id: room_lock.id,
           type: brm.type,
-          title: `lock id ${room_lock.id} status ${room_lock.status}`,
+          title: `${room_lock.status}`,
           start: moment(room_lock.start * 1000).tz(tz).toDate(),
           end: moment(room_lock.end * 1000).tz(tz).toDate(),
           // url: `/partners/room_lock/${room_lock.id}`
@@ -79,7 +88,6 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
   return (
     <FullCalendar
       {...rtp}
-
     />
   )
 }
@@ -88,7 +96,6 @@ export { CalendarUI }
 
 // a custom render function
 function renderEventContent(eventInfo) {
-  console.log(eventInfo)
   return (
     <Button onClick={(e) => {
       preventDefault

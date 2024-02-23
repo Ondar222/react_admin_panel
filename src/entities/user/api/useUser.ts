@@ -49,8 +49,6 @@ const useUsers = create<IUseUsers>((set) => ({
     const createdUser = await axios
       .post(`${import.meta.env.VITE_API}/user`)
       .then((res) => res);
-
-    console.log(createdUser);
   },
 }));
 
