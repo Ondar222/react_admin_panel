@@ -11,6 +11,8 @@ import React from "react"
 import { RoomLockCreationForm } from "@/entities/room_lock/ui/form/create"
 import { useHotel } from "@/entities/hotel/api"
 import { Room } from "@/entities/room"
+import { BookingList } from "@/widget/booking/list-view"
+import { BookingBrickUI } from "@/widget/booking/tiles"
 
 enum BookingPageVM {
   calendar = 'calendar',
@@ -77,12 +79,18 @@ const BookingPage: FC = () => {
         style={{ width: '150px' }}
         defaultValue={BookingPageVMDecoder[0].name}
         onChange={(e) => setMode(e as BookingPageVM)}
+
       >
+
+
         {
           BookingPageVMDecoder.map((mode) => {
             return <option key={mode.name} value={mode.name}>{mode.label_ru}</option>
           })
+
         }
+
+
       </Select>
 
       {mode === BookingPageVM.calendar &&
@@ -97,15 +105,37 @@ const BookingPage: FC = () => {
                 const id = e.event.extendedProps.item_id
                 const entity = e.event.extendedProps.type
                 navigate(`/${entity}/${id}`)
-              }} />
+
+              }}
+
+
+            />
+          </Col>
+          <Col>
           </Col>
         </Row>
       }
-    </MainLayout >
 
+      {
+        mode === BookingPageVM.list &&
+        <BookingList data={brm} />
+      }
+        {
+        mode === BookingPageVM.brick &&
+        <BookingBrickUI data={brm} />
+      }
+
+
+    </MainLayout >
 
   )
 }
 
+
 export { BookingPage }
 
+// {
+//   <Col>
+//   <TableApp />
+//   </Col>
+// }
