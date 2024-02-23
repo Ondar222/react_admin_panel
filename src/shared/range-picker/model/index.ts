@@ -8,12 +8,12 @@ interface IRangePicker {
     onChange: (dates: [number, number]) => void
 }
 
-interface IRangePickerUI {
-    label: string
+interface IRangePickerUI extends RangePickerProps {
+    label?: string
     locale: any
     value: [Dayjs, Dayjs]
-    defaultValue: [Dayjs, Dayjs]
-    onChange: RangePickerProps["onChange"]
+    defaultValue?: [Dayjs, Dayjs]
+    onChange?: RangePickerProps["onChange"]
 }
 
 export type { IRangePicker, IRangePickerUI }

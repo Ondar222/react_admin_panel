@@ -1,24 +1,27 @@
+import { UploadFile } from "antd";
 import type { Room, RoomCreationDto, RoomUpdateDto } from "..";
 import { RoomLock } from "../model/interface";
 
 interface IUseRoom {
   rooms: Room[] | undefined;
   currentRoom: Room | undefined;
-  lockedRooms: Room[] | undefined;
 
-  create: (room: RoomCreationDto) => void
-  findById: (id: string) => void;
-  update: (room: RoomUpdateDto) => void;
-  findAll: () => void
-  findByHotel: (id: string | number) => void;
+  create: (room: RoomCreationDto) => Promise<void>;
 
-  getRoomLocks: (
-    start: number,
-    end: number,
-    id: number,
-    reason: string,
-    status: string
-  ) => void;
+  update: (room: RoomUpdateDto) => Promise<void>;
+  changeVisibility: (room_id: number, visibility: boolean) => Promise<void>;
+  deleteRoom: (room_id: number) => Promise<void>;
+
+  findById: (id: string) => Promise<void>;
+  findMyRooms: () => Promise<void>;
+
+  // images
+  uploadImage: (
+    room_id: number,
+    fieldName: string,
+    file: UploadFile
+  ) => Promise<void>;
+  deleteImage: (room_id: number, image_id: string) => Promise<void>;
 }
 
 interface IUseRoomLock {

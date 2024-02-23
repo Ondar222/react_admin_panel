@@ -1,6 +1,6 @@
 import { useHotel } from "@/entities/hotel/api"
 import { useRoom, RoomCreationDto } from "@/entities/room"
-import { RoomCreateForm } from "@/entities/room/ui/creation-form.tsx/ui"
+import { RoomCreateForm } from "@/widget/room/creation-form.tsx/ui"
 import { MainLayout } from "@/shared/layouts/layout"
 import { FC, useEffect, useState } from "react"
 

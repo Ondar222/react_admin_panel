@@ -27,7 +27,6 @@ const useRoomLock = create<IUseRoomLock>((set, get) => ({
       )
       .then((res) => res.data)
       .then((res) => {
-        console.log(res);
         set({
           locks: [res.data, ...(get().locks as RoomLock[])],
         });
@@ -36,10 +35,10 @@ const useRoomLock = create<IUseRoomLock>((set, get) => ({
       });
   },
 
-  async findByRoomId(id: number, status: string) {
+  async findByRoomId(id: string, status: string) {
     await axios
       .get<ApiResponse<Array<any>>>(
-        `${import.meta.env.VITE_API}/roomlock?room_id=${id}&status=${status}`
+        `${import.meta.env.VITE_API}/roomlock?room_id=${id}`
       )
       .then((res) => res.data)
       .then((res) => {
