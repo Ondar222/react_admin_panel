@@ -12,7 +12,7 @@ import { RoomLockCreationForm } from "@/entities/room_lock/ui/form/create"
 import { useHotel } from "@/entities/hotel/api"
 import { Room } from "@/entities/room"
 import { BookingList } from "@/widget/booking/list-view"
-import { BookingBrickUI } from "@/widget/booking/tiles"
+import { BookingBrick } from "@/widget/booking/tiles"
 
 enum BookingPageVM {
   calendar = 'calendar',
@@ -122,7 +122,7 @@ const BookingPage: FC = () => {
       }
         {
         mode === BookingPageVM.brick &&
-        <BookingBrickUI data={brm} />
+        <BookingBrick data={booking} />
       }
 
 
