@@ -1,105 +1,106 @@
 import React, { FC, useEffect, useState } from "react"
-import { Button, Flex, Space, Table, Tag, Typography, Col, Row, Divider, Card } from 'antd';
+import { Button, Flex, Space, Table, Tag, Typography, Col, Row, Divider, Card, DatePicker, Image } from 'antd';
 import { useBooking } from "@/entities/booking";
 import { useBrm } from "@/entities/calendar/api/useBrm"
 import { V2_Booking } from "@/entities/booking";
 import { RoomLock } from "@/entities/room/model/interface";
+import dayjs, { Dayjs } from "dayjs";
 
+interface IBookingBrick {
+  data: V2_Booking[]
+}
 
+interface IUseBookingBrick {
+  data: V2_Booking[]
+}
 
-const BookingBrickUI: React.FC<any> = (props) =>{
-  const { booking, findAll } = useBooking()
-  
-  const { brm, getAll } = useBrm()
+interface IBookingBrickItem {
+  id: number,
+  status: string,
+  dates: [Dayjs, Dayjs],
+  rooms: Array<{id: number, cover: string}>
+}
 
-  useEffect(() => {
-    findAll()
-    getAll()
-  }, [])
-  const useBookingList = (props) => {
-    const [data, setData] = useState<{
-      type: string;
-      item: V2_Booking | RoomLock;
-    }[]>([])
-  
-    useEffect(() => {
-      setData(props.brm)
-    }, [])
-  
-    useEffect(() => {
-      setData(props.brm)
-    }, [props.brm])
-  
-    return data
-  }
-  
+interface IBookingBrickUI {
+  booking: IBookingBrickItem[]
+}
 
-  
+const BookingBrick: FC<IBookingBrick> = ({data}) => {
 
-return (
+  const booking = useBookingBrick({data})
 
-<>
-<Row className="container_brick" gutter={16}>
-    <Col span={8}>
-      <Card bordered={false}>
-      <a>{JSON.stringify(brm)}</a>,
-      </Card>
-    </Col>
-    <Col span={8}>
-      <Card bordered={false}>
-      <p>Идентификатор</p>
-       <p>Типы</p>
-       <p>Начало</p>
-       <p>Конец</p>
-       <p>Статус</p>
-      </Card>
-    </Col>
-    <Col span={8}>
-      <Card  bordered={false}>
-      <p>Идентификатор</p>
-       <p>Типы</p>
-       <p>Начало</p>
-       <p>Конец</p>
-       <p>Статус</p>
-      </Card>
-    </Col>
-  </Row>
-  <Row gutter={16}>
-    <Col span={8}>
-      <Card bordered={false}>
-      <p>Идентификатор</p>
-       <p>Типы</p>
-       <p>Начало</p>
-       <p>Конец</p>
-       <p>Статус</p>
-      </Card>
-    </Col>
-    <Col span={8}>
-      <Card bordered={false}>
-      <p>Идентификатор</p>
-       <p>Типы</p>
-       <p>Начало</p>
-       <p>Конец</p>
-       <p>Статус</p>
-      </Card>
-    </Col>
-    <Col span={8}>
-      <Card bordered={false}>
-      <p>Идентификатор</p>
-       <p>Типы</p>
-       <p>Начало</p>
-       <p>Конец</p>
-       <p>Статус</p>
-      </Card>
-    </Col>
-  </Row>
-</>
-)
+  return <BookingBrickUI booking={booking} />
 }
 
 
+const useBookingBrick = ({data}: IUseBookingBrick): IBookingBrickItem[] => {
+  const [formattedBooking, setFormattedBooking] = useState<IBookingBrickItem[]>(data?.map((item) => ({
+    id: item.id,
+    status: item.status,
+    rooms: item.rooms.map((room) => ({id: room.id, cover: room.cover})),
+    dates: [dayjs(item.check_in*1000), dayjs(item.check_out*1000)]
+  })))
+
+  // useEffect(() => {
+  //   setData(props?.data?.map((item) => {
+  //     if (item.type === "booking") {
+  //       return {...item, id: item.item.id, dates: [dayjs(item.item.check_in*1000), dayjs(item.item.check_out*1000)]}
+  //     }
+  //   }))
+  // }, [])
+
+  // useEffect(() => {
+  //   setData(props?.data?.map((item) => {
+  //     if (item.type === "booking") {
+  //       return {...item, id: item.item.id, dates: [dayjs(item.item.check_in*1000), dayjs(item.item.check_out*1000)]}
+  //     }
+  //   }))
+  // }, [props.data])
+
+  return formattedBooking
+}
+
+const BookingBrickUI: FC<IBookingBrickUI> = ({booking}) =>
+  <Row className="container_brick" justify={"space-between"} gutter={[16,16]}>
+    {
+      booking?.map((item) => {
+        return (
+          <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+            <Card
+              title={`Бронь №${item.id}`}
+              bordered={false}
+            >   
+           
+
+          
+              <DatePicker.RangePicker disabled value={item.dates}  />  
+               
+             <Button className="Button_more_detalis_tiles">Подробнее</Button>             
+          <Row>
+            {
+              item.rooms.map((room) => {
+                return <Col span={12}>
+                 <Card title={`Номер ${room.id}`}>
+                <Image src={room.cover}  />
+                </Card>  
+                 <Card title={`Статус: ${item.status}`}  />
+                </Col>
+              })
+             }
+          </Row>
+             
+
+             
+            </Card>
+          </Col>
+        )
+      })
+    }
+  </Row>
+
+export { BookingBrick };
 
 
-export { BookingBrickUI };
+
 
 

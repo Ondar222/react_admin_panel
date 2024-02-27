@@ -230,3 +230,9 @@
 .container_brick.Card {
     border: 1px solid red;
 }
+
+.Button_more_detalis_tiles {
+    background: rgb(143, 202, 211);
+    color: #fff;
+    margin-top: 10px;
+}
