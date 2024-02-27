@@ -1,13 +1,10 @@
-import { DeleteIcon } from "@/assets/icons/delete";
-import { EditIcon } from "@/assets/icons/edit";
-import { useHotel } from "@/entities/hotel/api";
+
 import { useRoom } from "@/entities/room";
-import { IconButton } from "@/shared/components/button/action-buttons";
 import { MainLayout } from "@/shared/layouts/layout";
 import RoomCardUI from "@/shared/room/card";
-import { Button, Card, Col, Flex, Image, Row, Switch, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import { FC, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RoomPage: FC = () => {
   const { rooms, findMyRooms, changeVisibility } = useRoom()

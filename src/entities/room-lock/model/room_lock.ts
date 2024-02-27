@@ -1,8 +1,8 @@
 import { IRangePicker } from "@/shared/range-picker/model";
-import Hotel from "@/entities/hotel/model/interface";
+import { Hotel } from "@/entities/hotel/model/hotel";
 import { Room } from "@/entities/room/model";
 
-interface RoomLock {
+type RoomLock = {
   id: number;
 
   start: number;
@@ -22,15 +22,17 @@ interface IRoomLockCreationForm {
 interface IRoomLockCreateFormPresenter {
   hotel: Hotel;
   onDatePickerChange: IRangePicker["onChange"];
-  onRoomSelect: (e: Pick<Room, "id">[]) => void;
+  onRoomSelect: (e: Pick<Room, "id">) => void;
   onSaveButtonClick: () => void;
   onReasonSelectChange: (e: string) => void;
 }
 
 interface IRoomLockCreationFormUI {
   hotel: Hotel;
+  room_id: Pick<Room, "id">
+  dates: [number, number]
   onDatePickerChange: IRangePicker["onChange"];
-  onRoomSelect: (e: Pick<Room, "id">[]) => void;
+  onRoomSelect: (e: Pick<Room, "id">) => void;
   onSaveButtonClick: () => void;
   onReasonSelectChange: (e: string) => void;
 }

@@ -1,19 +1,17 @@
-import { useHotel } from "@/entities/hotel/api";
-import { AddressBuilderPresenter } from "@/entities/hotel/ui/form/address-builder/presenter";
-import { RoomUpdateDto } from "@/entities/room";
-import { getBase64 } from "@/widget/room/creation-form.tsx/ui";
+import { useHotel } from "@/entities/hotel";
+import { AddressBuilderPresenter } from "@/widget/address/address-builder/presenter";
+import { getBase64 } from "@/shared/utils";
 import { YurtaUpload } from "@/shared/components/form/ui/input/file";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { MainLayout } from "@/shared/layouts/layout";
-import { DownloadOutlined, SwapOutlined, RotateLeftOutlined, RotateRightOutlined, ZoomOutOutlined, ZoomInOutlined } from "@ant-design/icons";
-import { Col, Form, Input, Typography, UploadProps, Image, UploadFile, Button, Space } from "antd";
+import { Col, Form, Typography, UploadProps, UploadFile, Button } from "antd";
 import { RcFile } from "antd/es/upload";
-import { ItemRender } from "antd/es/upload/interface";
 import { FC, useEffect, useState } from "react";
+import { UploadChangeParam } from "antd/lib/upload";
 
 
 const HotelPage: FC = () => {
-  const { hotel, setHotel, updateHotel } = useHotel()
+  const { hotel, setHotel, updateHotel, uploadImage } = useHotel()
 
   useEffect(() => {
     setHotel()
@@ -22,14 +20,14 @@ const HotelPage: FC = () => {
   useEffect(() => {
     setUpdate({
       images: hotel?.images?.map((image) => ({
-        uid: image,
-        name: image,
-        thumbUrl: image
+        uid: image.id,
+        name: image.id,
+        thumbUrl: image.link
       })),
       cover: {
-        uid: hotel?.cover,
-        name: hotel?.cover,
-        thumbUrl: hotel?.cover
+        uid: hotel?.cover.id,
+        name: hotel?.cover.id,
+        thumbUrl: hotel?.cover.link
       }
     })
   }, [hotel?.images, hotel?.cover])
@@ -42,70 +40,38 @@ const HotelPage: FC = () => {
     setUpdate((prev) => ({ ...prev, [fieldname]: e.target.value }))
   }
 
-  const onDownload = () => {
-    fetch(
-      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    )
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'image.png';
-        document.body.appendChild(link);
-        link.click();
-        URL.revokeObjectURL(url);
-        link.remove();
-      });
-  };
-
-  // upload component handlers
-  const handleItemRender: ItemRender = (item, file) => {
-    return (
-      <Image
-        src={file.thumbUrl}
-        height={100}
-        width={100}
-        preview={{
-          toolbarRender: (
-            _,
-            {
-              transform: { scale },
-              actions: { onFlipY, onFlipX, onRotateLeft, onRotateRight, onZoomOut, onZoomIn },
-            },
-          ) => (
-            <Space size={12} className="toolbar-wrapper">
-              <Button>delete</Button>
-              <DownloadOutlined onClick={onDownload} />
-              <SwapOutlined rotate={90} onClick={onFlipY} />
-              <SwapOutlined onClick={onFlipX} />
-              <RotateLeftOutlined onClick={onRotateLeft} />
-              <RotateRightOutlined onClick={onRotateRight} />
-            </Space>
-          ),
-        }}
-        style={{ objectFit: "cover", borderRadius: 8 }}
-      />
-    )
-  }
-
-  const handleFilesChange: UploadProps['onChange'] = (e) => {
-    setUpdate((prev) => ({
-      ...prev,
-      images: e.fileList
-    }))
-  }
-
-  const handleFileChange: UploadProps['onChange'] = async ({ file }) => {
-    if (file.status === 'done') {
-      getBase64(file.originFileObj as RcFile);
+  const handleFileChange = async (fieldName: string, info: UploadChangeParam) => {
+console.log(info)
+    if (info.file.status === "uploading") {
+      await uploadImage(fieldName, info.file)
+      switch (fieldName) {
+        case "cover":
+          setUpdate((prev) => ({ ...prev, cover: info.file.originFileObj }));
+          break;
+        case "images":
+          info.fileList.pop()
+          setUpdate((prev) => ({
+            ...prev,
+            images: [...info.fileList, info.file]
+          }));
+          break
+      }
     }
 
-    if (!file.url && !file.preview) {
-      setUpdate((prev) => ({
-        ...prev,
-        cover: file
-      }))
+    if (info.file.status === "done") {
+      switch (fieldName) {
+        case "cover":
+          setUpdate((prev) => ({ ...prev, cover: info.file }));
+          break;
+        case "images":
+          info.fileList.pop()
+          setUpdate((prev) => ({
+            ...prev,
+            images: [...info.fileList, info.file]
+          }));
+          break
+      }
+      
     }
   }
   return (
@@ -118,26 +84,27 @@ const HotelPage: FC = () => {
 
             {hotel && <AddressBuilderPresenter address={hotel?.address} />}
 
-            {update && <YurtaUpload
-              label="Изображения"
-              multiple={true}
-              listType="picture-card"
-              fileList={update?.images}
-              itemRender={handleItemRender}
-              onChange={handleFilesChange}
-            />}
-
-
             {update && (
               <YurtaUpload
                 label="Превью"
-                multiple={true}
+                fieldName="cover"
+                multiple={false}
                 listType="picture-card"
                 fileList={[update?.cover]}
-                itemRender={handleItemRender}
-                onChange={handleFileChange}
+                onChange={() => { }}
+                onRemove={() => { }}
               />
             )}
+
+            {update && <YurtaUpload
+              label="Изображения"
+              fieldName="images"
+              multiple={true}
+              listType="picture-card"
+              fileList={update?.images}
+              onChange={handleFileChange}
+              onRemove={() => { }}
+            />}
 
             <Button onClick={() => {
               updateHotel({

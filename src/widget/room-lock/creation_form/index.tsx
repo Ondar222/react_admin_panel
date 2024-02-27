@@ -3,24 +3,25 @@ import { IRoomLockCreateFormPresenter, IRoomLockCreationForm, IRoomLockCreationF
 import RoomSelect from "@/widget/room/room-select";
 import { YurtaDatePicker } from "@/shared/range-picker";
 import { Form, Typography, Select, Button, notification } from "antd";
-import moment from "moment";
 import { IRangePicker } from "@/shared/range-picker/model";
 import { Room } from "@/entities/room";
-import { useHotel } from "@/entities/hotel/api";
+import { useHotel } from "@/entities/hotel";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRoomLock } from "../../../entities/room-lock/api/useRoomLock";
 import { Dayjs } from "dayjs";
 import { LockReasonSelect } from "../../../shared/reason-select";
 import { useBrm } from "@/entities/calendar/api/useBrm";
+import dayjs from "dayjs";
 
-const RoomLockCreationForm: FC = (props) => {
+const RoomLockCreationForm: FC = () => {
   const [api, contextHolder] = notification.useNotification();
+
   const { hotel, setHotel } = useHotel()
   const { create } = useRoomLock()
   const { addRoomLock } = useBrm()
 
   const [reason, setReason] = useState<string>("")
-  const [dates, setDates] = useState<[number, number]>([moment().unix() / 1000, moment().unix() / 1000])
+  const [dates, setDates] = useState<[number, number]>([dayjs().unix(), dayjs().unix()])
   const [room, setRoom] = useState<number>(0)
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const RoomLockCreationForm: FC = (props) => {
 
   const openNotification = (placement: NotificationPlacement) => {
     api.open({
-      message: `Notification ${placement}`,
+      message: `Номер забронирован`,
       placement,
     });
   };
@@ -39,15 +40,15 @@ const RoomLockCreationForm: FC = (props) => {
     setDates([dates[0], dates[1]])
   }
 
-  const handleRoomSelectChange = (e: Pick<Room, "id">[]) => {
-    setRoom(e[0].id)
+  const handleRoomSelectChange = (e: Pick<Room, "id">) => {
+    setRoom(e.id)
   }
 
   const handleSaveButtonClick = () => {
     openNotification('top')
 
     create(room, dates[0], dates[1], reason)
-
+    // console.log(dates)
   }
 
   const handleLockReason = (e) => {
@@ -59,11 +60,12 @@ const RoomLockCreationForm: FC = (props) => {
       {contextHolder}
       <RoomLockCreationFormUI
         hotel={hotel}
+        room_id={null}
+        dates={dates}
         onDatePickerChange={handleDatePickerChange}
         onSaveButtonClick={handleSaveButtonClick}
         onRoomSelect={handleRoomSelectChange}
-        onReasonSelectChange={handleLockReason}
-      />
+        onReasonSelectChange={handleLockReason} />
     </>
 
   )
@@ -73,17 +75,18 @@ const RoomLockCreationFormPresenter = (props: IRoomLockCreateFormPresenter): IRo
   const [api, contextHolder] = notification.useNotification();
   const [hotel, setHotel] = useState(props.hotel)
   const [dates, setDates] = useState<[Dayjs, Dayjs]>()
+  const [room, setRoom] = useState<number>()
 
-  const handleLockReason = (e) => {
+  const handleLockReasonChange = (e) => {
 
   }
 
   const handleDatePickerChange: IRangePicker["onChange"] = (dates) => {
-
+    setDates([dayjs(dates[0]), dayjs(dates[1])])
   }
 
-  const handleRoomSelectChange = (e: Pick<Room, "id">[]) => {
-
+  const handleRoomSelectChange = (e: Pick<Room, "id">) => {
+    props.onRoomSelect(e)
   }
 
   const handleSaveButtonClick = () => {
@@ -92,10 +95,12 @@ const RoomLockCreationFormPresenter = (props: IRoomLockCreateFormPresenter): IRo
 
   return {
     hotel: hotel,
+    room_id: { id: room },
+    dates: [dates[0].unix() / 1000, dates[0].unix() / 1000],
     onDatePickerChange: handleDatePickerChange,
     onRoomSelect: handleRoomSelectChange,
     onSaveButtonClick: handleSaveButtonClick,
-    onReasonSelectChange: handleLockReason,
+    onReasonSelectChange: handleLockReasonChange,
 
   }
 }
@@ -107,14 +112,21 @@ const RoomLockCreationFormUI: FC<IRoomLockCreationFormUI> = (props) =>
 
     <YurtaDatePicker
       label="Даты недоступности"
-      value={[moment.now() / 1000, moment.now() / 1000]}
+      value={props.dates}
       onChange={props.onDatePickerChange}
     />
+
     {
       props.hotel && <RoomSelect
-        value={[]}
+        isMultiple={false}
+        value={props.room_id}
         rooms={props.hotel.rooms}
-        onChange={props.onRoomSelect}
+        onChange={(e) => {
+          const room: Pick<Room, 'id'> = e as Pick<Room, 'id'>
+          props.onRoomSelect(room)
+
+
+        }}
       />
     }
 

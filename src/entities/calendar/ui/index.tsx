@@ -49,8 +49,8 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
     weekends: true,
     headerToolbar: {
       left: 'prev,next,listWeek,list',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      center: "title",
+      right: 'dayGridMonth',
     },
     locales: [ruLocale],
     dayMaxEvents: true,

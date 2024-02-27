@@ -27,15 +27,16 @@ const useRoom = create<IUseRoom>((set, get) => ({
     if (room.images)
       formData.append(
         "images",
-        room.images[0]?.originFileObj as unknown as Blob,
+        room.images[0]?.originFileObj,
         room.images[0].name
       );
 
-    formData.append(
-      "cover",
-      room.cover?.originFileObj as unknown as Blob,
-      room.cover?.name
-    );
+    if (room.cover)
+      formData.append(
+        "cover",
+        room.cover?.originFileObj,
+        room.cover?.name
+      );
 
     const data = await axios
       .post(`${import.meta.env.VITE_API}/room`, formData, {
@@ -64,6 +65,8 @@ const useRoom = create<IUseRoom>((set, get) => ({
       });
   },
 
+  // completed
+  // don't touch it
   changeVisibility: async (room_id: number, visibility: boolean) => {
     const { access_token } = useCredentails.getState();
 
@@ -164,18 +167,21 @@ const useRoom = create<IUseRoom>((set, get) => ({
 
   // completed
   // don't touch it
-  deleteImage: async (room_id: number, id: string) => {
-    const formData = new FormData();
+  deleteImage: async (room_id: number, fieldName: string, id: string) => {
     const { access_token } = useCredentails.getState();
+
+
 
     await axios.delete(`${import.meta.env.VITE_API}/room/${room_id}/images`, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
       data: {
+        cover: id,
         images: [id],
       },
-    });
+    })
+      .then((res) => console.log(res));
   },
 }));
 

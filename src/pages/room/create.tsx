@@ -1,32 +1,12 @@
-import { useHotel } from "@/entities/hotel/api"
-import { useRoom, RoomCreationDto } from "@/entities/room"
-import { RoomCreateForm } from "@/widget/room/creation-form.tsx/ui"
 import { MainLayout } from "@/shared/layouts/layout"
-import { FC, useEffect, useState } from "react"
+import { FC } from "react"
+import { RoomCreationForm } from "@/widget/room/forms/creation-form"
+import { useRoomCreate } from "@/widget/room/forms/creation-form/api/hook/useRoomCreate"
 
 const RoomCreationPage: FC = () => {
-  const [room, setRoom] = useState<RoomCreationDto>(new RoomCreationDto())
-  const { hotel, setHotel } = useHotel()
-  const { create } = useRoom()
-
-  useEffect(() => {
-    setHotel()
-
-  }, [])
-
-  useEffect(() => {
-    if (hotel)
-      setRoom((prev: RoomCreationDto) => ({ ...prev, hotel_id: hotel?.id }))
-  }, [hotel])
-
   return (
     <MainLayout header="Создание нового номера" footer="">
-      <RoomCreateForm
-        room={room}
-        setRoom={setRoom}
-        onSaveButtonClick={() => {
-          create(room)
-        }} />
+      <RoomCreationForm />
     </MainLayout>
   )
 }

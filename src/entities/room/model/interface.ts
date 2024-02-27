@@ -1,9 +1,9 @@
 import { IImage } from "@/app/types";
 
 enum RoomTypes {
-  economy = "Эконом",
-  standard = "Стандарт",
-  luxury = "Люкс",
+  economy = "economy",
+  standard = "standart",
+  luxury = "luxury",
 }
 
 interface BaseRoom {

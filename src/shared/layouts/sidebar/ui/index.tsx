@@ -16,11 +16,15 @@ const Sidebar: FC = () => {
                 position: "sticky",
                 top: 0,
             }}
+            
             selectedKeys={[key]}
             onClick={(e) => {
                 setKey(e.key)
                 navigate(`/${e.key}`)
             } }
+            onChange={(e) => {
+                e.persist()
+            }}
             theme="dark"
             items={[
                 {

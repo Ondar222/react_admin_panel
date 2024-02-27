@@ -4,7 +4,7 @@ import axios from "axios";
 import { IDirectusResponse } from "../../../shared/directus/model/interface";
 import useCredentails from "./useCredentails";
 import Cookies from "js-cookie";
-import { useHotel } from "@/entities/hotel/api";
+import { useHotel } from "@/entities/hotel";
 
 const useAuth = create<IUseAuth>((set) => ({
   isAuth: false,

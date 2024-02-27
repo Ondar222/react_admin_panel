@@ -1,18 +1,17 @@
+import { IImage } from "@/app/types";
 import { Room } from "@/entities/room";
 import User from "@/entities/user/model/interface";
 
-interface Hotel {
+type Hotel = {
   id: number;
   name: string;
   description: string;
   rooms: Array<Room>;
   administrator: User;
   options: Array<number>;
-  address: {
-    [fieldName: string]: string;
-  };
-  images: Array<string>;
-  cover: string;
+  address: Record<string, string>
+  images: Array<IImage>;
+  cover: IImage;
 }
 
-export default Hotel;
+export type { Hotel };

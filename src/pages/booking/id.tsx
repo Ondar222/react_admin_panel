@@ -3,8 +3,8 @@ import { MainLayout } from "../../shared/layouts/layout"
 import { EBookingStatus, useBooking } from "@/entities/booking"
 import { useParams } from "react-router-dom"
 import { BookingUpdateDto } from "@/entities/booking/model/dto/update-dto"
-import { Flex, Form, Select, Input, InputNumber, Button } from "antd"
-import { useHotel } from "@/entities/hotel/api"
+import { Flex, Form, Button } from "antd"
+import { useHotel } from "@/entities/hotel"
 import RoomSelect from "@/widget/room/room-select"
 import { YurtaDatePicker } from "@/shared/range-picker"
 import { YurtaUserSelect } from "@/entities/booking/ui/form/user-select"
@@ -130,12 +130,9 @@ const BookingDetailPage: FC = () => {
           {
             hotel && <RoomSelect
               value={booking.rooms}
+              isMultiple={true}
               rooms={hotel.rooms}
-              onChange={(e) => setBooking((prev) => ({
-                ...prev,
-                rooms: e
-              }))
-              }
+
             />
           }
 

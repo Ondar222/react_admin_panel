@@ -4,7 +4,7 @@ import { EBookingStatus } from "../..";
 import { YurtaDatePicker } from "../../../../shared/range-picker";
 import RoomSelect from "../../../../widget/room/room-select";
 import { YurtaUserSelect } from "./user-select";
-import Hotel from "@/entities/hotel/model/interface";
+import { Hotel } from "@/entities/hotel/model/hotel";
 import { BookingCreateDto } from "../../model/dto/create-dto";
 
 interface IYurtaCreateForm {
@@ -103,11 +103,15 @@ const YurtaCreateForm: FC<IYurtaCreateForm> = ({ hotel, onSubmit }) => {
         {
           hotel && <RoomSelect
             value={state.rooms}
+            isMultiple={true}
             rooms={hotel.rooms}
-            onChange={(e) => setState((prev) => ({
-              ...prev,
-              rooms: e
-            }))
+            onChange={(e) => {
+              if (Array.isArray(e))
+                setState((prev) => ({
+                  ...prev,
+                  rooms: e
+                }))
+            }
             }
           />
         }

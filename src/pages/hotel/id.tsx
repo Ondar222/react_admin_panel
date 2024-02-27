@@ -1,4 +1,4 @@
-import { useHotel } from "@/entities/hotel/api";
+import { useHotel } from "@/entities/hotel";
 import { MainLayout } from "@/shared/layouts/layout";
 import { DetailsPageHeader } from "@/shared/observer/ui/details/header";
 import { FC, useEffect } from "react";

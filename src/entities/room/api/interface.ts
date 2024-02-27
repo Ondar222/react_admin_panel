@@ -21,7 +21,7 @@ interface IUseRoom {
     fieldName: string,
     file: UploadFile
   ) => Promise<void>;
-  deleteImage: (room_id: number, image_id: string) => Promise<void>;
+  deleteImage: (room_id: number, fieldName: string, image_id: string) => Promise<void>;
 }
 
 interface IUseRoomLock {

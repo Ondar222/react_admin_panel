@@ -107,8 +107,6 @@ const BookingPage: FC = () => {
                 navigate(`/${entity}/${id}`)
 
               }}
-
-
             />
           </Col>
           <Col>

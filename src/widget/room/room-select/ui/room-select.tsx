@@ -5,7 +5,7 @@ import { IYurtaRoomSelectUI } from "../model/interface";
 const YurtaRoomSelectUI: FC<IYurtaRoomSelectUI> = (props) =>
   <Form.Item label="Номера">
     <Select
-      mode="multiple"
+      {...props}
       options={props.options}
       value={props.value}
       onChange={(e) => props.onChange(e)}
