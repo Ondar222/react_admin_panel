@@ -1,28 +1,34 @@
 import { FC, useEffect, useState } from "react";
-import { IUseRoomSelectProps, IYurtaRoomSelectUI } from "../model/interface";
+import {
+  IUseRoomSelectProps,
+  IYurtaRoomSelectProps,
+  IYurtaRoomSelectUI,
+} from "../model/interface";
 import { Room } from "@/entities/room";
 
-const useRoomSelect = ({ rooms, isMultiple, value: initialValue, onChange }: IUseRoomSelectProps) => {
+const useRoomSelect = ({
+  rooms,
+  isMultiple,
+  value: initialValue,
+  onChange,
+}: IYurtaRoomSelectProps): IYurtaRoomSelectUI => {
   const [value, setValue] = useState<IYurtaRoomSelectUI["value"]>([]);
 
   useEffect(() => {
     if (initialValue != null)
       if (isMultiple) {
-
-        const val = initialValue as Room[]
-        setValue(val.map((room) => room.id))
-
+        const val = initialValue as Room[];
+        setValue(val.map((room) => room.id));
+      } else {
+        const val = initialValue as Room;
+        setValue(val.id);
       }
-      else {
-        const val = initialValue as Room
-        setValue(val.id)
-      }
-  }, [])
+  }, []);
 
   const options: IYurtaRoomSelectUI["options"] = rooms?.map((room) => ({
     value: room.id,
-    label: room.name
-  }))
+    label: room.name,
+  }));
 
   const handleChange = (e: number[] | number) => {
     setValue(e);
@@ -32,7 +38,7 @@ const useRoomSelect = ({ rooms, isMultiple, value: initialValue, onChange }: IUs
 
     if (typeof e === "object") {
       const castedValue = e?.map((room_id) => ({ id: room_id }));
-      onChange(castedValue)
+      onChange(castedValue);
     }
   };
 

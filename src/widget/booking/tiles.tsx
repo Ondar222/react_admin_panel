@@ -5,6 +5,7 @@ import { useBrm } from "@/entities/calendar/api/useBrm"
 import { V2_Booking } from "@/entities/booking";
 import { RoomLock } from "@/entities/room/model/interface";
 import dayjs, { Dayjs } from "dayjs";
+import { IImage } from "@/app/types";
 
 interface IBookingBrick {
   data: V2_Booking[]
@@ -18,28 +19,29 @@ interface IBookingBrickItem {
   id: number,
   status: string,
   dates: [Dayjs, Dayjs],
-  rooms: Array<{id: number, cover: string}>
+  rooms: Array<{ id: number, cover: IImage }>
 }
 
 interface IBookingBrickUI {
   booking: IBookingBrickItem[]
 }
 
-const BookingBrick: FC<IBookingBrick> = ({data}) => {
+const BookingBrick: FC<IBookingBrick> = ({ data }) => {
 
-  const booking = useBookingBrick({data})
+  const booking = useBookingBrick({ data })
 
   return <BookingBrickUI booking={booking} />
 }
 
 
-const useBookingBrick = ({data}: IUseBookingBrick): IBookingBrickItem[] => {
-  const [formattedBooking, setFormattedBooking] = useState<IBookingBrickItem[]>(data?.map((item) => ({
-    id: item.id,
-    status: item.status,
-    rooms: item.rooms.map((room) => ({id: room.id, cover: room.cover})),
-    dates: [dayjs(item.check_in*1000), dayjs(item.check_out*1000)]
-  })))
+const useBookingBrick = ({ data }: IUseBookingBrick): IBookingBrickItem[] => {
+  const [formattedBooking, setFormattedBooking] = useState<IBookingBrickItem[]>(
+    data?.map((item) => ({
+      id: item.id,
+      status: item.status,
+      rooms: item.rooms.map((room) => ({ id: room.id, cover: room.cover })),
+      dates: [dayjs(item.check_in * 1000), dayjs(item.check_out * 1000)]
+    })))
 
   // useEffect(() => {
   //   setData(props?.data?.map((item) => {
@@ -60,8 +62,8 @@ const useBookingBrick = ({data}: IUseBookingBrick): IBookingBrickItem[] => {
   return formattedBooking
 }
 
-const BookingBrickUI: FC<IBookingBrickUI> = ({booking}) =>
-  <Row className="container_brick" justify={"space-between"} gutter={[16,16]}>
+const BookingBrickUI: FC<IBookingBrickUI> = ({ booking }) =>
+  <Row className="container_brick" justify={"space-between"} gutter={[16, 16]}>
     {
       booking?.map((item) => {
         return (
@@ -69,34 +71,34 @@ const BookingBrickUI: FC<IBookingBrickUI> = ({booking}) =>
             <Card
               title={`Бронь №${item.id}`}
               bordered={false}
-            >   
-           
+            >
 
-          
-              <DatePicker.RangePicker disabled value={item.dates}  />  
-               
-                      
-          <Row>
-            {
-              item.rooms.map((room) => {
-                return <Col span={12} className="lover_block_of_brick">
-                  <Row className="lover_block_of_brick_container">
-                 <Card title={`Номер ${room.id}`}>
-                <Image src={room.cover}  />
-                </Card>  
-                 <Card title={`Статус:`} >
-                 {item.status}
-                 </Card>
-                  <Button className="Button_more_detalis_tiles">Подробнее</Button>  
-                  </Row> 
-                  
-                </Col>
-              })
-             }
-          </Row>
-             
 
-             
+
+              <DatePicker.RangePicker disabled value={item.dates} />
+
+
+              <Row>
+                {
+                  item.rooms.map((room) => {
+                    return <Col span={12} className="lover_block_of_brick">
+                      <Row className="lover_block_of_brick_container">
+                        <Card title={`Номер ${room.id}`}>
+                          <Image src={room.cover.link} />
+                        </Card>
+                        <Card title={`Статус:`} >
+                          {item.status}
+                        </Card>
+                        <Button className="Button_more_detalis_tiles">Подробнее</Button>
+                      </Row>
+
+                    </Col>
+                  })
+                }
+              </Row>
+
+
+
             </Card>
           </Col>
         )

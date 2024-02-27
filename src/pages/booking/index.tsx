@@ -9,8 +9,6 @@ import { CalendarUI } from "@/entities/calendar/ui"
 import { useBrm } from "@/entities/calendar/api/useBrm"
 import React from "react"
 import { RoomLockCreationForm } from "@/widget/room-lock/creation_form"
-import { useHotel } from "@/entities/hotel/api"
-import { Room } from "@/entities/room"
 import { BookingList } from "@/widget/booking/list-view"
 import { BookingBrick } from "@/widget/booking/tiles"
 
@@ -118,7 +116,7 @@ const BookingPage: FC = () => {
         mode === BookingPageVM.list &&
         <BookingList data={brm} />
       }
-        {
+      {
         mode === BookingPageVM.brick &&
         <BookingBrick data={booking} />
       }

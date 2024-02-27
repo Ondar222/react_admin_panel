@@ -11,10 +11,7 @@ const RoomSelect: FC<IYurtaRoomSelectProps> = (props) => {
             {...props}
             options={options}
             value={value}
-            onChange={(e) => {
-                console.log(e)
-                onChange(e)
-            }}
+            onChange={(e) => onChange(e)}
         />
     )
 }

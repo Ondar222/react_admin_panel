@@ -5,6 +5,7 @@ import { Hotel } from "../model/hotel";
 import { useCredentails } from "@/features/auth";
 import { ApiResponse } from "@/app/types";
 import { IUseHotel } from "../model/useHotel";
+import { UploadFile } from "antd";
 
 const useHotel = create<IUseHotel>((set, get) => ({
   hotel: undefined,
@@ -27,7 +28,7 @@ const useHotel = create<IUseHotel>((set, get) => ({
     });
   },
 
-  createHotel: () => { },
+  createHotel: () => {},
 
   updateHotel: async (dto: HotelUpdateDto) => {
     const { access_token } = useCredentails.getState();
@@ -82,35 +83,33 @@ const useHotel = create<IUseHotel>((set, get) => ({
       .then((res) => res.data.data);
   },
 
-  deleteHotel: () => { },
-
+  deleteHotel: () => {},
 
   // completed
   uploadImage: async (fieldName, file) => {
-    const { access_token } = useCredentails.getState()
-    const formData = new FormData()
+    const { access_token } = useCredentails.getState();
+    const formData = new FormData();
 
     if (Array.isArray(file) === true) {
-      for (let i = 0; i < file.length; i++) {
-        formData.append(fieldName, file[i].originFileObj)
+      for (let i = 0; i < (file as UploadFile[]).length; i++) {
+        formData.append(fieldName, file[i].originFileObj);
       }
     }
-    else {
-      formData.append(fieldName, file.originFileObj)
+    if (Array.isArray(file) === false) {
+      formData.append(fieldName, (file as UploadFile).originFileObj);
     }
 
     await axios.post(`${import.meta.env.VITE_API}/hotel/my/images`, formData, {
       headers: {
-        Authorization: `Bearer ${access_token}`
-      }
-    })
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
   },
 
   // completed
-  deleteImage: async (fieldName, images) => { 
-    const { access_token } = useCredentails.getState()
+  deleteImage: async (fieldName, images) => {
+    const { access_token } = useCredentails.getState();
   },
-
 }));
 
 export { useHotel };
