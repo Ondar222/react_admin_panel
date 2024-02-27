@@ -75,15 +75,21 @@ const BookingBrickUI: FC<IBookingBrickUI> = ({booking}) =>
           
               <DatePicker.RangePicker disabled value={item.dates}  />  
                
-             <Button className="Button_more_detalis_tiles">Подробнее</Button>             
+                      
           <Row>
             {
               item.rooms.map((room) => {
-                return <Col span={12}>
+                return <Col span={12} className="lover_block_of_brick">
+                  <Row className="lover_block_of_brick_container">
                  <Card title={`Номер ${room.id}`}>
                 <Image src={room.cover}  />
                 </Card>  
-                 <Card title={`Статус: ${item.status}`}  />
+                 <Card title={`Статус:`} >
+                 {item.status}
+                 </Card>
+                  <Button className="Button_more_detalis_tiles">Подробнее</Button>  
+                  </Row> 
+                  
                 </Col>
               })
              }
