@@ -14,7 +14,7 @@ interface V2_Booking extends Object {
   check_in: number;
   check_out: number;
   capacity: number;
-  user: Pick<User, "id" | "surname" | "name" | "phone" | "email"> | string;
+  user: Pick<User, "id" | "surname" | "name" | "phone" | "email" | "avatar"> | string;
   rooms: Array<Pick<Room, "id" | "type" | "cover" | "number">>;
 }
 

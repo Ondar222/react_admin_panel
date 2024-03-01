@@ -2,7 +2,7 @@
 import { useRoom } from "@/entities/room";
 import { MainLayout } from "@/shared/layouts/layout";
 import RoomCardUI from "@/shared/room/card";
-import { Col, Row, Typography } from "antd";
+import { Button, Col, Row, Typography } from "antd";
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +16,7 @@ const RoomPage: FC = () => {
 
   return (
     <MainLayout
-      header={<Typography.Title level={2}>Номера</Typography.Title>}
+      header={<Row><Col span={16}><Typography.Title level={2}>Номера</Typography.Title></Col><Col span={8}><Button onClick={() => navigate("/room/+")}>Создать номер</Button></Col></Row>}
       footer="Пагинация"
     >
       <Row gutter={[16, 16]} wrap={true} justify="space-between">

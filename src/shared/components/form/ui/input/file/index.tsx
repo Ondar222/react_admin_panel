@@ -1,38 +1,77 @@
 import { FC, useState } from "react";
-import { Button, Form, Upload, UploadProps, Image, Space, Modal, GetProp } from "antd";
+import { Button, Form, Upload, Image } from "antd";
 import { UploadIcon } from "@/assets/icons/upload";
-import { DeleteIcon } from "@/assets/icons/delete";
-import room from "@/pages/room";
-import { IconButton } from "@/shared/components/button/action-buttons";
-import { SwapOutlined, RotateLeftOutlined, RotateRightOutlined, ZoomOutOutlined, ZoomInOutlined } from "@ant-design/icons";
-import { ItemRender, UploadFile } from "antd/es/upload/interface";
+import { UploadFile } from "antd/es/upload/interface";
 import { UploadChangeParam } from "antd/lib/upload";
 import { FileType, getBase64 } from "@/shared/utils";
 import { IYurtaUpload } from "./interface";
 
 const YurtaUpload: FC<IYurtaUpload> = ({ label, fieldName, onChange, onRemove, ...props }) => {
+  const [fileList, setFileList] = useState<Array<UploadFile>>(props.fileList)
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
 
   const handlePreview = async (file: UploadFile) => {
+    console.log(file)
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType);
     }
 
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewOpen(true);
+    await setPreviewImage(file.thumbUrl || file.preview);
+    await setPreviewOpen(true);
   };
 
-  const handleChange = (info: UploadChangeParam) => onChange(fieldName, info)
-  const handleRemove = (file: UploadFile) => onRemove(fieldName, file)
+  const handleChange = (info: UploadChangeParam) => {
+    const { file, fileList, event } = info
+    const status = file.status
+
+    console.log(fileList)
+
+    switch (status) {
+      case "removed":
+        setFileList((prev) => prev.filter((removed_file) => removed_file.uid != file.uid))
+        onChange(fieldName, info)
+        break
+
+      case "uploading":
+
+        if (file.percent == 0) {
+          setFileList((prev) => [...prev, {
+            ...file,
+            thumbUrl: file.thumbUrl,
+            originFileObj: file.originFileObj
+          }])
+          onChange(fieldName, info)
+          return
+        }
+
+        if (file.percent == 100) {
+          const images = fileList
+
+
+          setFileList((prev) => [...images.filter((image) => file.uid != image.uid), {
+            ...file,
+            status: "done"
+          }])
+
+          return
+        }
+        break
+      case "done":
+        console.log(file, 'done')
+        break
+    }
+
+  }
 
   return (
     <Form.Item
       label={label}>
-      <Upload {...props}
+      <Upload
+        {...props}
+        fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}
-        onRemove={handleRemove}
       >
         <Button icon={<UploadIcon />} style={{ position: "absolute" }}></Button>
       </Upload>

@@ -32,11 +32,7 @@ const useRoom = create<IUseRoom>((set, get) => ({
       );
 
     if (room.cover)
-      formData.append(
-        "cover",
-        room.cover?.originFileObj,
-        room.cover?.name
-      );
+      formData.append("cover", room.cover?.originFileObj, room.cover?.name);
 
     const data = await axios
       .post(`${import.meta.env.VITE_API}/room`, formData, {
@@ -101,6 +97,7 @@ const useRoom = create<IUseRoom>((set, get) => ({
   // don't touch it
   deleteRoom: async (room_id) => {
     const { access_token } = useCredentails.getState();
+
     await axios
       .delete(`${import.meta.env.VITE_API}/room/${room_id}`, {
         headers: {
@@ -167,20 +164,32 @@ const useRoom = create<IUseRoom>((set, get) => ({
 
   // completed
   // don't touch it
-  deleteImage: async (room_id: number, fieldName: string, id: string) => {
+  deleteImage: async (
+    room_id: number,
+    fieldName: string,
+    file: string | string[]
+  ) => {
     const { access_token } = useCredentails.getState();
 
+    const data = {
+      [fieldName]: undefined,
+    };
 
+    if (Array.isArray(file) === true) {
+      data[fieldName] = file;
+    }
 
-    await axios.delete(`${import.meta.env.VITE_API}/room/${room_id}/images`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-      data: {
-        cover: id,
-        images: [id],
-      },
-    })
+    if (Array.isArray(file) === false) {
+      data[fieldName] = file;
+    }
+
+    await axios
+      .delete(`${import.meta.env.VITE_API}/room/${room_id}/images`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+        data,
+      })
       .then((res) => console.log(res));
   },
 }));

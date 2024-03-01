@@ -10,7 +10,7 @@ interface IRoomFormUI {
     handleChange: InputProps["onChange"]
     handleSelect: SelectProps["onChange"]
     onFileChange: (fieldName: string, info: UploadChangeParam<UploadFile<any>>) => void
-    onFileRemove: (fieldName: string, file: UploadFile) => void
+    onFileRemove?: (fieldName: string, file: UploadFile) => void
 }
 
 export type { IRoomFormUI }

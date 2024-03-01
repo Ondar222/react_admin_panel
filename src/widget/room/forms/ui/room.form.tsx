@@ -59,7 +59,7 @@ export const RoomFormUI: FC<IRoomFormUI> = (props) =>
         value: status,
         label: status
       }))}
-      
+
       onChange={props.handleSelect}
     />
 
@@ -80,7 +80,6 @@ export const RoomFormUI: FC<IRoomFormUI> = (props) =>
       fileList={props.room.cover ? [props?.room?.cover] : []}
       maxCount={1}
       onChange={props.onFileChange}
-      onRemove={props.onFileRemove}
     />
 
     <YurtaUpload
@@ -91,7 +90,6 @@ export const RoomFormUI: FC<IRoomFormUI> = (props) =>
       fileList={props.room?.images}
       maxCount={100}
       onChange={props.onFileChange}
-      onRemove={props.onFileRemove}
     />
 
     <Button value={"Cохранить"} onClick={() => {
