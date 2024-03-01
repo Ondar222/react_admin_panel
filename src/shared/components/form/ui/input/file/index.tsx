@@ -8,7 +8,6 @@ import { IYurtaUpload } from "./interface";
 
 const YurtaUpload: FC<IYurtaUpload> = ({ label, fieldName, onChange, onRemove, ...props }) => {
   const [fileList, setFileList] = useState<Array<UploadFile>>(props.fileList)
-  const [fileList, setFileList] = useState<Array<UploadFile>>(props.fileList)
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
 
