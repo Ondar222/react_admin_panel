@@ -8,15 +8,19 @@ import { IYurtaUpload } from "./interface";
 
 const YurtaUpload: FC<IYurtaUpload> = ({ label, fieldName, onChange, onRemove, ...props }) => {
   const [fileList, setFileList] = useState<Array<UploadFile>>(props.fileList)
+  const [fileList, setFileList] = useState<Array<UploadFile>>(props.fileList)
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
 
   const handlePreview = async (file: UploadFile) => {
     console.log(file)
+    console.log(file)
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType);
     }
 
+    await setPreviewImage(file.thumbUrl || file.preview);
+    await setPreviewOpen(true);
     await setPreviewImage(file.thumbUrl || file.preview);
     await setPreviewOpen(true);
   };
