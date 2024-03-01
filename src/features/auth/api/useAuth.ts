@@ -9,13 +9,13 @@ import { useHotel } from "@/entities/hotel";
 const useAuth = create<IUseAuth>((set) => ({
   isAuth: false,
   setIsAuth: (status: boolean) => set({ isAuth: status }),
+
   checkAuth: async () => {
     const access = Cookies.get("access_token");
     const refresh = Cookies.get("refresh_token");
 
     const data = {
-      refresh_token: refresh,
-      mode: "json",
+      refresh: refresh,
     };
 
     if (access) {
@@ -24,7 +24,7 @@ const useAuth = create<IUseAuth>((set) => ({
       });
     } else {
       const {} = await axios.post(
-        "https://yurta.site/api/cms/auth/refresh",
+        `${import.meta.env.VITE_API}/auth/refresh`,
         data
       );
     }
@@ -42,7 +42,7 @@ const useAuth = create<IUseAuth>((set) => ({
         data
       )
       .then((res) => {
-        useHotel.getState().setHotel()
+        // useHotel.getState().setHotel()
         return res.data.data;
       });
 

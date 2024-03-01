@@ -1,6 +1,7 @@
 import { Room } from "@/entities/room";
 import { EBookingStatus, V2_Booking } from "..";
 import moment from "moment";
+import { IImage } from "@/app/types";
 
 class BookingUpdateDto {
   constructor(
@@ -14,6 +15,10 @@ class BookingUpdateDto {
         surname: "",
         phone: "",
         email: "",
+        avatar: {
+          id: "",
+          link: "",
+        },
       },
       capacity: 1,
       check_in: 0,
@@ -52,6 +57,7 @@ class BookingUpdateDto {
   check_in: number;
   check_out: number;
   rooms: Array<Pick<Room, "id">>;
+  avatar: IImage;
 }
 
 export { BookingUpdateDto };

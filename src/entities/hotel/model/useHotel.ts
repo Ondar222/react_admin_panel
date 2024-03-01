@@ -18,7 +18,7 @@ interface IUseHotel {
 
     deleteImage: (
         fieldName: string,
-        images: Array<string>
+        images: Array<string> | string
     ) => Promise<void>
 }
 

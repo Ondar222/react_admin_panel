@@ -56,6 +56,7 @@ class RoomUpdateDto {
         name: item.id,
         url: item.link,
         thumbUrl: item.link,
+        status: "done",
       };
     });
   }

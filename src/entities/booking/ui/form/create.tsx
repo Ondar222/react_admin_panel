@@ -2,7 +2,7 @@ import { Button, Flex, Form, InputNumber, Select, notification } from "antd";
 import { FC, useState } from "react";
 import { EBookingStatus } from "../..";
 import { YurtaDatePicker } from "../../../../shared/range-picker";
-import RoomSelect from "../../../../widget/room/room-select";
+import { RoomSelect } from "../../../../widget/room/room-select";
 import { YurtaUserSelect } from "./user-select";
 import { Hotel } from "@/entities/hotel/model/hotel";
 import { BookingCreateDto } from "../../model/dto/create-dto";

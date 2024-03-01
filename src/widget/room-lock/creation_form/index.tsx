@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { IRoomLockCreateFormPresenter, IRoomLockCreationForm, IRoomLockCreationFormUI } from "../../../entities/room-lock/model/room_lock";
-import RoomSelect from "@/widget/room/room-select";
+import { RoomSelect } from "@/widget/room/room-select";
 import { YurtaDatePicker } from "@/shared/range-picker";
 import { Form, Typography, Select, Button, notification } from "antd";
 import { IRangePicker } from "@/shared/range-picker/model";

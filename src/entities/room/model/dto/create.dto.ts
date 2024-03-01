@@ -2,34 +2,19 @@ import { UploadFile } from "antd/lib";
 import { Room, RoomTypes } from "..";
 
 class RoomCreationDto {
-  constructor(
-    dto: Omit<Room, "id"> = {
-      price: 0,
-      description: "",
-      type: RoomTypes.standard,
-      cover: {
-        id: "",
-        link: "",
-      },
-      visibility: false,
-      name: "",
-      number: "",
-      capacity: 0,
-      hotel_id: 0,
-      images: [],
-    }
-  ) {
-    this.name = dto.name;
-    this.price = dto.price;
-    this.description = dto.description;
-    this.type = dto.type;
-    this.number = dto.number;
-    this.capacity = dto.capacity;
-    this.hotel_id = dto.hotel_id;
-    this.visibility = dto.visibility;
+  constructor() {
+    this.name = undefined;
+    this.price = undefined;
+    this.description = undefined;
+    this.type = undefined;
+    this.number = undefined;
+    this.capacity = undefined;
+    this.hotel_id = undefined;
+    this.visibility = undefined;
     this.cover = undefined;
-    this.images = undefined
+    this.images = undefined;
   }
+  
   price: number = undefined;
   description?: string = undefined;
   type: RoomTypes = RoomTypes.standard;
@@ -39,8 +24,8 @@ class RoomCreationDto {
   capacity: number = undefined;
   hotel_id: number = undefined;
 
-  cover: UploadFile;
-  images: Array<UploadFile>;
+  cover: UploadFile = undefined;
+  images: Array<UploadFile> = undefined;
 
   visibility: boolean = false;
 }

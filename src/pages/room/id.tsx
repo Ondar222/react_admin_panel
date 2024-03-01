@@ -16,23 +16,16 @@ const RoomDetailsPage: FC = () => {
   const { locks, findByRoomId } = useRoomLock()
 
   useEffect(() => {
-    if (id) {
-      findById(id)
-      findByRoomId(id, 'active')
-    }
+    findById(id)
+    findByRoomId(id, "active")
   }, [])
 
-  useEffect(() => {
-    if (locks) {
-
-    }
-  }, [locks])
+  if (!currentRoom || currentRoom.id != Number(id))
+    return <div>loading</div>
 
   return (
     <MainLayout
       header={<RoomDtlsPgHdr room={currentRoom} />}
-      footer={<></>}
-
     >
       <Row gutter={[16, 16]}>
         <Col span={14}>

@@ -95,6 +95,7 @@ const useHotel = create<IUseHotel>((set, get) => ({
         formData.append(fieldName, file[i].originFileObj);
       }
     }
+
     if (Array.isArray(file) === false) {
       formData.append(fieldName, (file as UploadFile).originFileObj);
     }
@@ -107,8 +108,31 @@ const useHotel = create<IUseHotel>((set, get) => ({
   },
 
   // completed
-  deleteImage: async (fieldName, images) => {
+  deleteImage: async (fieldName, file) => {
     const { access_token } = useCredentails.getState();
+
+    const data = {
+      [fieldName]: undefined,
+    };
+
+    if (Array.isArray(file) === true) {
+      data[fieldName] = file;
+    }
+
+    if (Array.isArray(file) === false) {
+      data[fieldName] = file;
+    }
+
+    console.log(data)
+
+    await axios.delete(`${import.meta.env.VITE_API}/hotel/my/images`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+      data: {
+        ...data,
+      },
+    });
   },
 }));
 

@@ -17,4 +17,4 @@ const RoomSelect: FC<IYurtaRoomSelectProps> = (props) => {
 }
 
 
-export default RoomSelect
+export { RoomSelect }
