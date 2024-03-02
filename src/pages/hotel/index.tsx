@@ -1,6 +1,5 @@
 import { useHotel } from "@/entities/hotel";
 import { AddressBuilderPresenter } from "@/widget/address/address-builder/presenter";
-import { getBase64 } from "@/shared/utils";
 import { YurtaUpload } from "@/shared/components/form/ui/input/file";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { MainLayout } from "@/shared/layouts/layout";

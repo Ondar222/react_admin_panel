@@ -41,6 +41,7 @@ const useRoom = create<IUseRoom>((set, get) => ({
         },
       })
       .then((res) => {
+        console.log(res);
         return res;
       });
   },

@@ -24,46 +24,81 @@ const YurtaUpload: FC<IYurtaUpload> = ({ label, fieldName, onChange, onRemove, .
     await setPreviewOpen(true);
   };
 
-  const handleChange = (info: UploadChangeParam) => {
-    const { file, fileList, event } = info
-    const status = file.status
+  const handleChange = async (info: UploadChangeParam) => {
+    if (props.multiple) {
+      const images: UploadFile[] = await Promise.all(info.fileList.map(async (file) => {
+        let url = file.url
 
-    console.log(fileList)
-
-    switch (status) {
-      case "removed":
-        setFileList((prev) => prev.filter((removed_file) => removed_file.uid != file.uid))
-        onChange(fieldName, info)
-        break
-
-      case "uploading":
-
-        if (file.percent == 0) {
-          setFileList((prev) => [...prev, {
-            ...file,
-            thumbUrl: file.thumbUrl,
-            originFileObj: file.originFileObj
-          }])
-          onChange(fieldName, info)
-          return
+        if (!file.url) {
+          url = await getBase64(file.originFileObj)
         }
 
-        if (file.percent == 100) {
-          const images = fileList
-
-
-          setFileList((prev) => [...images.filter((image) => file.uid != image.uid), {
-            ...file,
-            status: "done"
-          }])
-
-          return
+        return {
+          url: url,
+          uid: file.uid,
+          name: file.name,
+          originFileObj: file.originFileObj,
+          thumbUrl: file.thumbUrl,
+          status: "done"
         }
-        break
-      case "done":
-        console.log(file, 'done')
-        break
+      }))
+
+      setFileList(images)
+      onChange(fieldName, info)
+      return
     }
+
+    if (!props.multiple) {
+      const file = await getBase64(info.file.originFileObj)
+
+      setFileList([{
+        url: file,
+        uid: info.file.uid,
+        name: info.file.name
+      }])
+
+      onChange(fieldName, info)
+      return
+    }
+
+
+    // const { file, fileList, event } = info
+    // const status = file.status
+
+    // switch (status) {
+    //   case "removed":
+    //     setFileList((prev) => prev.filter((removed_file) => removed_file.uid != file.uid))
+    //     onChange(fieldName, info)
+    //     break
+
+    //   case "uploading":
+
+    //     if (file.percent == 0) {
+    //       setFileList((prev) => [...prev, {
+    //         ...file,
+    //         thumbUrl: file.thumbUrl,
+    //         originFileObj: file.originFileObj
+    //       }])
+    //       onChange(fieldName, info)
+    //       return
+    //     }
+
+    //     if (file.percent == 100) {
+    //       const images = fileList
+
+
+    //       setFileList((prev) => [...images.filter((image) => file.uid != image.uid), {
+    //         ...file,
+    //         status: "done"
+    //       }])
+
+    //       return
+    //     }
+    //     break
+    //   case "done":
+    //     console.log(file, 'done')
+    //     break
+    // }
 
   }
 

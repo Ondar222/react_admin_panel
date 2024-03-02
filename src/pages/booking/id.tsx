@@ -129,6 +129,7 @@ const BookingDetailPage: FC = () => {
 
           {
             hotel && <RoomSelect
+              mode="multiple"
               value={booking.rooms}
               isMultiple={true}
               rooms={hotel.rooms}
