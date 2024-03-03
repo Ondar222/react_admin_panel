@@ -143,7 +143,6 @@ const BookingDetailPage: FC = () => {
             Сохранить
           </Button>
         </Flex>
-        <>sdsdsd</>
       </Form>
     </MainLayout >
   )

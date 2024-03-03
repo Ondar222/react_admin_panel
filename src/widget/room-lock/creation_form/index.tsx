@@ -36,19 +36,19 @@ const RoomLockCreationForm: FC = () => {
     });
   };
 
-  const handleDatePickerChange: IRangePicker["onChange"] = (dates) => {
+  const handleDatePickerChange: IRangePicker["onChange"] = (dates) =>
     setDates([dates[0], dates[1]])
-  }
 
-  const handleRoomSelectChange = (e: Pick<Room, "id">) => {
+
+  const handleRoomSelectChange = (e: Pick<Room, "id">) => 
     setRoom(e.id)
-  }
+  
 
   const handleSaveButtonClick = () => {
     openNotification('top')
 
     create(room, dates[0], dates[1], reason)
-    // console.log(dates)
+    console.log(dates)
   }
 
   const handleLockReason = (e) => {
@@ -82,7 +82,7 @@ const RoomLockCreationFormPresenter = (props: IRoomLockCreateFormPresenter): IRo
   }
 
   const handleDatePickerChange: IRangePicker["onChange"] = (dates) => {
-    setDates([dayjs(dates[0]), dayjs(dates[1])])
+    setDates([dayjs(dates[0]).add(7, "h"), dayjs(dates[1]).add(7, "hours")])
   }
 
   const handleRoomSelectChange = (e: Pick<Room, "id">) => {
@@ -96,7 +96,7 @@ const RoomLockCreationFormPresenter = (props: IRoomLockCreateFormPresenter): IRo
   return {
     hotel: hotel,
     room_id: { id: room },
-    dates: [dates[0].unix() / 1000, dates[0].unix() / 1000],
+    dates: [dates[0].add(1, "second").unix() / 1000, dates[0].add(1, "second").unix() / 1000],
     onDatePickerChange: handleDatePickerChange,
     onRoomSelect: handleRoomSelectChange,
     onSaveButtonClick: handleSaveButtonClick,

@@ -9,17 +9,20 @@ const RoomCreationPage: FC = () => {
   const { create } = useRoom()
   const { hotel, setHotel } = useHotel()
 
+  const getData = async () => {
+    await setHotel()
+  }
   useEffect(() => {
-    setHotel()
+    getData()
   }, [])
 
   useEffect(() => {
     setRoom(new RoomCreationDto())
     setRoom((prev) => ({
       ...prev,
-      hotel_id: hotel.id
+      hotel_id: hotel?.id
     }))
-  }, [])
+  }, [hotel])
 
   if (!hotel && !hotel?.id)
     return <div>loading</div>
@@ -29,7 +32,7 @@ const RoomCreationPage: FC = () => {
       <RoomCreationForm
         room={room}
         setRoom={setRoom}
-        hotel_id={hotel?.id}
+        hotel_id={hotel.id}
         onSubmit={create}
       />
     </MainLayout>

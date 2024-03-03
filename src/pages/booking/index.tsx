@@ -103,7 +103,6 @@ const BookingPage: FC = () => {
                 const id = e.event.extendedProps.item_id
                 const entity = e.event.extendedProps.type
                 navigate(`/${entity}/${id}`)
-
               }}
             />
           </Col>

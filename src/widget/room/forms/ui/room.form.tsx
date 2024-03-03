@@ -92,7 +92,7 @@ export const RoomFormUI: FC<IRoomFormUI> = (props) =>
       onChange={props.onFileChange}
     />
 
-    <Button value={"Cохранить"} onClick={() => {
+    <Button value={"Cохранить"} title="Сохранить" onClick={() => {
       console.log(props.room)
       console.group('creation')
       console.log(isRoomCreation(props.room))
@@ -102,5 +102,5 @@ export const RoomFormUI: FC<IRoomFormUI> = (props) =>
       console.log(isRoomUpdating(props.room))
       console.groupEnd()
       props.onSubmit()
-    }} />
+    }} >Сохранить</Button>
   </Form>

@@ -18,6 +18,7 @@ import { RoomLock } from "@/entities/room/model/interface";
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import ruLocale from '@fullcalendar/core/locales/ru';
+import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -43,7 +44,7 @@ interface ICalendarUI {
 
 const CalendarUI: FC<ICalendarUI> = (props) => {
   const rtp: CalendarOptions = {
-    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, momentPlugin, listPlugin],
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, momentPlugin, momentTimezonePlugin, listPlugin],
     initialView: 'dayGridMonth',
     dayCellClassNames: 'brm-cell',
     weekends: true,
@@ -52,8 +53,10 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
       center: "title",
       right: 'dayGridMonth',
     },
+
+    nextDayThreshold: '00:00',
     locales: [ruLocale],
-    dayMaxEvents: true,
+    dayMaxEvents: false,
     events: props.brm.map((brm) => {
       const booking = brm.item as V2_Booking
       if (brm.type === 'booking') {
@@ -61,8 +64,8 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
           item_id: booking.id,
           type: brm.type,
           title: `${booking.status}`,
-          start: moment(booking.check_in * 1000).tz(tz).toDate(),
-          end: moment(booking.check_out * 1000).tz(tz).toDate(),
+          start: dayjs(booking.check_in * 1000).tz(tz).format(),
+          end: dayjs(booking.check_out * 1000).tz(tz).format(),
           // url: `/partners/booking/${booking.id}`
 
         }
@@ -73,8 +76,9 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
           item_id: room_lock.id,
           type: brm.type,
           title: `${room_lock.status}`,
-          start: moment(room_lock.start * 1000).tz(tz).toDate(),
-          end: moment(room_lock.end * 1000).tz(tz).toDate(),
+          start: moment(room_lock.start * 1000).tz(tz).format(),
+          end: moment(room_lock.end * 1000).add(1, "s").format(),
+
           // url: `/partners/room_lock/${room_lock.id}`
         }
       }

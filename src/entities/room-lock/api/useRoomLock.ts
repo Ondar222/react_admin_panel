@@ -45,6 +45,19 @@ const useRoomLock = create<IUseRoomLock>((set, get) => ({
         set({ locks: res.data });
       });
   },
+
+  async deleteRoomLock(id: number) {
+    const { access_token } = useCredentails.getState();
+    await axios.delete(`${import.meta.env.VITE_API}/roomlock/${id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    })
+
+    set({
+      locks: get().locks.filter((item) => item.id != id)
+    })
+  }
 }));
 
 export { useRoomLock };

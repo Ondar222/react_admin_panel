@@ -1,4 +1,4 @@
-import { useHotel } from "@/entities/hotel";
+import { Hotel, HotelUpdateDto, useHotel } from "@/entities/hotel";
 import { AddressBuilderPresenter } from "@/widget/address/address-builder/presenter";
 import { YurtaUpload } from "@/shared/components/form/ui/input/file";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
@@ -13,6 +13,7 @@ import { useHotelFiles } from "@/entities/hotel/api/useHotelFiles";
 const HotelPage: FC = () => {
   const { hotel, setHotel, updateHotel } = useHotel()
   const { cover, images, getHotelFiles, uploadImage, deleteImage } = useHotelFiles()
+  const [state, setState] = useState<HotelUpdateDto>()
   const [addressKeys, setAddressKeys] = useState<{ [key: string]: string }>()
 
   useEffect(() => {
@@ -20,9 +21,13 @@ const HotelPage: FC = () => {
     getHotelFiles()
   }, [])
 
+  useEffect(() => {
+    setState(new HotelUpdateDto(hotel))
+  }, [hotel])
+
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const fieldname = e.target.name
-    // setUpdate((prev) => ({ ...prev, [fieldname]: e.target.value }))
+    setState((prev) => ({ ...prev, [fieldname]: e.target.value }))
   }
 
   const handleFileChange = async (fieldName: string, info: UploadChangeParam) => {
@@ -44,7 +49,7 @@ const HotelPage: FC = () => {
         {
           hotel &&
           <Form layout="vertical" size="large">
-            <YurtaInput label="Название" value={hotel.name} />
+            <YurtaInput label="Название" name="name" value={state?.name} onChange={handleChange} />
 
             <AddressBuilderPresenter address={hotel?.address} />
 
@@ -81,13 +86,9 @@ const HotelPage: FC = () => {
             <Button
               onClick={() => {
                 updateHotel({
-                  id: hotel.id,
-                  cover: cover[0],
-                  images: images,
-                  name: hotel.name,
-
-                  address: 2,
-                  description: ""
+                  id: state?.id,
+                  name: state?.name,
+                  description: state?.description
                 })
               }}>Сохранить</Button>
           </Form>

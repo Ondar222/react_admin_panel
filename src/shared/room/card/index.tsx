@@ -9,18 +9,12 @@ import { RoomVsbltSwitch } from "../visibility_switch";
 const RoomCardUI: FC<Room> = (room) =>
     <Card
         title={
-            <Row gutter={[16, 16]} wrap={false} justify="space-between">
-                <Col span={16}>
-                    <Typography.Title
-                        level={4}
-                        style={{
-                            width: '100%',
-                            textOverflow: "ellipsis"
-                        }}>
-                        {room.name}
-                    </Typography.Title>
-                </Col>
-            </Row>
+            <Typography.Title
+                level={4}
+                ellipsis
+            >
+                {room.name}
+            </Typography.Title>
         }
 
         actions={[
@@ -42,16 +36,16 @@ const RoomCardUI: FC<Room> = (room) =>
                 </Col>
                 <Col span={12}>
                     <Row>
-                        <Typography.Text>Цена {room.price}</Typography.Text>
+                        <Typography.Text ellipsis>Цена {room.price}</Typography.Text>
                     </Row>
                     <Row>
-                        <Typography.Text>Тип {room.type}</Typography.Text>
+                        <Typography.Text ellipsis>Тип {room.type}</Typography.Text>
                     </Row>
                     <Row>
-                        <Typography.Text>Номер {room.number}</Typography.Text>
+                        <Typography.Text ellipsis>Номер {room.number}</Typography.Text>
                     </Row>
                     <Row>
-                        <Typography.Text>Вместимость {room.capacity}</Typography.Text>
+                        <Typography.Text ellipsis>Вместимость {room.capacity}</Typography.Text>
                     </Row>
                 </Col>
             </Row>

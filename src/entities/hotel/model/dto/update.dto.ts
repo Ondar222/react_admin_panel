@@ -1,26 +1,18 @@
 import { UploadFile } from "antd";
+import { Hotel } from "../hotel";
 
 class HotelUpdateDto {
-  constructor(dto: {
-    id: number;
-    name: string;
-    description: string;
-    rooms: Array<number>;
-    address: number;
-  }) {
-    this.id = dto.id;
-    this.name = dto.name;
-    this.description = dto.description;
-    this.address = dto.address;
+  constructor(dto: Hotel) {
+    this.id = dto?.id || 0;
+    this.name = dto?.name;
+    this.description = dto?.description;
+    this.address = dto?.address;
   }
 
   id: number;
   name: string;
   description: string;
-  address: number;
-
-  images: Array<UploadFile>;
-  cover: UploadFile;
+  address?: Record<string, string>;
 }
 
 export { HotelUpdateDto };

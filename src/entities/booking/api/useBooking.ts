@@ -5,7 +5,7 @@ import { IUseBooking } from "./interface";
 
 import { useCredentails } from "../../../features/auth";
 import axios from "axios";
-import { IDirectusResponse } from "../../../shared/directus/model/interface";
+import { IDirectusResponse } from "@/shared/directus/model/interface";
 import { BookingCreateDto } from "../model/dto/create-dto";
 import { BookingUpdateDto } from "../model/dto/update-dto";
 

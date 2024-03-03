@@ -13,7 +13,7 @@ const RoomDetailsPage: FC = () => {
   const { id } = useParams()
 
   const { currentRoom, findById } = useRoom()
-  const { locks, findByRoomId } = useRoomLock()
+  const { locks, findByRoomId, deleteRoomLock } = useRoomLock()
 
   useEffect(() => {
     findById(id)
@@ -28,11 +28,11 @@ const RoomDetailsPage: FC = () => {
       header={<RoomDtlsPgHdr room={currentRoom} />}
     >
       <Row gutter={[16, 16]}>
-        <Col span={14}>
+        <Col span={12}>
           <RoomUpdateForm room={currentRoom} />
         </Col>
-        <Col span={8}>
-          <RoomLockListUI room_locks={locks} />
+        <Col span={12}>
+          <RoomLockListUI room_locks={locks} onItemClick={(id) => deleteRoomLock(id)} />
         </Col>
       </Row>
 
