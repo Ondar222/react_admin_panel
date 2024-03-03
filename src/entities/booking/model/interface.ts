@@ -1,3 +1,4 @@
+import { IImage } from "@/app/types";
 import { Room } from "@/entities/room";
 import User from "@/entities/user/model/interface";
 
@@ -14,8 +15,8 @@ interface V2_Booking extends Object {
   check_in: number;
   check_out: number;
   capacity: number;
-  user: Pick<User, "id" | "surname" | "name" | "phone" | "email"> | string;
-  rooms: Array<Pick<Room, "id" | "type" | "cover" | "number">>;
+  user: Pick<User, "id" | "surname" | "name" | "phone" | "email" | "avatar">;
+  rooms: Array<Pick<Room, "id" | "type" | "cover" | "number" >>;
 }
 
 export type { V2_Booking };

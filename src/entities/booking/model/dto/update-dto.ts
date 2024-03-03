@@ -14,6 +14,10 @@ class BookingUpdateDto {
         surname: "",
         phone: "",
         email: "",
+        avatar: {
+          id: "",
+          link: ""
+        }
       },
       capacity: 1,
       check_in: 0,
@@ -47,7 +51,7 @@ class BookingUpdateDto {
   id: number;
   amount: number;
   status: EBookingStatus;
-  user: string;
+  user: V2_Booking["user"];
   capacity: number;
   check_in: number;
   check_out: number;

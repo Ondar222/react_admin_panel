@@ -13,6 +13,10 @@ class BookingCreateDto {
         surname: "",
         phone: "",
         email: "",
+        avatar: {
+          id: "",
+          link: ""
+        }
       },
       capacity: 1,
       check_in: Date.now() / 1000,
