@@ -1,5 +1,4 @@
 import { Room, useRoom } from "@/entities/room"
-import id from "@/pages/hotel/id"
 import { RoomDeleteButton } from "@/shared/room/delete_buttom"
 import { RoomVsbltSwitch } from "@/shared/room/visibility_switch"
 import { Flex, Typography, Row, Col, Button, Switch } from "antd"
