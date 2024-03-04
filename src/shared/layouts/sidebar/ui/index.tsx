@@ -1,41 +1,47 @@
-import React, { useState } from 'react';
-import { AppstoreOutlined, MailOutlined, SelectOutlined, SettingOutlined } from '@ant-design/icons';
-import type { MenuProps, MenuTheme } from 'antd';
-import { Divider, Menu, Switch } from 'antd';
+import React, { FC, useState } from 'react';
+import { CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { AccountBookFilled, CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(
-    label: React.ReactNode,
-    key?: React.Key | null,
-    icon?: React.ReactNode,
-    children?: MenuItem[],
-    type?: 'group',
+    label: string,
+    key: string,
+    icon: React.ReactNode,
 ): MenuItem {
     return {
         key,
         icon,
-        children,
         label,
-        type,
     } as MenuItem;
 }
 
+const items:  MenuItem[] = [
+    getItem('Бронь', 'booking', <CalendarFilled />),
+    getItem('Номера', 'room', <CalendarFilled />),
+    getItem('Отель', 'hotel', <CalendarFilled />),
+    getItem('Аккаунт', 'account', <UserOutlined />),
+    { type: "divider" },
+    getItem('Выйти', 'logout', <LogoutOutlined />),
+];
 
-
-const Sidebar: React.FC = () => {
-    const [theme, setTheme] = useState<MenuTheme>('dark');
-    const [current, setCurrent] = useState('1');
+const Sidebar: FC = () => {
+    const [collapsed, setCollapsed] = useState(false);
     const [key, setKey] = useState<string>('booking')
     const navigate = useNavigate()
+  
 
     return (
-        <>
-            <Menu style={{padding: "20px 20px"}}
-                theme={'dark'}
-                mode='inline'
+        <div style={{ padding: "20px 20px" }}>
+
+            <Menu
+                defaultSelectedKeys={[key]}
+                defaultOpenKeys={[key]}
+                mode="inline"
+                theme="dark"
+                inlineCollapsed={collapsed}
                 onClick={(e) => {
                     setKey(e.key)
                     navigate(`/${e.key}`)
@@ -43,12 +49,15 @@ const Sidebar: React.FC = () => {
                 onChange={(e) => {
                     e.persist()
                 }}
+                
                 items={[
+                
                     {
-                    
+
                         key: 'booking',
                         icon: <CalendarFilled />,
-                        label: "Бронь"
+                        label: "Бронь",
+
                     },
                     {
                         key: 'room',
@@ -73,9 +82,12 @@ const Sidebar: React.FC = () => {
                         icon: <LogoutOutlined />,
                         label: "Выйти"
                     },
+                
                 ]}
-            ></Menu>
-        </>
+              
+              
+            />
+        </div>
     );
 };
 

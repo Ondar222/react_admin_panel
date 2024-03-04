@@ -223,9 +223,7 @@
     text-align: center;
 }
 
-.container_brick {
-    
-}
+.container_brick {}
 
 .container_brick.Card {
     border: 1px solid red;
@@ -246,12 +244,13 @@
 }
 
 .lover_block_of_brick_container {
- display: flex;
- flex-direction: column;
- gap: 20px;
- width: 230px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 230px;
 }
 
-.container_avatar {
-   
+
+.www_menu:hover {
+
 }

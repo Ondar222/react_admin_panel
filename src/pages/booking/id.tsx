@@ -2,7 +2,7 @@ import { FC, useEffect } from "react"
 import { MainLayout } from "../../shared/layouts/layout"
 import { EBookingStatus, useBooking } from "@/entities/booking"
 import { useParams } from "react-router-dom"
-import { Flex, Form,Col} from "antd"
+import { Flex, Form, Col, Divider, Typography } from "antd"
 import { useHotel } from "@/entities/hotel"
 import { YurtaDatePicker } from "@/shared/range-picker"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
@@ -12,10 +12,11 @@ import RoomSelect from "@/widget/room/room-select"
 import { Image } from "antd/lib"
 import { Avatar, Space, Card, Row } from 'antd';
 import { useAccount } from "@/entities/account/api";
+import Title from "antd/es/skeleton/Title"
 
 
 
-const style: React.CSSProperties = {  padding: '10px 0', margin: '10px 0', textAlign: "center", cursor: "not-allowed" };
+const style: React.CSSProperties = { padding: '6px 0', margin: '6px 0', cursor: "not-allowed", textDecorationLine: "underline" };
 
 const BookingDetailPage: FC = () => {
   const { id } = useParams()
@@ -80,39 +81,37 @@ const BookingDetailPage: FC = () => {
             }))}
           />
 
-          <Card style={{borderColor: "#d9d9d9"}}>
-          
-            <Row gutter={[10, 20]}>
-              <Col className="gutter-row" span={4}>
-            
-                <div>
-                  <Space direction="vertical" size={4}>
-                    <Space wrap size={12}>
-                      <Avatar shape="circle" size={78} icon={<Image src={currentBooking.user.avatar?.link} />} />
+          <Card style={{ borderColor: "#d9d9d9", width: "20%" }}>
+
+            <Row >
+              <Typography.Title  level={2} >Гость</Typography.Title>
+            </Row>
+
+            <Divider />
+
+            <Row style={{margin: "0 auto", textAlign: "center"}} gutter={[8, 5]}>
+              <Col className="gutter-row" span={24}>            
+                  <Space direction="vertical" size={6}>
+                    <Space wrap size={6}>
+                      <Avatar shape="circle" size={90} icon={<Image src={currentBooking.user.avatar?.link} />} />
                     </Space>
-                  </Space>
-                </div>
-             
+                  </Space>     
+                <Row>
+                <Col className="gutter-row" span={24}>
+                  <p style={style}>{currentBooking.user.surname}</p>
+                  <p style={style}>{currentBooking.user.name}</p>
+                  <p style={style}> {account?.phone} </p>
+                  <p style={style}> {account?.email} </p>
+                </Col>
+
+                </Row>
+
               </Col>
-            
-                
-              <Col className="gutter-row" span={5}>
-                <div style={style}> <p>{currentBooking.user.surname}</p></div>
-              </Col>
-              <Col className="gutter-row" span={5}>
-                <div style={style}><p>{currentBooking.user.name}</p></div>
-              </Col>
-              <Col className="gutter-row" span={5}>
-                <div style={style}> <p> {account?.phone} </p></div>
-              </Col>
-              <Col className="gutter-row" span={5}>
-                <div style={style}> <p> {account?.email} </p></div>
-              </Col>
-              </Row>
-            
-             
-            
-         
+            </Row>
+
+
+
+
           </Card>
 
 
