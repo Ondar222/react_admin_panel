@@ -1,4 +1,4 @@
 export { useHotel } from "./api/useHotel"
-export type { Hotel } from "./model/hotel"
-export { HotelCreationDto } from "./model/dto/create.dto"
-export { HotelUpdateDto } from "./model/dto/update.dto"
+export type { Hotel } from "./model/Hotel"
+export { HotelCreateDto } from "./model/dto/HotelCreateDto"
+export { HotelUpdateDto } from "./model/dto/HotelUpdateDto"

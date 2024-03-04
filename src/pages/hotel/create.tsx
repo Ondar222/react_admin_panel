@@ -10,7 +10,8 @@ const HotelCreationPage: FC = () => {
   const [cover, setCover] = useState<UploadFile[]>(undefined)
   const [images, setImages] = useState<UploadFile[]>(undefined)
 
-  const handleImagesChange = async (info: UploadChangeParam<UploadFile<any>>) => {
+  const handleImagesChange = async (name: string, info: UploadChangeParam<UploadFile<any>>) => {
+    console.log(info)
     const images: UploadFile[] = await Promise.all(info.fileList.map(async (file) => {
       let url = file.url
 
@@ -31,7 +32,7 @@ const HotelCreationPage: FC = () => {
     setImages(images)
   }
 
-  const handleCoverChange = async (info: UploadChangeParam<UploadFile<any>>) => {
+  const handleCoverChange = async (name: string, info: UploadChangeParam<UploadFile<any>>) => {
     const file = await getBase64(info.file.originFileObj)
 
     setCover([{
@@ -48,35 +49,25 @@ const HotelCreationPage: FC = () => {
       <Form layout="vertical">
         <YurtaInput label={"Название"} />
 
-        <Upload
+        <YurtaUpload
+          label={"Обложка"}
           fileList={cover}
-          onChange={handleCoverChange}
+          onChange={(name, info) => handleCoverChange(name, info)}
           multiple={false}
           maxCount={1}
-          listType="picture-card"
-        >
-          <Button>загрузить</Button>
-        </Upload>
-
-        {/* <Upload
-          fileList={images}
-          onChange={handleImagesChange}
-          multiple={true}
-          maxCount={10}
-          listType="picture-card"
-        >
-          <Button>загрузить</Button>
-        </Upload> */}
+          listType="picture-card" onRemove={function (name: string, file: UploadFile<any>): void {
+            throw new Error("Function not implemented.")
+          }} />
 
         <YurtaUpload
           label={"Изображения"}
-          fieldName={"images"}
           fileList={images}
-          onChange={(fieldsname, info) => handleImagesChange(info)}
+          onChange={(name, info) => handleImagesChange(name, info)}
           multiple={true}
           maxCount={10}
-          listType="picture-card"
-        />
+          listType="picture-card" onRemove={function (name: string, file: UploadFile<any>): void {
+            throw new Error("Function not implemented.")
+          }} />
       </Form>
 
 

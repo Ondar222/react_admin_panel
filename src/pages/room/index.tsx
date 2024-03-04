@@ -7,16 +7,27 @@ import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RoomPage: FC = () => {
-  const { rooms, findMyRooms, changeVisibility } = useRoom()
+  const { rooms, getHotelRelatedRooms, changeVisibility } = useRoom()
   const navigate = useNavigate()
 
   useEffect(() => {
-    findMyRooms()
+    getHotelRelatedRooms()
   }, [])
 
   return (
     <MainLayout
-      header={<Row><Col span={16}><Typography.Title level={2}>Номера</Typography.Title></Col><Col span={8}><Button onClick={() => navigate("/room/+")}>Создать номер</Button></Col></Row>}
+      header={
+        <Row justify={"space-between"}>
+          <Col span={22}>
+            <Typography.Title level={2}>Номера</Typography.Title>
+          </Col>
+          <Col span={2}>
+            <Button onClick={() => navigate("/room/+")}>
+              Создать номер
+            </Button>
+          </Col>
+        </Row>
+      }
       footer="Пагинация"
     >
       <Row gutter={[16, 16]} wrap={true} justify="space-between">

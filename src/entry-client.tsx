@@ -18,5 +18,5 @@ root.render(
         <Router />
       </BrowserRouter>
     </ConfigProvider>
-  // </React.StrictMode>
+  </React.StrictMode>
 )

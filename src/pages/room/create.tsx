@@ -1,39 +1,24 @@
 import { MainLayout } from "@/shared/layouts/layout"
-import { FC, useEffect, useState } from "react"
-import { RoomCreationForm } from "@/widget/room/forms/creation-form"
+import { FC, useEffect } from "react"
+import { RoomCreationForm } from "@/widget/room/forms/create-form"
 import { useHotel } from "@/entities/hotel"
-import { RoomCreationDto, useRoom } from "@/entities/room"
+import { LoadingPage } from "@/widget/loading_page"
 
 const RoomCreationPage: FC = () => {
-  const [room, setRoom] = useState<RoomCreationDto>(new RoomCreationDto())
-  const { create } = useRoom()
-  const { hotel, setHotel } = useHotel()
+  const { hotel, getHotelDetails } = useHotel()
 
-  const getData = async () => {
-    await setHotel()
-  }
   useEffect(() => {
-    getData()
+    if (!hotel)
+      getHotelDetails()
   }, [])
 
-  useEffect(() => {
-    setRoom(new RoomCreationDto())
-    setRoom((prev) => ({
-      ...prev,
-      hotel_id: hotel?.id
-    }))
-  }, [hotel])
-
-  if (!hotel && !hotel?.id)
-    return <div>loading</div>
+  if (!hotel)
+    return <LoadingPage />
 
   return (
     <MainLayout header="Создание нового номера" footer="">
       <RoomCreationForm
-        room={room}
-        setRoom={setRoom}
-        hotel_id={hotel.id}
-        onSubmit={create}
+        hotel={hotel}
       />
     </MainLayout>
   )

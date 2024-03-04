@@ -1,13 +1,14 @@
-import { V2_Booking } from "@/entities/booking";
-import { Room, RoomLock } from "@/entities/room/model/interface";
+import { Booking } from "@/entities/booking";
+import { Room } from "@/entities/room/model/Room";
+import { Roomlock } from "@/entities/roomlock";
 
 interface ICalendar {
   id: number;
   date: string;
   brm: {
     id: number;
-    booking: V2_Booking;
-    lock: RoomLock;
+    booking: Booking;
+    lock: Roomlock;
     status: string;
   }[];
 }
@@ -15,8 +16,8 @@ interface ICalendar {
 interface IBrm {
   id: number;
   status: string;
-  booking: V2_Booking | null;
-  lock: RoomLock | null;
+  booking: Booking | null;
+  lock: Roomlock | null;
   rooms: Room[];
 }
 

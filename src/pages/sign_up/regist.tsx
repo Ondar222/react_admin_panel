@@ -3,7 +3,7 @@ import { FC }  from "react"
 import {SubmitHandler, useForm} from "react-hook-form"
 // import { ISippingField } from "./regist.interface"
 import { useState } from "react"
-import { useAccount } from "@/entities/account/api"
+import { useAccount } from "@/entities/account"
 import { useAuth } from "../../features/auth"
 import { SignUpFormUI } from "@/features/sing_up/ui"
 

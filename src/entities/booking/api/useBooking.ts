@@ -1,55 +1,47 @@
 import { create } from "zustand";
-
-import { V2_Booking } from "../model/interface";
-import { IUseBooking } from "./interface";
-
+import { Booking, UseBooking } from "../model";
 import { useCredentails } from "../../../features/auth";
 import axios from "axios";
-import { IDirectusResponse } from "@/shared/directus/model/interface";
-import { BookingCreateDto } from "../model/dto/create-dto";
-import { BookingUpdateDto } from "../model/dto/update-dto";
+import { BookingCreateDto } from "../model/dto/BookingCreateDto";
+import { BookingUpdateDto } from "../model/dto/BookingUpdateDto";
+import { ApiResponse } from "@/app/types";
 
-const useBooking = create<IUseBooking>((set) => ({
-  booking: [],
-  currentBooking: undefined,
+const useBooking = create<UseBooking>((set) => ({
+  bookings: undefined,
 
-  findAll: async () => {
+  booking_details: undefined,
+
+  getAllBookings: async () => {
     const access_token = useCredentails.getState().access_token;
     const data = await axios
-      .get<IDirectusResponse<V2_Booking[]>>(
-        `${import.meta.env.VITE_API}/booking`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
-      )
+      .get<ApiResponse<Booking[]>>(`${import.meta.env.VITE_API}/booking`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
       .then((res) => res.data.data);
 
     set({
-      booking: data,
+      bookings: data,
     });
   },
 
-  findById: async (id) => {
+  getBookingDetailsByID: async (id) => {
     const access_token = useCredentails.getState().access_token;
     const data = await axios
-      .get<IDirectusResponse<V2_Booking>>(
-        `${import.meta.env.VITE_API}/booking/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
-      )
+      .get<ApiResponse<Booking>>(`${import.meta.env.VITE_API}/booking/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
       .then((res) => res.data.data);
 
     return set({
-      currentBooking: data,
+      booking_details: data,
     });
   },
 
-  create: async (booking: BookingCreateDto) => {
+  createBooking: async (booking: BookingCreateDto) => {
     const { access_token } = useCredentails.getState();
     await axios.post(`${import.meta.env.VITE_API}/booking`, booking, {
       headers: {
@@ -58,7 +50,7 @@ const useBooking = create<IUseBooking>((set) => ({
     });
   },
 
-  update: async (booking: BookingUpdateDto) => {
+  updateBooking: async (booking: BookingUpdateDto) => {
     const { access_token } = useCredentails.getState();
     await axios.put(
       `${import.meta.env.VITE_API}/booking/${booking.id}`,
@@ -71,7 +63,7 @@ const useBooking = create<IUseBooking>((set) => ({
     );
   },
 
-  delete: () => {},
+  deleteBookingByID: () => {},
 }));
 
 export { useBooking };

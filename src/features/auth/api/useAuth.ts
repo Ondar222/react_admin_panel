@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { IAuthResponse, IUseAuth } from "../model/interface";
 import axios from "axios";
-import { IDirectusResponse } from "../../../shared/directus/model/interface";
 import useCredentails from "./useCredentails";
 import Cookies from "js-cookie";
 import { useHotel } from "@/entities/hotel";
+import { ApiResponse } from "@/app/types";
 
 const useAuth = create<IUseAuth>((set) => ({
   isAuth: false,
@@ -37,12 +37,11 @@ const useAuth = create<IUseAuth>((set) => ({
     };
 
     const authResponse: IAuthResponse = await axios
-      .post<IDirectusResponse<IAuthResponse>>(
+      .post<ApiResponse<IAuthResponse>>(
         `${import.meta.env.VITE_API}/auth/login/password`,
         data
       )
       .then((res) => {
-        // useHotel.getState().setHotel()
         return res.data.data;
       });
 

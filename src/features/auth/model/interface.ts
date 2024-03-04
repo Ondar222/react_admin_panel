@@ -1,6 +1,6 @@
 interface IUseAuth {
-  isAuth: boolean,
-  checkAuth: () => void,
+  isAuth: boolean;
+  checkAuth: () => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -12,13 +12,10 @@ interface IAuthResponse {
 }
 
 interface IUseCredentails extends IAuthResponse {
-  actions: {
-    setCredentails: (credentails: IAuthResponse) => void;
-    refresh: () => void;
-    getAccessToken: () => string | undefined;
-    getRefreshToken: () => string | undefined;
-  }
-
+  setCredentails: (credentails: IAuthResponse) => void;
+  refresh: () => void;
+  getAccessToken: () => string | undefined;
+  getRefreshToken: () => string | undefined;
 }
 
 export type { IUseAuth, IAuthResponse, IUseCredentails };

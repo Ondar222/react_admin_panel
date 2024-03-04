@@ -2,7 +2,6 @@ import {
   Route,
   Routes
 } from "react-router-dom";
-import App from "../../pages";
 import { NotAuthorizedPage, SignInPage } from "../../pages/auth";
 import { BookingPage } from "../../pages/booking";
 import { SignUpPage } from "@/pages/sign_up/regist";
@@ -18,7 +17,7 @@ import HotelCreationPage from "@/pages/hotel/create";
 
 const Router = () =>
   <Routes>
-    <Route path="/" element={<App />} />
+    <Route path="/" element={<SignUpPage />} />
 
     <Route path="/auth" element={<SignInPage />} />
     <Route path="/auth-error" element={<NotAuthorizedPage />} />

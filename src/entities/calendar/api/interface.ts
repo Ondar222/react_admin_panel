@@ -1,6 +1,6 @@
-import { V2_Booking } from "@/entities/booking";
+import { Booking } from "@/entities/booking";
 import { IBrm, ICalendar } from "../model/interface";
-import { RoomLock } from "@/entities/room/model/interface";
+import { Roomlock } from "@/entities/roomlock/model/Roomlock";
 
 interface IUseCalendar {
   calendar: ICalendar[];
@@ -12,7 +12,7 @@ interface IUseCalendar {
 interface IUseBrm {
   // booking: {
   //   type: string;
-  //   items: V2_Booking;
+  //   items: Booking;
   // }[];
   // room_lock: {
   //   type: string;
@@ -20,10 +20,10 @@ interface IUseBrm {
   // }[];
   brm: {
     type: string;
-    item: V2_Booking | RoomLock;
+    item: Booking | Roomlock;
   }[];
   getAll: () => void;
-  addRoomLock: (lock: RoomLock) => void;
+  addRoomLock: (lock: Roomlock) => void;
 }
 
 export type { IUseCalendar, IUseBrm };

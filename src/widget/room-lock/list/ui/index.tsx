@@ -3,15 +3,15 @@ import { FC } from "react";
 import { IRoomLockListUI } from "../model";
 import { RangePickerUI } from "@/shared/range-picker/ui";
 import dayjs from "dayjs";
-import { DeleteButton, IconButton } from "@/shared/components/button/action-buttons";
+import { IconButton } from "@/shared/components/button/action-buttons";
 import { DeleteIcon } from "@/assets/icons/delete";
 
-const RoomLockListUI: FC<IRoomLockListUI> = ({ room_locks, onItemClick }) =>
+const RoomlockListUI: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
   <List
     bordered
     header={<div style={{ position: "sticky", top: 0 }}>Активные блокировки</div>}
     itemLayout="horizontal"
-    dataSource={room_locks}
+    dataSource={roomlocks}
     renderItem={(item) => (
       <List.Item
         actions={[
@@ -48,4 +48,4 @@ const RoomLockListUI: FC<IRoomLockListUI> = ({ room_locks, onItemClick }) =>
   />
 
 
-export { RoomLockListUI }
+export { RoomlockListUI }

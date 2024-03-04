@@ -5,7 +5,7 @@ import axios from "axios";
 import { useCredentails } from "@/features/auth";
 import { ApiResponse } from "@/app/types";
 import { Room } from "@/entities/room";
-import { Hotel } from "../model/hotel";
+import { Hotel } from "../model/Hotel";
 
 interface IUseHotelFiles {
   cover: UploadFile | undefined;

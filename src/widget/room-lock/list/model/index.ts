@@ -1,7 +1,7 @@
-import { RoomLock } from "@/entities/room-lock/model/room_lock";
+import { Roomlock } from "@/entities/roomlock/model/Roomlock";
 
 interface IRoomLockListUI {
-  room_locks: RoomLock[];
+  roomlocks: Roomlock[];
   onItemClick: (id: number) => void
 }
 

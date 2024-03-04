@@ -1,16 +1,16 @@
-import { create } from "zustand";
-import { HotelUpdateDto } from "../model/dto/update.dto";
 import axios from "axios";
-import { Hotel } from "../model/hotel";
+import { create } from "zustand";
 import { useCredentails } from "@/features/auth";
+
 import { ApiResponse } from "@/app/types";
-import { IUseHotel } from "../model/useHotel";
+import { Hotel } from "../model/Hotel";
+import { UseHotel } from "../model/UseHotel";
 import { UploadFile } from "antd";
 
-const useHotel = create<IUseHotel>((set, get) => ({
+const useHotel = create<UseHotel>((set, get) => ({
   hotel: undefined,
 
-  setHotel: async () => {
+  getHotelDetails: async () => {
     const { access_token } = useCredentails.getState();
     const hotel = await axios
       .get<ApiResponse<Hotel>>(`${import.meta.env.VITE_API}/hotel/my`, {
@@ -27,13 +27,12 @@ const useHotel = create<IUseHotel>((set, get) => ({
     });
   },
 
-  createHotel: () => { },
+  createHotel: (dto) => {},
 
-  updateHotel: async (dto: HotelUpdateDto) => {
+  updateHotel: async (dto) => {
     const { access_token } = useCredentails.getState();
     const { ...update_dto } = dto;
     const formData = new FormData();
-
 
     const hotel = await axios
       .patch<ApiResponse<Hotel>>(
@@ -48,7 +47,7 @@ const useHotel = create<IUseHotel>((set, get) => ({
       .then((res) => res.data.data);
   },
 
-  deleteHotel: () => { },
+  deleteHotel: () => {},
 
   // completed
   uploadImage: async (fieldName, file) => {
@@ -88,7 +87,7 @@ const useHotel = create<IUseHotel>((set, get) => ({
       data[fieldName] = file;
     }
 
-    console.log(data)
+    console.log(data);
 
     await axios.delete(`${import.meta.env.VITE_API}/hotel/my/images`, {
       headers: {

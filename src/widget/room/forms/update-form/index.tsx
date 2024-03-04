@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from "react"
-import { RoomFormUI } from ".."
+import { FC, useState } from "react"
 import { Room, RoomUpdateDto, useRoom } from "@/entities/room"
 import { InputProps, SelectProps } from "antd";
+import { RoomUpdateFormUI } from "./ui";
 
 const RoomUpdateForm: FC<{ room: Room }> = (props) => {
     const [room, setRoom] = useState<RoomUpdateDto | undefined>(new RoomUpdateDto(props.room));
-    const { update, uploadImage, deleteImage } = useRoom();
+    const { updateRoom, uploadRoomImage, deleteRoomImage } = useRoom();
 
     // handlers
     const handleChange: InputProps["onChange"] = (e) => {
@@ -16,25 +16,32 @@ const RoomUpdateForm: FC<{ room: Room }> = (props) => {
         }));
     };
 
-    const handleSelect: SelectProps["onChange"] = (value, option) => { };
+    const handleSelect: SelectProps["onChange"] = (value, option) => {
+        setRoom((prev) => ({
+            ...prev,
+            type: value
+        }))
+    };
 
     const handleImageChange = async (fieldName: string, info) => {
+
         const status = info.file.status
 
         if (status === "uploading") {
-            await uploadImage(room.id, fieldName, info.file);
+            // await uploadRoomImage(fieldName, info.file);
         }
 
         if (status === "removed") {
-            await deleteImage(room.id, fieldName, info.file.uid);
+            console.log(fieldName)
+            await deleteRoomImage(fieldName, info.file.uid);
         }
     };
 
-    const onSubmit = () => update(room);
+    const onSubmit = () => updateRoom(room);
 
     if (room)
         return (
-            <RoomFormUI
+            <RoomUpdateFormUI
                 room={room}
 
                 handleChange={handleChange}

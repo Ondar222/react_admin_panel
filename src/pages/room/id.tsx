@@ -3,36 +3,41 @@ import { MainLayout } from "@/shared/layouts/layout"
 import { Col, Row } from "antd"
 import { FC, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { RoomLockListUI } from "@/widget/room-lock/list"
-import { useRoomLock } from "@/entities/room-lock/api/useRoomLock"
+import { RoomlockListUI } from "@/widget/room-lock/list"
+import { useRoomLock } from "@/entities/roomlock/api/useRoomlock"
 import { RoomUpdateForm } from "@/widget/room/forms"
 import { RoomDtlsPgHdr } from "@/widget/room/details_page_header/ui"
+import { LoadingPage } from "@/widget/loading_page"
 
 const RoomDetailsPage: FC = () => {
   // room details
   const { id } = useParams()
 
-  const { currentRoom, findById } = useRoom()
-  const { locks, findByRoomId, deleteRoomLock } = useRoomLock()
+  const { room_details, getRoomDetailsByID } = useRoom()
+  const { roomlocks, getRoomlocksByRoomID, deleteRoomlock } = useRoomLock()
 
   useEffect(() => {
-    findById(id)
-    findByRoomId(id, "active")
+    getRoomDetailsByID(Number(id))
+    getRoomlocksByRoomID(Number(id))
   }, [])
 
-  if (!currentRoom || currentRoom.id != Number(id))
-    return <div>loading</div>
+  if (!room_details || room_details.id != Number(id))
+    return <LoadingPage />
 
   return (
     <MainLayout
-      header={<RoomDtlsPgHdr room={currentRoom} />}
+      header={<RoomDtlsPgHdr room={room_details} />}
     >
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <RoomUpdateForm room={currentRoom} />
+      <Row justify={"space-between"} gutter={[16, 16]}>
+        <Col span={10}>
+
+          <RoomUpdateForm room={room_details} />
+
         </Col>
-        <Col span={12}>
-          <RoomLockListUI room_locks={locks} onItemClick={(id) => deleteRoomLock(id)} />
+        <Col span={10}>
+
+          <RoomlockListUI roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
+          
         </Col>
       </Row>
 

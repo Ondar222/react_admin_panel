@@ -5,12 +5,12 @@ import { useBooking } from "@/entities/booking"
 import { Col, NotificationArgsProps, Row, Select, notification } from "antd"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
 import { useNavigate } from "react-router-dom"
-import { CalendarUI } from "@/entities/calendar/ui"
+import { CalendarUI } from "@/widget/calendar/ui"
 import { useBrm } from "@/entities/calendar/api/useBrm"
 import React from "react"
-import { RoomLockCreationForm } from "@/widget/room-lock/creation_form"
+import { RoomlockCreationForm } from "@/widget/room-lock/creation_form"
 import { BookingList } from "@/widget/booking/list-view"
-import { BookingBrick } from "@/widget/booking/tiles"
+import { BookingBrick } from "@/widget/booking/brick-view"
 
 enum BookingPageVM {
   calendar = 'calendar',
@@ -54,14 +54,14 @@ const BookingPage: FC = () => {
 
   const contextValue = useMemo(() => ({ name: 'Ant Design' }), []);
 
-  const { booking, findAll } = useBooking()
+  const { bookings, getAllBookings } = useBooking()
   // const { calendar, getAll } = useCalendar()
   const { brm, getAll } = useBrm()
   const navigate = useNavigate()
 
   useEffect(() => {
     getAll()
-    findAll()
+    getAllBookings()
   }, [])
 
   return (
@@ -94,7 +94,7 @@ const BookingPage: FC = () => {
       {mode === BookingPageVM.calendar &&
         <Row gutter={[16, 16]}>
           <Col span={6}>
-            <RoomLockCreationForm />
+            <RoomlockCreationForm />
           </Col>
           <Col span={18}>
             <CalendarUI
@@ -117,7 +117,7 @@ const BookingPage: FC = () => {
       }
       {
         mode === BookingPageVM.brick &&
-        <BookingBrick data={booking} />
+        <BookingBrick data={bookings} />
       }
 
 
