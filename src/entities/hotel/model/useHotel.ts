@@ -1,6 +1,6 @@
 import { UploadFile } from "antd";
 import { HotelUpdateDto } from "./dto/HotelUpdateDto";
-import type { Hotel } from "./Hotel";
+import type { Hotel } from "@/entities/hotel";
 import { HotelCreateDto } from "./dto/HotelCreateDto";
 
 interface UseHotel {

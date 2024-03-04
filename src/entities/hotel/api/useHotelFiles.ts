@@ -1,11 +1,9 @@
 import { UploadFile } from "antd";
 import { create } from "zustand";
-import { useHotel } from "./useHotel";
 import axios from "axios";
 import { useCredentails } from "@/features/auth";
 import { ApiResponse } from "@/app/types";
-import { Room } from "@/entities/room";
-import type { Hotel } from "../model/Hotel";
+import type { Hotel } from "@/entities/hotel";
 
 interface IUseHotelFiles {
   cover: UploadFile | undefined;
