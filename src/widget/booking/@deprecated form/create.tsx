@@ -4,7 +4,7 @@ import { EBookingStatus } from "../../../entities/booking";
 import { YurtaDatePicker } from "../../../shared/range-picker";
 import { RoomSelect } from "../../room/room-select";
 import { YurtaUserSelect } from "./user-select";
-import { Hotel } from "@/entities/hotel/model/Hotel";
+import type { Hotel } from "@/entities/hotel";
 import { BookingCreateDto } from "../../../entities/booking/model/dto/BookingCreateDto";
 
 interface IYurtaCreateForm {

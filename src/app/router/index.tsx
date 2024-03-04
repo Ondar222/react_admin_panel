@@ -13,7 +13,7 @@ import RoomPage from "@/pages/room";
 import { RoomCreationPage } from "@/pages/room/create";
 import { AccountPage } from "@/pages/account";
 import { HotelPage } from "@/pages/hotel";
-import HotelCreationPage from "@/pages/hotel/create";
+import { HotelCreationPage } from "@/pages/hotel/create";
 
 const Router = () =>
   <Routes>

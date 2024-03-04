@@ -75,4 +75,4 @@ const HotelCreationPage: FC = () => {
   )
 }
 
-export default HotelCreationPage
+export { HotelCreationPage }

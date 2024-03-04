@@ -1,5 +1,5 @@
 import { IRangePicker } from "@/shared/range-picker/model";
-import { Hotel } from "@/entities/hotel/model/Hotel";
+import type { Hotel } from "@/entities/hotel";
 import { Room } from "@/entities/room/model";
 
 type Roomlock = {

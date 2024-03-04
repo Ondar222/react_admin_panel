@@ -1,10 +1,9 @@
 import axios from "axios";
 import { create } from "zustand";
 import { useCredentails } from "@/features/auth";
-
 import { ApiResponse } from "@/app/types";
-import { Hotel } from "../model/Hotel";
-import { UseHotel } from "../model/UseHotel";
+import type { Hotel } from "../model/Hotel";
+import type { UseHotel } from "../model/UseHotel";
 import { UploadFile } from "antd";
 
 const useHotel = create<UseHotel>((set, get) => ({

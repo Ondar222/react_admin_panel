@@ -1,7 +1,7 @@
 import { CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import { Flex, List, Menu } from "antd";
+import { Menu } from "antd";
 import { FC, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const menu_items = {
 
@@ -16,12 +16,12 @@ const Sidebar: FC = () => {
                 position: "sticky",
                 top: 0,
             }}
-            
+
             selectedKeys={[key]}
             onClick={(e) => {
                 setKey(e.key)
                 navigate(`/${e.key}`)
-            } }
+            }}
             onChange={(e) => {
                 e.persist()
             }}

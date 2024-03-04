@@ -5,7 +5,7 @@ import { InputProps, SelectProps } from "antd";
 import { UploadChangeParam } from "antd/es/upload";
 import { LoadingPage } from "@/widget/loading_page";
 import { url } from "inspector";
-import { Hotel } from "@/entities/hotel";
+import type { Hotel } from "@/entities/hotel";
 import { UploadFile } from "antd/lib";
 import { getBase64 } from "@/shared/utils";
 import { RcFile } from "antd/lib/upload";

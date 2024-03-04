@@ -1,5 +1,5 @@
 import { UploadFile } from "antd";
-import { Hotel } from "../Hotel";
+import type { Hotel } from "../Hotel";
 
 class HotelUpdateDto {
   constructor(dto: Hotel) {
