@@ -54,7 +54,7 @@ const useAuth = create<IUseAuth>((set) => ({
       Cookies.set("access_token", access_token, {
         expires: expires,
       });
-      useCredentails.getState().actions.setCredentails(authResponse);
+      useCredentails.getState().setCredentails(authResponse);
       set({ isAuth: true });
     }
   },
