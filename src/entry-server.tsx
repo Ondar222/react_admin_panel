@@ -13,7 +13,7 @@ export const render = ({ path }: IRenderProps) => {
   return ReactDOMServer.renderToString(
     sheet.collectStyles(
       <ConfigProvider>
-        <Router />
+        {/* <Router /> */}
       </ConfigProvider>
     )
   );

@@ -1,4 +1,4 @@
-import { AccountBookFilled, CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Flex, List, Menu } from "antd";
 import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
