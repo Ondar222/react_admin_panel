@@ -18,6 +18,7 @@ import ruLocale from '@fullcalendar/core/locales/ru';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendarUI } from "../model";
 import { Roomlock } from "@/entities/roomlock";
+import { start } from "repl";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -30,21 +31,22 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
     dayCellClassNames: 'brm-cell',
     weekends: true,
     headerToolbar: {
-      left: 'prev,next,listWeek,list',
+      left: 'prev,next,list',
       center: "title",
       right: 'dayGridMonth',
     },
 
     nextDayThreshold: '00:00',
+
     locales: [ruLocale],
-    dayMaxEvents: false,
+    dayMaxEvents: 2,
     events: props.brm.map((brm) => {
-      const booking = brm.item as Booking
+
 
       if (brm.type === 'booking') {
+        const booking = brm.item as Booking
         return {
           item_id: booking.id,
-          type: brm.type,
           title: `${booking.status}`,
           start: dayjs(booking.check_in * 1000).tz(tz).format(),
           end: dayjs(booking.check_out * 1000).tz(tz).format(),
@@ -55,26 +57,33 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
 
       if (brm.type === 'room_lock') {
         const room_lock = brm.item as Roomlock
+
+        console.group('date')
+        console.log('start')
+        console.log(dayjs(room_lock.start * 1000).tz(tz).toDate().toISOString())
+        console.log('end')
+        console.log(dayjs(room_lock.end * 1000).tz(tz).toDate().toISOString())
+        console.groupEnd()
+
         return {
           item_id: room_lock.id,
-          type: brm.type,
           title: `${room_lock.status}`,
-          start: moment(room_lock.start * 1000).tz(tz).format(),
-          end: moment(room_lock.end * 1000).add(1, "s").format(),
 
-          // url: `/partners/room_lock/${room_lock.id}`
+          start: dayjs(room_lock.start * 1000).tz(tz).toDate().toISOString(),
+          end: dayjs(room_lock.end * 1000).tz(tz).toDate().toISOString(),
+          url: `/partners/room_lock/${room_lock.id}`
         }
       }
     }),
-    locale: "ru",
+    // locale: "ru",
     eventContent: renderEventContent,
-    timeZone: "Asia/Krasnoyarsk",
+    // timeZone: "Asia/Krasnoyarsk",
     eventClick: (props.onClick)
   }
   return (
-    <FullCalendar
-      {...calendar_options}
-    />
+      <FullCalendar
+        {...calendar_options}
+      />
   )
 }
 

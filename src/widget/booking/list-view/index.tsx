@@ -18,7 +18,7 @@ const columns: TableProps<{
       title: 'Идентификатор',
       dataIndex: 'item',
       key: 'item',
-      render: (item) => <a>{JSON.stringify(item.id)}</a>,
+      render: (item) => <a>{item.id}</a>,
     },
     {
       title: 'Типы',

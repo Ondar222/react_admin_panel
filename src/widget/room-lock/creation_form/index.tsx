@@ -36,8 +36,11 @@ const RoomlockCreationForm: FC = () => {
     });
   };
 
-  const handleDatePickerChange: IRangePicker["onChange"] = (dates) =>
+  const handleDatePickerChange: IRangePicker["onChange"] = (dates) => {
+    console.log(dates)
     setDates([dates[0], dates[1]])
+  }
+    
 
 
   const handleRoomSelectChange = (e: Pick<Room, "id">) =>
@@ -52,7 +55,7 @@ const RoomlockCreationForm: FC = () => {
 
   const handleSaveButtonClick = () => {
     openNotification('top')
-
+    console.log(dates)
     createRoomlock({ room_id: room_id, start: dates[0], end: dates[1], reason: reason })
   }
 

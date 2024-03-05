@@ -24,10 +24,9 @@ const useRoom = create<UseRoom>((set, get) => ({
     formData.append("description", room.description);
     formData.append("price", String(room.price));
 
+    console.log(room.images);
+    console.log(Boolean(room.images));
 
-    console.log(room.images)
-    console.log(Boolean(room.images))
-    
     if (room.images) {
       for (let i = 0; i < room.images.length; i++) {
         formData.append(
@@ -52,6 +51,8 @@ const useRoom = create<UseRoom>((set, get) => ({
         console.log(res);
         return res;
       });
+
+    return data;
   },
 
   // completed
@@ -124,15 +125,19 @@ const useRoom = create<UseRoom>((set, get) => ({
 
     formData.append(fieldName, image.originFileObj, image.name);
 
-    await axios.post(
-      `${import.meta.env.VITE_API}/room/${get().room_details.id}/images`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    await axios
+      .post(
+        `${import.meta.env.VITE_API}/room/${get().room_details.id}/images`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
   },
 
   // completed
@@ -149,7 +154,7 @@ const useRoom = create<UseRoom>((set, get) => ({
     }
 
     if (Array.isArray(file) === false) {
-      data[fieldName] = file;
+      data[fieldName] = [file];
     }
 
     console.log(data);

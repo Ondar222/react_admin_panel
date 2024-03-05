@@ -13,6 +13,9 @@ type Hotel = {
 
   rooms: Array<Room>;
 
+  arrival: string;
+  departure: string;
+
   images: Array<IImage>;
   cover: IImage;
 };

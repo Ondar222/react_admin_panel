@@ -4,8 +4,35 @@ import { InputProps, SelectProps } from "antd";
 import { RoomUpdateFormUI } from "./ui";
 
 const RoomUpdateForm: FC<{ room: Room }> = (props) => {
-    const [room, setRoom] = useState<RoomUpdateDto | undefined>(new RoomUpdateDto(props.room));
-    const { updateRoom, uploadRoomImage, deleteRoomImage } = useRoom();
+    const [room, setRoom] = useState<RoomUpdateDto>( {
+        id: props.room.id,
+        name: props.room.name,
+        description: props.room.description,
+
+        price: props.room.price,
+        number: props.room.number,
+
+        capacity: props.room.capacity,
+        visibility: props.room.visibility,
+        type: props.room.type,
+
+        hotel_id: props.room.hotel.id,
+
+        cover: props.room.cover != null ? [{
+            uid: props.room.cover.id,
+            name: props.room.cover.id,
+            thumbUrl: props.room.cover.link,
+            url: props.room.cover.link
+        }] : undefined,
+        images: props.room.images.map((image) => ({
+            uid: image.id,
+            name: image.id,
+            thumbUrl: image.link,
+            url: image.link
+        })),
+    });
+
+    const { updateRoom, deleteRoomImage } = useRoom();
 
     // handlers
     const handleChange: InputProps["onChange"] = (e) => {
@@ -24,18 +51,23 @@ const RoomUpdateForm: FC<{ room: Room }> = (props) => {
     };
 
     const handleImageChange = async (fieldName: string, info) => {
-
         const status = info.file.status
 
-        if (status === "uploading") {
+        console.log(status)
+        if (status === "done") {
+            console.log('uploaded')
             // await uploadRoomImage(fieldName, info.file);
         }
 
         if (status === "removed") {
-            console.log(fieldName)
             await deleteRoomImage(fieldName, info.file.uid);
         }
+
     };
+
+    const handleImageRemove = async (fieldName: string, file) => {
+
+    }
 
     const onSubmit = () => updateRoom(room);
 
@@ -47,6 +79,7 @@ const RoomUpdateForm: FC<{ room: Room }> = (props) => {
                 handleChange={handleChange}
                 handleSelect={handleSelect}
                 onFileChange={handleImageChange}
+                onFileRemove={handleImageRemove}
                 onSubmit={onSubmit}
             />
         )

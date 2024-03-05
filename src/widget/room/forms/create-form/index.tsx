@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { RoomCreateFormUI } from "./ui/room.form";
-import { RoomCreationDto, useRoom } from "@/entities/room";
+import { Room, RoomCreationDto, useRoom } from "@/entities/room";
 import { InputProps, SelectProps } from "antd";
 import { UploadChangeParam } from "antd/es/upload";
 import { LoadingPage } from "@/widget/loading_page";
@@ -9,6 +9,9 @@ import type { Hotel } from "@/entities/hotel";
 import { UploadFile } from "antd/lib";
 import { getBase64 } from "@/shared/utils";
 import { RcFile } from "antd/lib/upload";
+import { useNavigate } from "react-router-dom";
+import { ApiResponse } from "@/app/types";
+import { AxiosResponse } from "axios";
 
 interface RoomCreationFormProps {
     hotel: Hotel
@@ -17,6 +20,7 @@ interface RoomCreationFormProps {
 const RoomCreationForm: FC<RoomCreationFormProps> = (props) => {
     const [room, setRoom] = useState<RoomCreationDto>()
     const { createRoom } = useRoom()
+    const navigate = useNavigate()
 
     useEffect(() => {
         setRoom((prev: RoomCreationDto) => ({
@@ -41,7 +45,7 @@ const RoomCreationForm: FC<RoomCreationFormProps> = (props) => {
     }
 
     const handleImageChange = async (name: string, { file, fileList }: UploadChangeParam) => {
-        
+
         setRoom((prev) => ({
             ...prev,
             [name]: fileList
@@ -55,20 +59,24 @@ const RoomCreationForm: FC<RoomCreationFormProps> = (props) => {
         // }))
     }
 
-    const handleSubmit = () => createRoom(room)
+    const handleSubmit = () => {
+        createRoom(room)
+            .then((res: AxiosResponse<ApiResponse<Room>>) => {
+                navigate(`/room/${res.data.data.id}`)
+            })
+            .catch((rejected) => {
+                navigate("/room")
+            })
+    }
 
-    return <>
-        {
-            JSON.stringify(room)
-        }
-        <RoomCreateFormUI
-            room={room}
-            onSubmit={handleSubmit}
-            handleChange={handleInputChange}
-            handleSelect={handleSelect}
-            onFileChange={handleImageChange}
-            onFileRemove={handleImageRemove} />
-    </>
+    return <RoomCreateFormUI
+        room={room}
+        onSubmit={handleSubmit}
+        handleChange={handleInputChange}
+        handleSelect={handleSelect}
+        onFileChange={handleImageChange}
+        onFileRemove={handleImageRemove} />
+
 
 }
 

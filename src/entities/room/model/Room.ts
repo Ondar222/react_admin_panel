@@ -1,4 +1,5 @@
 import { IImage } from "@/app/types";
+import { Hotel } from "@/entities/hotel";
 
 enum RoomTypes {
   economy = "economy",
@@ -6,7 +7,7 @@ enum RoomTypes {
   luxury = "luxury",
 }
 
-interface Room {
+type Room = {
   id: number;
   description: string;
 
@@ -18,11 +19,11 @@ interface Room {
   capacity: number;
   visibility: boolean;
 
-  hotel_id: number;
+  hotel: Pick<Hotel, "id" | "name" | "description" | "departure" | "arrival">;
 
-  cover: IImage;
+  cover: IImage | null;
   images: Array<IImage>;
-}
+};
 
 export { RoomTypes };
 export type { Room };

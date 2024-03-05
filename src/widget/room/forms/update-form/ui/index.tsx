@@ -72,7 +72,7 @@ export const RoomUpdateFormUI: FC<IRoomFormUI<RoomUpdateDto>> = (props) =>
       label="Обложка"
       multiple={false}
       listType="picture-card"
-      fileList={props.room.cover ? [props?.room?.cover] : []}
+      fileList={props.room?.cover}
       maxCount={1}
       onChange={props.onFileChange}
       onRemove={props.onFileRemove} />
@@ -85,11 +85,9 @@ export const RoomUpdateFormUI: FC<IRoomFormUI<RoomUpdateDto>> = (props) =>
       multiple={true}
       listType="picture-card"
       fileList={props.room?.images}
-      maxCount={100}
+      maxCount={10}
       onChange={props.onFileChange}
       onRemove={props.onFileRemove} />
 
-    <Button value={"Cохранить"} title="Сохранить" onClick={() => {
-      props.onSubmit()
-    }} >Сохранить</Button>
+    <Button value={"Cохранить"} title="Сохранить" onClick={props.onSubmit} >Сохранить</Button>
   </Form>
