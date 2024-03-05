@@ -1,5 +1,5 @@
 // import './App.css';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import "../../../../app/styles/sidebar.css";
 import { Menu } from 'antd';
 import {  useNavigate } from 'react-router-dom';
@@ -17,26 +17,38 @@ const Sidebar: FC = () => {
 };
 
 
-function SideMenu() {
+function SideMenu<FC>(){
+  const [selected, setSelected] = useState('/booking')
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setSelected(`/${window.location.pathname.split("/")[2]}`)
+  },[])
+
   return (
     
-    <Menu style={{padding: "20px 20px", background: "#2c94f5"}}
-      onClick={({ key }) => {
-        if (key === "signout") {
-
-        } else {
-            navigate(`/${key}`)
-        }
+    <Menu 
+    
+      style={{
+        padding: "20px 20px", 
+        // background: "#2c94f5"
       }}
-      defaultSelectedKeys={[window.location.pathname]}
+      theme='dark'
+      selectedKeys={[`/${window.location.pathname.split("/")[2]}`]}
+      defaultSelectedKeys={[selected]}
+      onClick={({ key }) => {
+        
+          setSelected(key)
+            navigate(`/${key}`)
+        
+      }}
+      
                   items={[
                     {
 
                         key: '/booking',
                         icon: <CalendarFilled />,
-                        label: "Бронь",
-
+                        label: "Бронь"
                     },
                     {
                         key: '/room',
