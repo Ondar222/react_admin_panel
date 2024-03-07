@@ -14,8 +14,8 @@ interface Booking {
   check_in: number;
   check_out: number;
   capacity: number;
-  user: Pick<User, "id" | "surname" | "name" | "phone" | "email" | "avatar">;
-  rooms: Array<Pick<Room, "id" | "type" | "cover" | "number" >>;
+  user: Omit<User, "role">;
+  rooms: Array<Pick<Room, "id" | "type" | "cover" | "number">>;
 }
 
 export type { Booking };
