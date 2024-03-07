@@ -130,8 +130,3 @@ const BookingPage: FC = () => {
 
 export { BookingPage }
 
-// {
-//   <Col>
-//   <TableApp />
-//   </Col>
-// }

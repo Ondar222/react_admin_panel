@@ -22,8 +22,8 @@ class User {
     phone: string = "",
     avatar: IImage = {
       id: "",
-      link: "",
-    }
+      link: ""
+    },
   ) {
     this.id = id;
     this.surname = surname;
@@ -37,23 +37,35 @@ class User {
   surname: string;
   name: string;
   email: string;
-  avatar: IImage;
+  avatar: IImage
+  // password: string;
+  // location: string;
+  // title: string;
+  // description: null;
+  // tags: null;
+  // avatar: null;
+  // language: string;
+  // theme: string;
+  // tfa_secret: null;
+  // status: string;
   role: string;
   phone: string;
 }
 
 class UserCreateDto {
-  constructor(phone: string, surname?: string, name?: string, email?: string) {
+  constructor(phone: string, surname?: string, name?: string,  email?: string, avatar?: IImage) {
     this.surname = surname;
     this.name = name;
     this.phone = phone;
     this.email = email;
+    this.avatar = avatar;
   }
 
   surname: string | undefined;
   name: string | undefined;
   phone: string;
   email: string | undefined;
+  avatar: IImage | undefined;
 }
 
 export { User as default };

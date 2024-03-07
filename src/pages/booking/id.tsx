@@ -2,20 +2,25 @@ import { FC, useEffect, useState } from "react"
 import { MainLayout } from "../../shared/layouts/layout"
 import { EBookingStatus, useBooking } from "@/entities/booking"
 import { useParams } from "react-router-dom"
-import { BookingUpdateDto } from "@/entities/booking/model/dto/BookingUpdateDto"
-import { Flex, Form, Button } from "antd"
+// import { BookingUpdateDto } from "@/entities/booking/model/dto/update-dto"
+import { Flex, Form, Button, Col, Divider, Typography } from "antd"
 import { useHotel } from "@/entities/hotel"
-import { RoomSelect } from "@/widget/room/room-select"
 import { YurtaDatePicker } from "@/shared/range-picker"
-import { YurtaUserSelect } from "@/widget/booking/@deprecated form/user-select"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
 import { YurtaInput } from "@/shared/components/form/ui/input/text"
 import { YurtaSelect } from "@/shared/components/form/ui/select/default"
+import { RoomSelect } from "@/widget/room/room-select"
+import { Image } from "antd/lib"
+import { Avatar, Space, Card, Row } from 'antd'
+import { BookingUpdateDto } from "@/entities/booking/model/dto/BookingUpdateDto"
+
+
+
+const style: React.CSSProperties = { padding: '6px 0', margin: '6px 0', cursor: "not-allowed", textDecorationLine: "underline" };
 
 const BookingDetailPage: FC = () => {
   const { id } = useParams()
   const { booking_details, getBookingDetailsByID } = useBooking()
-  const [booking, setBooking] = useState<BookingUpdateDto>(new BookingUpdateDto(booking_details))
   const { hotel, getHotelDetails } = useHotel()
 
   useEffect(() => {
@@ -25,11 +30,13 @@ const BookingDetailPage: FC = () => {
     }
   }, [])
 
-  useEffect(() => {
-    setBooking(new BookingUpdateDto(booking_details))
-  }, [booking_details])
+
+  if (!booking_details)
+    return <div>loading</div>
+
 
   return (
+
     <MainLayout
       header={<DetailsHeader
         title={`#${id}`}
@@ -44,61 +51,69 @@ const BookingDetailPage: FC = () => {
             label="Идентификатор"
             disabled
             placeholder="id"
-            value={booking.id}
+            value={booking_details.id}
             color={"white"} />
 
           <YurtaInput
             label="Сумма"
             placeholder="id"
             disabled
-            value={booking.amount}
+            value={booking_details.amount}
             color={"white"}
-            onChange={(e) => {
-              setBooking((prev) => {
-                if (e)
-                  return {
-                    ...prev,
-                    amount: Number(e.target.value)
-                  }
-
-                return prev
-              })
-            }}
           />
 
           <YurtaSelect
             disabled
             label="Статус"
-            value={booking.status}
+            value={booking_details.status}
             options={Object.keys(EBookingStatus).map((status) => ({
               value: status,
               label: status
             }))}
-            onChange={(e) => {
-              setBooking((prev) => ({
-                ...prev,
-                status: e
-              }))
-            }}
           />
+
+          <Card style={{ borderColor: "#d9d9d9", width: "20%" }}>
+
+            <Row >
+              <Typography.Title level={2} >Гость</Typography.Title>
+            </Row>
+
+            <Divider />
+
+            <Row style={{ margin: "0 auto", textAlign: "center" }} gutter={[8, 5]}>
+              <Col className="gutter-row" span={24}>
+                <Space direction="vertical" size={6}>
+                  <Space wrap size={6}>
+                    <Avatar shape="circle" size={90} icon={<Image src={booking_details.user.avatar?.link} />} />
+                  </Space>
+                </Space>
+                <Row>
+                  <Col className="gutter-row" span={24}>
+                    <p style={style}>{booking_details.user.surname}</p>
+                    <p style={style}>{booking_details.user.name}</p>
+                    <p style={style}> {booking_details.user?.phone} </p>
+                    <p style={style}> {booking_details.user?.email} </p>
+                  </Col>
+
+                </Row>
+
+              </Col>
+            </Row>
+
+
+
+
+          </Card>
+
 
           <YurtaInput
             label="Количество гостей"
             type="number"
-            value={booking.capacity}
-            onChange={(e) => {
-              setBooking((prev) => {
-                if (e)
-                  return {
-                    ...prev,
-                    capacity: Number(e.target.value)
-                  }
-                return prev
-              })
-            }}
+            value={booking_details.capacity}
+
           />
 
-          {
+          {/* {
             booking.user &&
             <YurtaUserSelect
               value={booking.user}
@@ -111,29 +126,23 @@ const BookingDetailPage: FC = () => {
                 })
               }} />
 
-          }
+          } */}
 
-          {booking.check_in && booking.check_out &&
+          {booking_details.check_in && booking_details.check_out &&
             <YurtaDatePicker
               label="Даты"
-              value={[booking.check_in, booking.check_out]}
-              onChange={(e) => {
-                setBooking((prev) => ({
-                  ...prev,
-                  check_in: e[0],
-                  check_out: e[1]
-                }))
-              }}
+              value={[booking_details.check_in, booking_details.check_out]}
+              onChange={() => { }}
             />
           }
 
           {
             hotel && <RoomSelect
               mode="multiple"
-              value={booking.rooms}
+              value={booking_details.rooms}
               isMultiple={true}
-              rooms={hotel.rooms}
 
+              rooms={hotel.rooms}
             />
           }
 
