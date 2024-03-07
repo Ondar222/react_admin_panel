@@ -5,7 +5,7 @@ export interface IAddress {
     house: string
 }
 
-
+// надо вынести куда-нибудь, тут только страницы
 
 export interface ISippingField {
     name: string

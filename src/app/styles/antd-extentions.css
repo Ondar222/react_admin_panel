@@ -250,4 +250,17 @@
     width: 230px;
 }
 
+.container_to_change {
+ background: #7B68EE;
+ width: 75px;
+ display: flex;
+ justify-content: center;
+ border-radius: 0.1rem;
+}
 
+.text_to_change {
+    color: #fff;
+}
+
+
+/* background: "#7B68EE", width: "75px", display: "flex", justifyContent: "center", borderRadius: "0.1rem" */

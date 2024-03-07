@@ -57,8 +57,8 @@ const columns: TableProps<{
     {
      
       render: (_, record) => (
-        <Space size="middle" style={{ background: "#7B68EE", width: "75px", display: "flex", justifyContent: "center", borderRadius: "0.1rem" }}>
-          <Link style={{ color: "#fff" }} to={`/booking/${record.item.id}`}>Изменить</Link>
+        <Space size="middle" className="container_to_change">
+          <Link className="text_to_change" to={`/booking/${record.item.id}`}>Изменить</Link>
         </Space>
       ),
     },
