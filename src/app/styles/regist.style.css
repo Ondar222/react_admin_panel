@@ -4,8 +4,6 @@
     align-items: center;
     margin: 0 auto;
     background: #001529;
-    top: 0;
-    bottom: 0;
 }
 
 .header_registr_yurta {
@@ -14,6 +12,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 20px;
     cursor: pointer;
     font-family: "Protest Guerrilla", sans-serif;
     font-weight: 400;
@@ -86,27 +85,4 @@
     color: #fff;
     cursor: pointer;
 
-}
-
-
-.SignUpPage_layout {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #001529;
-}
-
-.container_signUp {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  
-}
-
-
-.forgot_your_password_class {
-    display: flex;
-    justify-content: right;
 }

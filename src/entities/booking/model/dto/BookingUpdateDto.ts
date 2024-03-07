@@ -17,8 +17,8 @@ class BookingUpdateDto {
         email: "",
         avatar: {
           id: "",
-          link: ""
-        }
+          link: "",
+        },
       },
       capacity: 1,
       check_in: 0,
@@ -31,7 +31,7 @@ class BookingUpdateDto {
     this.status = booking.status;
 
     if (typeof booking.user === "object") {
-      this.user = booking.user;
+      this.user = booking.user.id;
     } else {
       this.user = booking.user;
     }
@@ -52,7 +52,7 @@ class BookingUpdateDto {
   id: number;
   amount: number;
   status: EBookingStatus;
-  user: Booking["user"];
+  user: string;
   capacity: number;
   check_in: number;
   check_out: number;
