@@ -1,35 +1,8 @@
-import { Col, Row, Typography, Checkbox, Form, Button, Divider, Input, InputProps } from "antd";
-import { FC, useState } from "react";
-import { useSignUp } from "../api/useSignUp";
-import { useOtp } from "@/features/otp/api/useOtp";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
-import { SignUpDto } from "../model";
-import { useNavigate } from "react-router-dom";
+import { Col, Row, Typography, Checkbox, Form, Button, Divider, Input } from "antd";
+import { FC } from "react";
 
-
-// начинаем собирать
 const SignUpFormUI: FC<any> = (props) => {
-    const [user, setUser] = useState<SignUpDto>({
-        email: "",
-        phone: "",
-        password: "",
-
-        surname: "",
-        name: "",
-        code: ""
-    })
-    const { signUp } = useSignUp()
-    const { verifyPhoneNumber } = useOtp()
-    const navigate = useNavigate()
-
-    const handleChange: InputProps["onChange"] = (e) => {
-        const { name, value } = e.target
-        setUser((prev) => ({
-            ...prev,
-            [name]: value
-        }))
-    }
-
     return (
         <Col span={12}>
             <Form layout="vertical" className="form_registr">
@@ -41,49 +14,34 @@ const SignUpFormUI: FC<any> = (props) => {
                     </Col>
                 </Row>
                 <Divider />
-                <Row className="container_signUp">
+                <Row style={{display: "flex",flexDirection: "column", gap: "20px"}}>
 
-                    <Row gutter={[16, 16]}>
-                        <Col span={12}>
-                            <Input placeholder="Имя" name="name" value={user.name} onChange={handleChange} />
-                        </Col>
-                        <Col span={12}>
-                            <Input placeholder="Фамилия" name="surname" value={user.surname} onChange={handleChange} />
-                        </Col>
-                    </Row>
-                    <Row className="container_signUp">
-                        <Col span={24}>
-                            <Input type="phone" name="phone" placeholder="Номер телефона" value={user.phone} onChange={handleChange} />
-                            <Button onClick={() => verifyPhoneNumber({ phone: user.phone })}>Подтвердить</Button>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={24}>
-                            <Input type="email" name="email" placeholder="Электронная почта" value={user.email} onChange={handleChange} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={24}>
-                            <Input
-                                type="password"
-                                placeholder="Пароль"
-                                name="password"
-                                value={user.password}
-                                onChange={handleChange} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={24}>
-                            <YurtaInput
-                                label="Код подтверждения"
-                                name="code"
-                                value={user.code}
-                            /*  */ onChange={handleChange} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        {props.errors?.password && <p>{props.errors?.password?.message || "Error!"}</p>}
-                    </Row>
+                <Row gutter={[16, 16]}>
+                    <Col span={12}>
+                        <Input placeholder="Имя" value={props.user.name} />
+                    </Col>
+                    <Col span={12}>
+                        <Input placeholder="Фамилия" value={props.user.surname} />
+                    </Col>
+                </Row>
+                <Row style={{display: "flex", flexDirection: "column", gap: "20px"}}>
+                    <Col span={24}>
+                        <Input type="phone" placeholder="Номер телефона" value={props.user.phone} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={24}>
+                        <Input type="email" placeholder="Электронная почта" value={props.user.email} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={24}>
+                        <Input type="password" placeholder="Пароль" value={props.user.password} />
+                    </Col>
+                </Row>
+                <Row style={{ width: "100%", color: "red", position: "relative", bottom: "0" }}>
+                    {props.errors?.password && <p>{props.errors?.password?.message || "Error!"}</p>}
+                </Row>
                 </Row>
                 <Row>
                     <Checkbox>
@@ -94,11 +52,10 @@ const SignUpFormUI: FC<any> = (props) => {
 
                 <Row gutter={[16, 16]}>
                     <Col span={12} >
-                        <Button type="primary" onClick={() => signUp(user)}>Зарегистрироваться</Button>
+                        <Button type="primary">Зарегистрироваться</Button>
                     </Col>
-                    <Col className="forgot_your_password_class" span={12}>
-                        <Button onClick={() => navigate("/auth")}>Войти в аккаунт</Button>
-
+                    <Col span={12} style={{ display: "flex", justifyContent: "right" }}>
+                        <Button>Забыли пароль?</Button>
                     </Col>
                 </Row>
             </Form>
