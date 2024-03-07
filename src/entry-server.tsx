@@ -17,6 +17,4 @@ export const render = ({ path }: IRenderProps) => {
       </ConfigProvider>
     )
   );
-}; {/* <StaticRouter location={path}>
-<Router />
-</StaticRouter> */}
+};

@@ -7,7 +7,6 @@ import { SignUpDto } from "../model";
 import { useNavigate } from "react-router-dom";
 
 
-// начинаем собирать
 const SignUpFormUI: FC<any> = (props) => {
     const [user, setUser] = useState<SignUpDto>({
         email: "",

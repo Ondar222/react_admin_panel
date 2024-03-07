@@ -12,8 +12,6 @@ const useSignUp = create<UseSignUp>((set) => ({
                 console.log(res)
                 return res.data.data
             })
-
-        // это для того чтобы сразу после регистрации если все ОК, войти в систему
         useCredentails.getState().setCredentails({
             access_token: credentials.access_token,
             refresh_token: credentials.refresh_token,
@@ -21,7 +19,5 @@ const useSignUp = create<UseSignUp>((set) => ({
         })
     }
 }))
-
-// по идее процесс регистрации завершен, хуки мы написали
 
 export { useSignUp }
