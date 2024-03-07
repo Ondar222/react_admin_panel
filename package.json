@@ -30,6 +30,7 @@
     "@fullcalendar/interaction": "^6.1.10",
     "@fullcalendar/list": "^6.1.10",
     "@fullcalendar/moment": "^6.1.10",
+    "@fullcalendar/moment-timezone": "^6.1.11",
     "@fullcalendar/react": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
     "@mui/icons-material": "^5.15.11",

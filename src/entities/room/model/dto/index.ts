@@ -1,2 +1,2 @@
-export { RoomCreationDto } from "./create.dto";
-export { RoomUpdateDto } from "./update.dto";
+export { RoomCreationDto } from "./RoomCreateDto";
+export { RoomUpdateDto } from "./RoomUpdateDto";

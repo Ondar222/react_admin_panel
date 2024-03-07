@@ -1,25 +1,27 @@
 import { UploadFile } from "antd";
-import { HotelUpdateDto } from "./dto/update.dto";
-import { Hotel } from "./hotel";
+import { HotelUpdateDto } from "./dto/HotelUpdateDto";
+import type { Hotel } from "@/entities/hotel";
+import { HotelCreateDto } from "./dto/HotelCreateDto";
 
-interface IUseHotel {
-    hotel: Hotel | undefined;
+interface UseHotel {
+  hotel: Hotel | undefined;
 
-    setHotel: () => void;
+  getHotelDetails: () => void;
 
-    createHotel: () => void;
-    updateHotel: (dto: HotelUpdateDto) => Promise<void>;
-    deleteHotel: () => void;
+  createHotel: (dto: HotelCreateDto) => void;
+  updateHotel: (dto: HotelUpdateDto) => Promise<void>;
 
-    uploadImage: (
-        fieldName: string,
-        file: UploadFile | Array<UploadFile>
-    ) => Promise<void>
+  deleteHotel: () => void;
 
-    deleteImage: (
-        fieldName: string,
-        images: Array<string>
-    ) => Promise<void>
+  uploadImage: (
+    fieldName: string,
+    file: UploadFile | Array<UploadFile>
+  ) => Promise<void>;
+
+  deleteImage: (
+    fieldName: string,
+    images: Array<string> | string
+  ) => Promise<void>;
 }
 
-export type { IUseHotel }
+export type { UseHotel };

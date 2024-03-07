@@ -6,12 +6,18 @@ type Hotel = {
   id: number;
   name: string;
   description: string;
-  rooms: Array<Room>;
+
   administrator: User;
-  options: Array<number>;
-  address: Record<string, string>
+
+  address: Record<string, string>;
+
+  rooms: Array<Room>;
+
+  arrival: string;
+  departure: string;
+
   images: Array<IImage>;
   cover: IImage;
-}
+};
 
 export type { Hotel };

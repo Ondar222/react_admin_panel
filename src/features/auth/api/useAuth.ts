@@ -1,21 +1,21 @@
 import { create } from "zustand";
 import { IAuthResponse, IUseAuth } from "../model/interface";
 import axios from "axios";
-import { IDirectusResponse } from "../../../shared/directus/model/interface";
 import useCredentails from "./useCredentails";
 import Cookies from "js-cookie";
 import { useHotel } from "@/entities/hotel";
+import { ApiResponse } from "@/app/types";
 
 const useAuth = create<IUseAuth>((set) => ({
   isAuth: false,
   setIsAuth: (status: boolean) => set({ isAuth: status }),
+
   checkAuth: async () => {
     const access = Cookies.get("access_token");
     const refresh = Cookies.get("refresh_token");
 
     const data = {
-      refresh_token: refresh,
-      mode: "json",
+      refresh: refresh,
     };
 
     if (access) {
@@ -24,7 +24,7 @@ const useAuth = create<IUseAuth>((set) => ({
       });
     } else {
       const {} = await axios.post(
-        "https://yurta.site/api/cms/auth/refresh",
+        `${import.meta.env.VITE_API}/auth/refresh`,
         data
       );
     }
@@ -37,12 +37,11 @@ const useAuth = create<IUseAuth>((set) => ({
     };
 
     const authResponse: IAuthResponse = await axios
-      .post<IDirectusResponse<IAuthResponse>>(
+      .post<ApiResponse<IAuthResponse>>(
         `${import.meta.env.VITE_API}/auth/login/password`,
         data
       )
       .then((res) => {
-        useHotel.getState().setHotel()
         return res.data.data;
       });
 
@@ -55,7 +54,7 @@ const useAuth = create<IUseAuth>((set) => ({
       Cookies.set("access_token", access_token, {
         expires: expires,
       });
-      useCredentails.getState().actions.setCredentails(authResponse);
+      useCredentails.getState().setCredentails(authResponse);
       set({ isAuth: true });
     }
   },

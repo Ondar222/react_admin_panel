@@ -3,7 +3,7 @@ import { useAuth } from "../.."
 import { isEmail } from "class-validator"
 import { useNavigate } from "react-router-dom"
 import { Button, Col, Flex, Input, Row, Typography, Divider } from "antd"
-import { useAccount } from "@/entities/account/api"
+import { useAccount } from "@/entities/account"
 import { FloatButton } from "antd/lib"
 
 const AuthForm: FC = () => {

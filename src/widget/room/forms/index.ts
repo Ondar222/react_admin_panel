@@ -1,4 +1,3 @@
-export { RoomFormUI } from "./ui/room.form"
-export { useRoomUpdate } from "./update-form/api/hook/useRoomUpdate"
-export type { IRoomFormUI } from "./model"
-export { RoomUpdateForm } from "./update-form"
+export { RoomUpdateFormUI } from "./update-form/ui/index";
+export type { IRoomFormUI } from "./model";
+export { RoomUpdateForm } from "./update-form";

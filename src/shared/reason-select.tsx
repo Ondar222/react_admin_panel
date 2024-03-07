@@ -9,15 +9,14 @@ export const LockReasonSelect: FC<any> = (props) => {
 
 const LockReasonSelectUI: FC<any> = (props) =>
   <Form.Item
-    label={
-      <Typography.Title
-        level={4}>
-        Добавить событие
-      </Typography.Title>
-    }>
+    label={<Typography.Title
+      level={4}>
+      Добавить событие
+    </Typography.Title>}
+  >
     <Select onChange={props.onChange}>
-      <option value={"repair"}>Ремонт</option>
-      <option value={"offline"}>Оффлайн заказ</option>
-      <option value={"other"}>Еще одна причина</option>
+      <Select.Option value={"repair"}>Ремонт</Select.Option>
+      <Select.Option value={"offline"}>Оффлайн заказ</Select.Option>
+      <Select.Option value={"other"}>Еще одна причина</Select.Option>
     </Select>
   </Form.Item>

@@ -1,18 +1,18 @@
 import { create } from "zustand";
-import { IUseRoom } from "./interface";
+import { UseRoom } from "../model/UseRoom";
 import axios from "axios";
 import { Room, RoomCreationDto, RoomUpdateDto } from "..";
 import { ApiResponse } from "@/app/types";
 import { useCredentails } from "@/features/auth";
 import { UploadFile } from "antd";
 
-const useRoom = create<IUseRoom>((set, get) => ({
+const useRoom = create<UseRoom>((set, get) => ({
   rooms: undefined,
-  currentRoom: undefined,
+  room_details: undefined,
 
   // completed
   // don't touch it
-  create: async (room: RoomCreationDto) => {
+  createRoom: async (room: RoomCreationDto) => {
     const { access_token } = useCredentails.getState();
     const formData = new FormData();
 
@@ -24,19 +24,22 @@ const useRoom = create<IUseRoom>((set, get) => ({
     formData.append("description", room.description);
     formData.append("price", String(room.price));
 
-    if (room.images)
-      formData.append(
-        "images",
-        room.images[0]?.originFileObj,
-        room.images[0].name
-      );
+    console.log(room.images);
+    console.log(Boolean(room.images));
 
-    if (room.cover)
-      formData.append(
-        "cover",
-        room.cover?.originFileObj,
-        room.cover?.name
-      );
+    if (room.images) {
+      for (let i = 0; i < room.images.length; i++) {
+        formData.append(
+          "images",
+          room.images[i].originFileObj,
+          room.images[i].name
+        );
+      }
+    }
+
+    if (room.cover) {
+      formData.append("cover", room.cover[0].originFileObj, room.cover[0].name);
+    }
 
     const data = await axios
       .post(`${import.meta.env.VITE_API}/room`, formData, {
@@ -45,13 +48,16 @@ const useRoom = create<IUseRoom>((set, get) => ({
         },
       })
       .then((res) => {
+        console.log(res);
         return res;
       });
+
+    return data;
   },
 
   // completed
   // don't touch it
-  update: async (room: RoomUpdateDto) => {
+  updateRoom: async (room: RoomUpdateDto) => {
     const { access_token } = useCredentails.getState();
 
     await axios
@@ -63,6 +69,107 @@ const useRoom = create<IUseRoom>((set, get) => ({
       .then((res) => {
         return res;
       });
+  },
+
+  // completed
+  // don't touch it
+  deleteRoom: async (room_id) => {
+    const { access_token } = useCredentails.getState();
+
+    await axios
+      .delete(`${import.meta.env.VITE_API}/room/${room_id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((res) => console.log(res));
+  },
+
+  // completed
+  // don't touch it
+  getRoomDetailsByID: async (id) => {
+    const { access_token } = useCredentails.getState();
+
+    const room_details = await axios
+      .get<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((res) => res.data.data);
+
+    set({ room_details });
+  },
+
+  // completed
+  // don't touch it
+  getHotelRelatedRooms: async () => {
+    const { access_token } = useCredentails.getState();
+    await axios
+      .get<ApiResponse<Array<Room>>>(`${import.meta.env.VITE_API}/room/my`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((res) => res.data.data)
+      .then((rooms) => {
+        set({ rooms });
+      });
+  },
+
+  // completed
+  // don't touch it
+  uploadRoomImage: async (fieldName: string, image: UploadFile) => {
+    const formData = new FormData();
+    const { access_token } = useCredentails.getState();
+
+    formData.append(fieldName, image.originFileObj, image.name);
+
+    await axios
+      .post(
+        `${import.meta.env.VITE_API}/room/${get().room_details.id}/images`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  },
+
+  // completed
+  // don't touch it
+  deleteRoomImage: async (fieldName: string, file: string | string[]) => {
+    const { access_token } = useCredentails.getState();
+
+    const data = {
+      [fieldName]: undefined,
+    };
+
+    if (Array.isArray(file) === true) {
+      data[fieldName] = file;
+    }
+
+    if (Array.isArray(file) === false) {
+      data[fieldName] = [file];
+    }
+
+    console.log(data);
+
+    await axios
+      .delete(
+        `${import.meta.env.VITE_API}/room/${get().room_details.id}/images`,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+          data,
+        }
+      )
+      .then((res) => console.log(res));
   },
 
   // completed
@@ -95,93 +202,6 @@ const useRoom = create<IUseRoom>((set, get) => ({
           }),
         });
       });
-  },
-
-  // completed
-  // don't touch it
-  deleteRoom: async (room_id) => {
-    const { access_token } = useCredentails.getState();
-    await axios
-      .delete(`${import.meta.env.VITE_API}/room/${room_id}`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-      .then((res) => console.log(res));
-  },
-
-  // completed
-  // don't touch it
-  findById: async (id) => {
-    const { access_token } = useCredentails.getState();
-    await axios
-      .get<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room/${id}`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-      .then((res) => res.data.data)
-      .then((currentRoom) => {
-        set({ currentRoom });
-      });
-  },
-
-  // completed
-  // don't touch it
-  findMyRooms: async () => {
-    const { access_token } = useCredentails.getState();
-    await axios
-      .get<ApiResponse<Array<Room>>>(`${import.meta.env.VITE_API}/room/my`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-      .then((res) => res.data.data)
-      .then((rooms) => {
-        set({ rooms });
-      });
-  },
-
-  // completed
-  // don't touch it
-  uploadImage: async (
-    room_id: number,
-    fieldName: string,
-    image: UploadFile
-  ) => {
-    const formData = new FormData();
-    const { access_token } = useCredentails.getState();
-
-    formData.append(fieldName, image.originFileObj, image.name);
-
-    await axios.post(
-      `${import.meta.env.VITE_API}/room/${room_id}/images`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
-  },
-
-  // completed
-  // don't touch it
-  deleteImage: async (room_id: number, fieldName: string, id: string) => {
-    const { access_token } = useCredentails.getState();
-
-
-
-    await axios.delete(`${import.meta.env.VITE_API}/room/${room_id}/images`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-      data: {
-        cover: id,
-        images: [id],
-      },
-    })
-      .then((res) => console.log(res));
   },
 }));
 

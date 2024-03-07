@@ -5,7 +5,11 @@ interface IUseUsers {
   users: DirectusUserResponse[];
   getUsers: () => Promise<void>;
   findUserByPhone: (phone: string, callback: Function) => Promise<void>;
-  register: (user: UserCreateDto, code: string, callback: void) => Promise<unknown>;
+  register: (
+    user: UserCreateDto,
+    code: string,
+    callback: void
+  ) => Promise<unknown>;
 }
 
 class User {
@@ -45,9 +49,6 @@ class User {
   // tfa_secret: null;
   // status: string;
   role: string;
-  // token: null;
-  // last_access: string;
-  // last_page: string;
   phone: string;
 }
 
