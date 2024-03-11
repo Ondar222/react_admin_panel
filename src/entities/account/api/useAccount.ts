@@ -3,13 +3,14 @@ import { UseAccount } from "../model/useAccount";
 import { useCredentails } from "@/features/auth";
 import axios from "axios";
 import { ApiResponse } from "@/app/types";
+import User from "@/entities/user/model/interface";
 
 const useAccount = create<UseAccount>((set) => ({
   account: undefined,
   me: async () => {
     const { access_token } = useCredentails.getState();
 
-    const account = await axios.get<ApiResponse<any>>(
+    const account = await axios.get<ApiResponse<User>>(
       `${import.meta.env.VITE_API}/user/me`,
       {
         headers: {

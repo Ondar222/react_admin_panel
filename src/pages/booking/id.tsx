@@ -7,7 +7,6 @@ import { Flex, Form, Button } from "antd"
 import { useHotel } from "@/entities/hotel"
 import { RoomSelect } from "@/widget/room/room-select"
 import { YurtaDatePicker } from "@/shared/range-picker"
-import { YurtaUserSelect } from "@/widget/booking/@deprecated form/user-select"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
 import { YurtaInput } from "@/shared/components/form/ui/input/text"
 import { YurtaSelect } from "@/shared/components/form/ui/select/default"
@@ -98,7 +97,7 @@ const BookingDetailPage: FC = () => {
             }}
           />
 
-          {
+          {/* {
             booking.user &&
             <YurtaUserSelect
               value={booking.user}
@@ -111,7 +110,7 @@ const BookingDetailPage: FC = () => {
                 })
               }} />
 
-          }
+          } */}
 
           {booking.check_in && booking.check_out &&
             <YurtaDatePicker
