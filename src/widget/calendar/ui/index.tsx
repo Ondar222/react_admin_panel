@@ -71,7 +71,7 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
 
           start: dayjs(room_lock.start * 1000).tz(tz).toDate().toISOString(),
           end: dayjs(room_lock.end * 1000).tz(tz).toDate().toISOString(),
-          url: `/partners/room_lock/${room_lock.id}`
+          url: `/partners/roomlock/${room_lock.id}`
         }
       }
     }),

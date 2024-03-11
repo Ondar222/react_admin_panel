@@ -14,6 +14,8 @@ import { RoomCreationPage } from "@/pages/room/create";
 import { AccountPage } from "@/pages/account";
 import { HotelPage } from "@/pages/hotel";
 import { HotelCreationPage } from "@/pages/hotel/create";
+import { RoomlockPage } from "@/pages/roomlock";
+import { RoomlockDetailsPage } from "@/pages/roomlock/id";
 
 const Router = () =>
   <Routes>
@@ -38,6 +40,11 @@ const Router = () =>
     <Route path="/calendar/:date" element={<YurtaCalendarDateDetailsPage />} />
 
     <Route path="/account" element={<AccountPage />} />
+
+    <Route path="/roomlock" element={<RoomlockPage />} />
+    <Route path="/roomlock/:id" element={<RoomlockDetailsPage />} />
+    
+    <Route path="/404" element={<div></div>} />
   </Routes>
 
 
