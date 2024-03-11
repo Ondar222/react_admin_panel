@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { NotAuthorizedPage, SignInPage } from "../../pages/auth";
 import { BookingPage } from "../../pages/booking";
-import { SignUpPage } from "@/pages/sign_up/regist";
+import { SignUpPage } from "@/pages/sign_up";
 import { BookingDetailPage } from "../../pages/booking/id";
 import BookingCreationPage from "@/pages/booking/create";
 import { YurtaCalendarDateDetailsPage } from "@/pages/calendar/[date]";
