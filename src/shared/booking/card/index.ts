@@ -1,1 +1,0 @@
-export { BookingCardUI } from "./ui";

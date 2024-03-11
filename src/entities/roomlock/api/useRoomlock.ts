@@ -17,7 +17,7 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
 
   async getRoomlocksByRoomID(room_id) {
     const roomlocks = await axios
-      .get<ApiResponse<Array<any>>>(`${import.meta.env.VITE_API}/roomlock`, {
+      .get<ApiResponse<Array<Roomlock>>>(`${import.meta.env.VITE_API}/roomlock`, {
         params: {
           room_id,
         },
