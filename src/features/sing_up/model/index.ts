@@ -1,3 +1,6 @@
+import { UseOtp } from "@/features/otp"
+import { InputProps } from "antd"
+
 interface SignUpDto {
     email: string
     phone: string
@@ -13,4 +16,11 @@ interface UseSignUp {
     signUp: (dto: SignUpDto) => Promise<void>
 }
 
-export type { UseSignUp, SignUpDto }
+interface SignUpFormUIProps {
+    user: SignUpDto
+    onChange: InputProps["onChange"]
+    verifyPhoneNumber: UseOtp["verifyPhoneNumber"]
+    signUp: UseSignUp["signUp"]
+}
+
+export type { UseSignUp, SignUpDto, SignUpFormUIProps }
