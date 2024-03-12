@@ -3,7 +3,7 @@ import { MainLayout } from "@/shared/layouts/layout";
 import { Col, Typography, } from "antd";
 import { FC, useEffect, useState } from "react";
 import { LoadingPage } from "@/widget/loading_page";
-import { HotelUpdateForm } from "@/widget/hotel/form/update-form";
+import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 
 
 

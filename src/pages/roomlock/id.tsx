@@ -13,7 +13,7 @@ const RoomlockDetailsPage: FC = () => {
         getRoomLockDetailsByID(Number(id))
     }, [])
 
-    if (roomlock_details.id != Number(id) || !roomlock_details) return <LoadingPage />
+    if (roomlock_details?.id != Number(id) || !roomlock_details) return <LoadingPage />
 
     return (
         <MainLayout header={<div></div>} footer={<div></div>}  >

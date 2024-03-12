@@ -6,7 +6,7 @@ import { Avatar, Col, Flex, Form, Image, Input, Row, Tag, Typography } from "ant
 import { FC, useEffect } from "react";
 import { HotelPage } from "../hotel";
 import { LoadingPage } from "@/widget/loading_page";
-import { HotelUpdateForm } from "@/widget/hotel/form/update-form";
+import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { useHotel } from "@/entities/hotel";
 
 const AccountPage: FC = () => {

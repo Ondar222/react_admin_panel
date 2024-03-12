@@ -26,7 +26,14 @@ const useHotel = create<UseHotel>((set, get) => ({
     });
   },
 
-  createHotel: (dto) => {},
+  createHotel: async (dto) => {
+    const { access_token } = useCredentails.getState();
+    const hotel = await axios.post(`${import.meta.env.VITE_API}`, dto, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+  },
 
   updateHotel: async (dto) => {
     const { access_token } = useCredentails.getState();

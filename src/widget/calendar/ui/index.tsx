@@ -5,7 +5,7 @@ import momentPlugin from "@fullcalendar/moment"
 import listPlugin from '@fullcalendar/list'
 import dayjs from "dayjs";
 import { ICalendar } from "../../../entities/calendar";
-import { CalendarOptions, EventClickArg, EventInput } from "@fullcalendar/core/index.js";
+import { CalendarOptions, CustomContentGenerator, EventClickArg, EventContentArg, EventInput } from "@fullcalendar/core/index.js";
 import { preventDefault } from "@fullcalendar/core/internal.js";
 import { Booking } from "@/entities/booking";
 import utc from 'dayjs/plugin/utc'
@@ -19,12 +19,14 @@ import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendarUI } from "../model";
 import { Roomlock } from "@/entities/roomlock";
 import { start } from "repl";
+import { Link, useNavigate } from "react-router-dom";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 const tz = "Asia/Krasnoyarsk"
 
 const CalendarUI: FC<ICalendarUI> = (props) => {
+  const navigate = useNavigate()
   const calendar_options: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, momentPlugin, momentTimezonePlugin, listPlugin],
     initialView: 'dayGridMonth',
@@ -50,49 +52,48 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
           title: `${booking.status}`,
           start: dayjs(booking.check_in * 1000).tz(tz).format(),
           end: dayjs(booking.check_out * 1000).tz(tz).format(),
-          // url: `/partners/booking/${booking.id}`
-
+          onclick: () => {
+            console.log(`/booking/${booking.id}`)
+            navigate(`/booking/${booking.id}`)
+          }
         }
       }
 
       if (brm.type === 'room_lock') {
-        const room_lock = brm.item as Roomlock
-
-        console.group('date')
-        console.log('start')
-        console.log(dayjs(room_lock.start * 1000).tz(tz).toDate().toISOString())
-        console.log('end')
-        console.log(dayjs(room_lock.end * 1000).tz(tz).toDate().toISOString())
-        console.groupEnd()
+        const roomlock = brm.item as Roomlock
 
         return {
-          item_id: room_lock.id,
-          title: `${room_lock.status}`,
+          item_id: roomlock.id,
+          title: `${roomlock.status}`,
 
-          start: dayjs(room_lock.start * 1000).tz(tz).toDate().toISOString(),
-          end: dayjs(room_lock.end * 1000).tz(tz).toDate().toISOString(),
-          url: `/partners/roomlock/${room_lock.id}`
+          start: dayjs(roomlock.start * 1000).tz(tz).toDate().toISOString(),
+          end: dayjs(roomlock.end * 1000).tz(tz).toDate().toISOString(),
+          url: `/roomlock/${roomlock.id}`,
+
+          // onclick: () => navigate(`/roomlock/${roomlock.id}`)
+
         }
       }
     }),
-    // locale: "ru",
-    eventContent: renderEventContent,
-    // timeZone: "Asia/Krasnoyarsk",
-    eventClick: (props.onClick)
+    eventContent: (e) => renderEventContent,
+    // eventClick: (arg) => arg.el.click()
   }
   return (
-      <FullCalendar
-        {...calendar_options}
-      />
+    <FullCalendar
+      {...calendar_options}
+    />
   )
 }
 
 // a custom render function
-function renderEventContent(eventInfo) {
+const renderEventContent = (eventInfo: EventContentArg): CustomContentGenerator<EventContentArg> => {
+  // const navigate = useNavigate()
   return (
-    <Button onClick={(e) => {
-      preventDefault
-    }} style={{ width: '100%' }}>{`${eventInfo.event.title}`}</Button>
+    <Link to={eventInfo.event.url}  style={{ width: '100%' }}>
+      <Button style={{ width: '100%' }}>
+        {`${eventInfo.event.title}`}
+      </Button>
+    </Link>
   )
 }
 

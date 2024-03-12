@@ -4,7 +4,7 @@ import { InputProps, SelectProps } from "antd";
 import { RoomUpdateFormUI } from "./ui";
 
 const RoomUpdateForm: FC<{ room: Room }> = (props) => {
-    const [room, setRoom] = useState<RoomUpdateDto>( {
+    const [room, setRoom] = useState<RoomUpdateDto>({
         id: props.room.id,
         name: props.room.name,
         description: props.room.description,
@@ -43,6 +43,13 @@ const RoomUpdateForm: FC<{ room: Room }> = (props) => {
         }));
     };
 
+    const handleEditorChange = (html: string) => {
+        setRoom((prev) => ({
+            ...prev,
+            description: html
+        }))
+    }
+
     const handleSelect: SelectProps["onChange"] = (value, option) => {
         setRoom((prev) => ({
             ...prev,
@@ -52,8 +59,6 @@ const RoomUpdateForm: FC<{ room: Room }> = (props) => {
 
     const handleImageChange = async (fieldName: string, info) => {
         const status = info.file.status
-
-        console.log(status)
         if (status === "done") {
             console.log('uploaded')
             // await uploadRoomImage(fieldName, info.file);
@@ -77,6 +82,7 @@ const RoomUpdateForm: FC<{ room: Room }> = (props) => {
                 room={room}
 
                 handleChange={handleChange}
+                handleDescriptionChange={handleEditorChange}
                 handleSelect={handleSelect}
                 onFileChange={handleImageChange}
                 onFileRemove={handleImageRemove}

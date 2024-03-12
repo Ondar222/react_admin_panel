@@ -7,7 +7,7 @@ interface ICalendarUI extends CalendarOptions {
     type: string;
     item: Booking | Roomlock;
   }[];
-  onClick: (arg: EventClickArg) => void
+  onClick?: (arg: EventClickArg) => void
 }
 
 export type {ICalendarUI}

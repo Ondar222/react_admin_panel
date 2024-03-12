@@ -3,12 +3,8 @@ import { RoomCreateFormUI } from "./ui/room.form";
 import { Room, RoomCreationDto, useRoom } from "@/entities/room";
 import { InputProps, SelectProps } from "antd";
 import { UploadChangeParam } from "antd/es/upload";
-import { LoadingPage } from "@/widget/loading_page";
-import { url } from "inspector";
 import type { Hotel } from "@/entities/hotel";
 import { UploadFile } from "antd/lib";
-import { getBase64 } from "@/shared/utils";
-import { RcFile } from "antd/lib/upload";
 import { useNavigate } from "react-router-dom";
 import { ApiResponse } from "@/app/types";
 import { AxiosResponse } from "axios";
@@ -34,6 +30,13 @@ const RoomCreationForm: FC<RoomCreationFormProps> = (props) => {
         setRoom(prev => ({
             ...prev,
             [fieldName]: e.target.value
+        }))
+    }
+
+    const handleDescriptionChange = (html) => {
+        setRoom(prev => ({
+            ...prev,
+            description: html
         }))
     }
 
@@ -69,14 +72,17 @@ const RoomCreationForm: FC<RoomCreationFormProps> = (props) => {
             })
     }
 
-    return <RoomCreateFormUI
-        room={room}
-        onSubmit={handleSubmit}
-        handleChange={handleInputChange}
-        handleSelect={handleSelect}
-        onFileChange={handleImageChange}
-        onFileRemove={handleImageRemove} />
-
+    return (
+        <RoomCreateFormUI
+            room={room}
+            onSubmit={handleSubmit}
+            handleChange={handleInputChange}
+            handleSelect={handleSelect}
+            onFileChange={handleImageChange}
+            onFileRemove={handleImageRemove}
+            handleDescriptionChange={handleDescriptionChange}
+        />
+    )
 
 }
 

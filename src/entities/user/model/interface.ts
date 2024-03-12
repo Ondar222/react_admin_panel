@@ -12,27 +12,7 @@ interface IUseUsers {
   ) => Promise<unknown>;
 }
 
-class User {
-  constructor(
-    id: string = "",
-    surname: string = "",
-    name: string = "",
-    email: string = "",
-    role: string = "",
-    phone: string = "",
-    avatar: IImage = {
-      id: "",
-      link: "",
-    }
-  ) {
-    this.id = id;
-    this.surname = surname;
-    this.name = name;
-    this.email = email;
-    this.role = role;
-    this.phone = phone;
-    this.avatar = avatar;
-  }
+type User = {
   id: string;
   surname: string;
   name: string;
@@ -40,21 +20,14 @@ class User {
   avatar: IImage;
   role: string;
   phone: string;
-}
+};
 
-class UserCreateDto {
-  constructor(phone: string, surname?: string, name?: string, email?: string) {
-    this.surname = surname;
-    this.name = name;
-    this.phone = phone;
-    this.email = email;
-  }
-
+type UserCreateDto = {
   surname: string | undefined;
   name: string | undefined;
   phone: string;
   email: string | undefined;
-}
+};
 
-export { User as default };
+export type { User as default };
 export type { IUseUsers };

@@ -4,8 +4,11 @@ import { SignUpFormUI } from "@/features/sing_up/ui"
 import { useSignUp } from "@/features/sing_up/api/useSignUp"
 import { SignUpDto } from "@/features/sing_up/model"
 import { useOtp } from "@/features/otp"
+import { useForm } from "antd/es/form/Form"
 
 const SignUpPage: FC = () => {
+    const form = useForm()
+    
     const [user, setUser] = useState<SignUpDto>({
         email: "",
         phone: "",

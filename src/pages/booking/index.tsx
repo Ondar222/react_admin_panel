@@ -100,11 +100,6 @@ const BookingPage: FC = () => {
           <Col span={18}>
             <CalendarUI
               brm={brm}
-              onClick={(e) => {
-                const id = e.event.extendedProps.item_id
-                const entity = e.event.extendedProps.type
-                navigate(`/${entity}/${id}`)
-              }}
             />
           </Col>
           <Col>

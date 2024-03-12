@@ -1,21 +1,16 @@
 
-import { useRef } from "react"
+import { FC, useRef } from "react"
 import { Editor } from '@tinymce/tinymce-react';
+import { YurtaEditorT } from "./types";
 
-export const YurtaEditor = ({ defaultValue, onChange }) => {
+export const YurtaEditor: FC<YurtaEditorT> = ({ value, onChange }: { value?: string, onChange?: any }) => {
     const editorRef = useRef(null);
-    const log = () => {
-        if (editorRef.current) {
-            console.log(editorRef.current.getContent());
-
-        }
-    };
 
     return (
         <Editor
-            apiKey='qu8gahwqf4sz5j8567k7fmk76nqedf655jhu2c0d9bhvc0as'
+            apiKey={import.meta.env.VITE_TINYMCE_APIKEY}
             onInit={(evt, editor) => editorRef.current = editor}
-            initialValue={defaultValue}
+            initialValue={value}
 
             init={{
                 language: "ru",
@@ -32,8 +27,7 @@ export const YurtaEditor = ({ defaultValue, onChange }) => {
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
             tagName="description"
-
-            onEditorChange={() => onChange(editorRef.current.getContent())}
+            onChange={() => onChange(editorRef.current.getContent())}
         />
     )
 }

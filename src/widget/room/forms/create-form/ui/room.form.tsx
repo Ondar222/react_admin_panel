@@ -5,6 +5,7 @@ import { YurtaSelect } from "@/shared/components/form/ui/select/default"
 import { Button, Form, Input, UploadFile } from "antd"
 import { FC } from "react"
 import { IRoomFormUI } from "../../model"
+import { YurtaEditor } from "@/shared/editor"
 
 export function isRoomCreation(room: RoomCreationDto | RoomUpdateDto): room is RoomCreationDto {
   return room instanceof RoomCreationDto
@@ -27,8 +28,8 @@ export const RoomCreateFormUI: FC<IRoomFormUI<RoomCreationDto>> = (props) =>
     />}
 
     <YurtaInput
-      label="Название комнаты"
-      placeholder="Название комнаты"
+      label="Название номера"
+      placeholder="Название номера"
       value={props.room?.name}
       name="name"
       onChange={props.handleChange}
@@ -52,8 +53,8 @@ export const RoomCreateFormUI: FC<IRoomFormUI<RoomCreationDto>> = (props) =>
     />
 
     <YurtaSelect
-      label="Тип комнаты"
-      placeholder="Тип комнаты"
+      label="Тип номера"
+      placeholder="Тип номера"
       value={props.room?.type}
       options={Object.keys(RoomTypes).map((status) => ({
         value: status,
@@ -71,6 +72,10 @@ export const RoomCreateFormUI: FC<IRoomFormUI<RoomCreationDto>> = (props) =>
       name="capacity"
       onChange={props.handleChange}
     />
+
+    <YurtaEditor
+      value={props.room?.description}
+      onChange={(html) => props.handleDescriptionChange(html)} />
 
     <YurtaUpload
       method="POST"

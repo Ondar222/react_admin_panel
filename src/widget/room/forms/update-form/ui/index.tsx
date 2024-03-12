@@ -6,6 +6,7 @@ import { Button, Form } from "antd"
 import { FC } from "react"
 import { IRoomFormUI } from "../.."
 import { isRoomUpdating } from "../../create-form/ui/room.form"
+import { YurtaEditor } from "@/shared/editor"
 
 export const RoomUpdateFormUI: FC<IRoomFormUI<RoomUpdateDto>> = (props) =>
   <Form
@@ -20,8 +21,8 @@ export const RoomUpdateFormUI: FC<IRoomFormUI<RoomUpdateDto>> = (props) =>
     />}
 
     <YurtaInput
-      label="Название комнаты"
-      placeholder="Название комнаты"
+      label="Название номера"
+      placeholder="Название номера"
       value={props.room?.name}
       name="name"
       onChange={props.handleChange}
@@ -45,8 +46,8 @@ export const RoomUpdateFormUI: FC<IRoomFormUI<RoomUpdateDto>> = (props) =>
     />
 
     <YurtaSelect
-      label="Тип комнаты"
-      placeholder="Тип комнаты"
+      label="Тип номера"
+      placeholder="Тип номера"
       value={props.room?.type}
       options={Object.keys(RoomTypes).map((status) => ({
         value: status,
@@ -54,6 +55,11 @@ export const RoomUpdateFormUI: FC<IRoomFormUI<RoomUpdateDto>> = (props) =>
       }))}
 
       onChange={props.handleSelect}
+    />
+
+    <YurtaEditor
+      value={props.room.description}
+      onChange={props.handleDescriptionChange}
     />
 
     <YurtaInput
