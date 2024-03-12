@@ -26,6 +26,7 @@ export const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
   const { updateHotel, deleteImage } = useHotel()
 
   const handleChange: InputProps["onChange"] = async (e) => {
+    console.log(e)
     setHotel((prev) => ({
       ...prev,
       [e.target.name]: e.target.value

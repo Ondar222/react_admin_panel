@@ -1,9 +1,10 @@
 import { useHotel } from "@/entities/hotel";
 import { MainLayout } from "@/shared/layouts/layout";
 import { Col, Typography, } from "antd";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { LoadingPage } from "@/widget/loading_page";
 import { HotelUpdateForm } from "@/widget/hotel/form/update-form";
+import { YurtaEditor } from "@/shared/editor";
 
 
 

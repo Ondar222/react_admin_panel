@@ -3,6 +3,7 @@ import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { Button, Form } from "antd";
 import { FC } from "react";
 import { HotelUpdateFormUIProps } from "../model";
+import { YurtaEditor } from "@/shared/editor";
 
 export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
   <Form layout="vertical" >
@@ -12,6 +13,8 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       value={props.hotel.name}
       onChange={props.handleChage}
     />
+
+    <YurtaEditor defaultValue={props.hotel.description} onChange={props.handleChage} />
 
     <YurtaUpload
       label="Превью"
