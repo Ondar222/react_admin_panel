@@ -11,10 +11,10 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       label="Название"
       name="name"
       value={props.hotel.name}
-      onChange={props.handleChage}
+      onChange={props.handleChange}
     />
 
-    <YurtaEditor defaultValue={props.hotel.description} onChange={props.handleChage} />
+    <YurtaEditor defaultValue={props.hotel.description} onChange={props.handleEditorChange} />
 
     <YurtaUpload
       label="Превью"

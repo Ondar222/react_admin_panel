@@ -34,18 +34,23 @@ export const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
   }
 
   const handleFileChange = async (name: string, info: UploadChangeParam<UploadFile<any>>) => {
-    
+
   }
 
   const handleFileRemove = async (name: string, file: UploadFile) => {
     deleteImage(name, file.uid)
   }
 
+  const handleEditorChange = async (html: any) => {
+    setHotel((prev) => ({ ...prev, description: html }))
+  }
+
   if (!hotel || !images || !cover) return <LoadingPage />
 
   return <HotelUpdateFormUI
+    handleEditorChange={handleEditorChange}
     hotel={hotel}
-    handleChage={handleChange}
+    handleChange={handleChange}
     images={images}
     cover={cover}
     onFileChange={handleFileChange}
