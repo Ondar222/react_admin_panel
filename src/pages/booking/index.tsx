@@ -83,7 +83,8 @@ const BookingPage: FC = () => {
 
         {
           BookingPageVMDecoder.map((mode) => {
-            return <option key={mode.name} value={mode.name}>{mode.label_ru}</option>
+            return <option key={mode.name} value={mode.name}>{mode.label_ru}
+            </option>
           })
 
         }
@@ -124,9 +125,3 @@ const BookingPage: FC = () => {
 
 
 export { BookingPage }
-
-// {
-//   <Col>
-//   <TableApp />
-//   </Col>
-// }

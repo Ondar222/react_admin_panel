@@ -94,8 +94,6 @@ const RoomLockCreationFormUI: FC<IRoomLockCreationFormUI> = (props) =>
         onChange={(e) => {
           const room: Pick<Room, 'id'> = e as Pick<Room, 'id'>
           props.onRoomSelect(room)
-
-
         }}
       />
     }
