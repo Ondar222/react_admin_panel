@@ -15,7 +15,7 @@ interface RoomCreationFormProps {
 
 const RoomCreationForm: FC<RoomCreationFormProps> = (props) => {
     const [room, setRoom] = useState<RoomCreationDto>()
-    const { createRoom } = useRoom()
+    const { createRoom } = useRoom() 
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -61,6 +61,7 @@ const RoomCreationForm: FC<RoomCreationFormProps> = (props) => {
         //     images: prev.images.filter((image) => image.uid != file.uid)
         // }))
     }
+
 
     const handleSubmit = () => {
         createRoom(room)
