@@ -74,10 +74,6 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
       .then((res) => res.data.data);
 
     useBrm.getState().addRoomLock(created_roomlock);
-
-    set({
-      roomlocks: [created_roomlock, ...get().roomlocks],
-    });
   },
 
   async deleteRoomlock(id: number) {

@@ -1,6 +1,6 @@
 import { HotelUpdateDto, useHotel } from "@/entities/hotel";
 import { LoadingPage } from "@/widget/loading_page";
-import { Button, Form, Input, InputProps, UploadFile } from "antd";
+import { Button, Form, Input, InputProps, UploadFile, message } from "antd";
 import Upload, { UploadChangeParam } from "antd/es/upload";
 import { FC, useState } from "react";
 import { HotelUpdatePageProps, UpdateHotelFormT } from "./model";
@@ -60,6 +60,10 @@ const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
         id: hotel?.id,
         name: hotel?.name,
         description: hotel?.description
+      }).then((res) => {
+        message.success("Данные отеля успешно обновлены")
+      }).catch((error) => {
+        message.error("Не удалось обновить данные отеля")
       })}
     />
   )
@@ -69,6 +73,7 @@ export { HotelUpdateForm }
 
 const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
   const { updateHotel, deleteImage } = useHotel()
+
   const [form] = Form.useForm<UpdateHotelFormT>()
   const hotel_name = Form.useWatch("name", form)
   const description = Form.useWatch("description", form)
@@ -76,16 +81,21 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
   const images = Form.useWatch("images", form)
 
 
-  return <Form.Provider onFormFinish={(name, info) => {
-    if (name === 'hotel_update') {
-      updateHotel({
-        id: props.hotel.id,
-        name: hotel_name,
-        description: description,
-        address: {},
-      })
-    }
-  }}>
+  return <Form.Provider
+    onFormFinish={async (name, info) => {
+      if (name === 'hotel_update') {
+        await updateHotel({
+          id: props.hotel.id,
+          name: hotel_name,
+          description: description,
+          address: {},
+        }).then((res) => {
+          message.success("Данные отеля были успешно обновлены")
+        }).catch((error) => {
+          message.error("Данные")
+        })
+      }
+    }}>
     <Form form={form} layout="vertical" name="hotel_update" >
       <Form.Item name={"id"} initialValue={props.hotel.id}>
         <Input />
@@ -127,3 +137,4 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
   </Form.Provider>
 }
 
+export { UpdateHotelForm }

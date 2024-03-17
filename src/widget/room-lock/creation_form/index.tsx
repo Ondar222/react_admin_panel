@@ -1,21 +1,17 @@
 import { FC, useEffect, useState } from "react";
 import { IRoomLockCreationFormUI } from "../../../entities/roomlock/model/Roomlock";
-import { RoomSelect } from "@/widget/room/room-select";
+import { RoomSelect } from "@/widget/room/RoomSelect";
 import { YurtaDatePicker } from "@/shared/range-picker";
-import { Form, Button, notification } from "antd";
+import { Form, Button, message } from "antd";
 import { IRangePicker } from "@/shared/range-picker/model";
 import { Room } from "@/entities/room";
 import { useHotel } from "@/entities/hotel";
-import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRoomLock } from "../../../entities/roomlock/api/useRoomlock";
-import { Dayjs } from "dayjs";
 import { LockReasonSelect } from "../../../shared/reason-select";
 import { useBrm } from "@/entities/calendar/api/useBrm";
 import dayjs from "dayjs";
 
 const RoomlockCreationForm: FC = () => {
-  const [api, contextHolder] = notification.useNotification();
-
   const { hotel, getHotelDetails } = useHotel()
   const { createRoomlock } = useRoomLock()
   const { addRoomLock } = useBrm()
@@ -29,49 +25,39 @@ const RoomlockCreationForm: FC = () => {
       getHotelDetails()
   }, [])
 
-  const openNotification = (placement: NotificationPlacement) => {
-    api.open({
-      message: `Номер забронирован`,
-      placement,
-    });
-  };
-
   const handleDatePickerChange: IRangePicker["onChange"] = (dates) => {
     console.log(dates)
     setDates([dates[0], dates[1]])
   }
-    
-
 
   const handleRoomSelectChange = (e: Pick<Room, "id">) =>
     setRoomId(e.id)
-
-
-
 
   const handleLockReason = (e) => {
     setReason(e)
   }
 
-  const handleSaveButtonClick = () => {
-    openNotification('top')
-    console.log(dates)
-    createRoomlock({ room_id: room_id, start: dates[0], end: dates[1], reason: reason })
+  const handleSaveButtonClick = async () => {
+    await createRoomlock({ room_id: room_id, start: dates[0], end: dates[1], reason: reason })
+      .then((res) => {
+        console.log(res)
+        message.success("Номер заблокирован")
+      })
+      .catch((error) => {
+        console.error(error)
+        message.error("Произошла ошибка при блокировке номера")
+      })
   }
 
   return (
-    <>
-      {contextHolder}
-      <RoomLockCreationFormUI
-        hotel={hotel}
-        room_id={{ id: room_id }}
-        dates={dates}
-        onDatePickerChange={handleDatePickerChange}
-        onSaveButtonClick={handleSaveButtonClick}
-        onRoomSelect={handleRoomSelectChange}
-        onReasonSelectChange={handleLockReason} />
-    </>
-
+    <RoomLockCreationFormUI
+      hotel={hotel}
+      room_id={{ id: room_id }}
+      dates={dates}
+      onDatePickerChange={handleDatePickerChange}
+      onSaveButtonClick={handleSaveButtonClick}
+      onRoomSelect={handleRoomSelectChange}
+      onReasonSelectChange={handleLockReason} />
   )
 }
 

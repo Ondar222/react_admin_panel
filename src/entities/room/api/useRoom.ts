@@ -24,9 +24,6 @@ const useRoom = create<UseRoom>((set, get) => ({
     formData.append("description", room.description);
     formData.append("price", String(room.price));
 
-    console.log(room.images);
-    console.log(Boolean(room.images));
-
     if (room.images) {
       for (let i = 0; i < room.images.length; i++) {
         formData.append(
@@ -57,7 +54,7 @@ const useRoom = create<UseRoom>((set, get) => ({
 
   // completed
   // don't touch it
-  updateRoom: async (room: RoomUpdateDto) => {
+  updateRoom: async (room: Omit<RoomUpdateDto, "hotel_id" | "cover" | "images" | "visibility">) => {
     const { access_token } = useCredentails.getState();
 
     await axios

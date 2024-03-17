@@ -2,12 +2,10 @@ import { FC, useMemo, useState } from "react"
 import { MainLayout } from "../../shared/layouts/layout"
 import { useEffect } from "react"
 import { useBooking } from "@/entities/booking"
-import { Col, NotificationArgsProps, Row, Select, notification } from "antd"
+import { Col, Row, Select } from "antd"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
-import { useNavigate } from "react-router-dom"
 import { CalendarUI } from "@/widget/calendar/ui"
 import { useBrm } from "@/entities/calendar/api/useBrm"
-import React from "react"
 import { RoomlockCreationForm } from "@/widget/room-lock/creation_form"
 import { BookingList } from "@/widget/booking/list-view"
 import { BookingBrick } from "@/widget/booking/brick-view"
@@ -36,28 +34,11 @@ const BookingPageVMDecoder = [
   }
 ]
 
-type NotificationPlacement = NotificationArgsProps['placement'];
-
-const Context = React.createContext({ name: 'Default' });
-
 const BookingPage: FC = () => {
   const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar)
-  const [api, contextHolder] = notification.useNotification();
-
-  const openNotification = (placement: NotificationPlacement) => {
-    api.info({
-      message: `Notification ${placement}`,
-      description: <Context.Consumer>{({ name }) => `Hello, ${name}!`}</Context.Consumer>,
-      placement,
-    });
-  };
-
-  const contextValue = useMemo(() => ({ name: 'Ant Design' }), []);
 
   const { bookings, getAllBookings } = useBooking()
-  // const { calendar, getAll } = useCalendar()
   const { brm, getAll } = useBrm()
-  const navigate = useNavigate()
 
   useEffect(() => {
     getAll()
@@ -72,25 +53,15 @@ const BookingPage: FC = () => {
       }
       footer={<></>}
     >
-
       <Select
         style={{ width: '150px' }}
         defaultValue={BookingPageVMDecoder[0].name}
         onChange={(e) => setMode(e as BookingPageVM)}
-
-      >
-
-
-        {
-          BookingPageVMDecoder.map((mode) => {
-            return <option key={mode.name} value={mode.name}>{mode.label_ru}
-            </option>
-          })
-
-        }
-
-
-      </Select>
+        options={BookingPageVMDecoder.map((mode) => ({
+          label: mode.label_ru,
+          value: mode.name
+        }))}
+      />
 
       {
         mode === BookingPageVM.calendar &&

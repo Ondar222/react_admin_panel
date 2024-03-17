@@ -43,9 +43,10 @@ const Router = () =>
 
     <Route path="/roomlock" element={<RoomlockPage />} />
     <Route path="/roomlock/:id" element={<RoomlockDetailsPage />} />
-    
+
     <Route path="/404" element={<div></div>} />
   </Routes>
+
 
 
 export default Router;

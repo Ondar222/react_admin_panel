@@ -2,9 +2,9 @@ import { IImage } from "@/app/types";
 import { Hotel } from "@/entities/hotel";
 
 enum RoomTypes {
-  economy = "economy",
-  standard = "standard",
-  luxury = "luxury",
+  economy = "Эконом",
+  standard = "Стандарт",
+  luxury = "Люкс",
 }
 
 type Room = {

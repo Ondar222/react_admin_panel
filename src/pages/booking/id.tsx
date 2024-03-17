@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import { BookingUpdateDto } from "@/entities/booking/model/dto/BookingUpdateDto"
 import { Flex, Form, Button } from "antd"
 import { useHotel } from "@/entities/hotel"
-import { RoomSelect } from "@/widget/room/room-select"
+import { RoomSelect } from "@/widget/room/RoomSelect"
 import { YurtaDatePicker } from "@/shared/range-picker"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
 import { YurtaInput } from "@/shared/components/form/ui/input/text"
@@ -51,6 +51,7 @@ const BookingDetailPage: FC = () => {
             placeholder="id"
             disabled
             value={booking.amount}
+            type="number"
             color={"white"}
             onChange={(e) => {
               setBooking((prev) => {

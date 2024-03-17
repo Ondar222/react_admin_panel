@@ -1,8 +1,8 @@
 import { MainLayout } from "@/shared/layouts/layout"
 import { FC, useEffect } from "react"
-import { RoomCreationForm } from "@/widget/room/forms/create-form"
 import { useHotel } from "@/entities/hotel"
 import { LoadingPage } from "@/widget/loading_page"
+import { AddNewRoomForm } from "@/widget"
 
 const RoomCreationPage: FC = () => {
   const { hotel, getHotelDetails } = useHotel()
@@ -17,9 +17,7 @@ const RoomCreationPage: FC = () => {
 
   return (
     <MainLayout header="Создание нового номера" footer="">
-      <RoomCreationForm
-        hotel={hotel}
-      />
+      <AddNewRoomForm hotel_id={hotel.id} />
     </MainLayout>
   )
 }

@@ -5,12 +5,11 @@ import { FC, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { RoomlockListUI } from "@/widget/room-lock/list"
 import { useRoomLock } from "@/entities/roomlock/api/useRoomlock"
-import { RoomUpdateForm } from "@/widget/room/forms"
 import { RoomDtlsPgHdr } from "@/widget/room/details_page_header/ui"
 import { LoadingPage } from "@/widget/loading_page"
+import { UpdateCurrentRoomForm } from "@/widget/room/UpdateCurrentRoomForm/UpdateCurrentRoomForm"
 
 const RoomDetailsPage: FC = () => {
-  // room details
   const { id } = useParams()
 
   const { room_details, getRoomDetailsByID } = useRoom()
@@ -30,14 +29,39 @@ const RoomDetailsPage: FC = () => {
     >
       <Row justify={"space-between"} gutter={[16, 16]}>
         <Col span={10}>
+          <UpdateCurrentRoomForm room={{
+            id: room_details.id,
+            name: room_details.name,
+            description: room_details.description,
 
-          <RoomUpdateForm room={room_details} />
+            price: room_details.price,
+            number: room_details.number,
+
+            capacity: room_details.capacity,
+            visibility: room_details.visibility,
+            type: room_details.type,
+
+            hotel_id: room_details.hotel.id,
+
+            cover: room_details.cover != null ? [{
+              uid: room_details.cover.id,
+              name: room_details.cover.id,
+              thumbUrl: room_details.cover.link,
+              url: room_details.cover.link
+            }] : undefined,
+            images: room_details.images.map((image) => ({
+              uid: image.id,
+              name: image.id,
+              thumbUrl: image.link,
+              url: image.link
+            })),
+          }} />
 
         </Col>
         <Col span={10}>
 
           <RoomlockListUI roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
-          
+
         </Col>
       </Row>
 
