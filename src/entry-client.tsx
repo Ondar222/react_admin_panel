@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client'
 import "./app/styles/index.css"
 import "./app/styles/antd-extentions.css"
 import "./app/styles/regist.style.css"
+import "./app/styles/table-roomlock.css"
 import Router from './app/router'
 import { BrowserRouter } from "react-router-dom";
 import { ConfigProvider } from 'antd'
 import ru_RU from "antd/lib/locale/ru_RU"
-// import App from './pages';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 
@@ -18,5 +18,5 @@ root.render(
         <Router />
       </BrowserRouter>
     </ConfigProvider>
-  // </React.StrictMode>
+  </React.StrictMode>
 )

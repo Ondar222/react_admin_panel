@@ -3,13 +3,13 @@ import { useAuth } from "../.."
 import { isEmail } from "class-validator"
 import { useNavigate } from "react-router-dom"
 import { Button, Col, Flex, Input, Row, Typography, Divider } from "antd"
-import { useAccount } from "@/entities/account/api"
+import { useAccount } from "@/entities/account"
 import { FloatButton } from "antd/lib"
 
 const AuthForm: FC = () => {
     const [email, setEmail] = useState<string>("asankheya@yurta.ru")
     const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false)
-    const [password, setPassword] = useState<string>("Tc7yf6rt!")
+    const [password, setPassword] = useState<string>("B858CB282617FB0956D960215C8E84D1CCF909C6")
     const { isAuth, login, logout, checkAuth } = useAuth()
     const { me } = useAccount()
     const [open, setOpen] = React.useState(false)

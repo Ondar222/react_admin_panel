@@ -2,32 +2,31 @@ import { FC, useEffect, useState } from "react"
 import { MainLayout } from "../../shared/layouts/layout"
 import { EBookingStatus, useBooking } from "@/entities/booking"
 import { useParams } from "react-router-dom"
-import { BookingUpdateDto } from "@/entities/booking/model/dto/update-dto"
-import { Flex, Form, Select, Input, InputNumber, Button } from "antd"
-import { useHotel } from "@/entities/hotel/api"
-import RoomSelect from "@/widget/room/room-select"
+import { BookingUpdateDto } from "@/entities/booking/model/dto/BookingUpdateDto"
+import { Flex, Form, Button } from "antd"
+import { useHotel } from "@/entities/hotel"
+import { RoomSelect } from "@/widget/room/RoomSelect"
 import { YurtaDatePicker } from "@/shared/range-picker"
-import { YurtaUserSelect } from "@/entities/booking/ui/form/user-select"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
 import { YurtaInput } from "@/shared/components/form/ui/input/text"
 import { YurtaSelect } from "@/shared/components/form/ui/select/default"
 
 const BookingDetailPage: FC = () => {
   const { id } = useParams()
-  const { currentBooking, findById, update } = useBooking()
-  const [booking, setBooking] = useState<BookingUpdateDto>(new BookingUpdateDto(currentBooking))
-  const { hotel, setHotel } = useHotel()
+  const { booking_details, getBookingDetailsByID } = useBooking()
+  const [booking, setBooking] = useState<BookingUpdateDto>(new BookingUpdateDto(booking_details))
+  const { hotel, getHotelDetails } = useHotel()
 
   useEffect(() => {
     if (id) {
-      setHotel()
-      findById(id)
+      getHotelDetails()
+      getBookingDetailsByID(Number(id))
     }
   }, [])
 
   useEffect(() => {
-    setBooking(new BookingUpdateDto(currentBooking))
-  }, [currentBooking])
+    setBooking(new BookingUpdateDto(booking_details))
+  }, [booking_details])
 
   return (
     <MainLayout
@@ -52,6 +51,7 @@ const BookingDetailPage: FC = () => {
             placeholder="id"
             disabled
             value={booking.amount}
+            type="number"
             color={"white"}
             onChange={(e) => {
               setBooking((prev) => {
@@ -98,7 +98,7 @@ const BookingDetailPage: FC = () => {
             }}
           />
 
-          {
+          {/* {
             booking.user &&
             <YurtaUserSelect
               value={booking.user}
@@ -111,7 +111,7 @@ const BookingDetailPage: FC = () => {
                 })
               }} />
 
-          }
+          } */}
 
           {booking.check_in && booking.check_out &&
             <YurtaDatePicker
@@ -129,19 +129,15 @@ const BookingDetailPage: FC = () => {
 
           {
             hotel && <RoomSelect
+              mode="multiple"
               value={booking.rooms}
+              isMultiple={true}
               rooms={hotel.rooms}
-              onChange={(e) => setBooking((prev) => ({
-                ...prev,
-                rooms: e
-              }))
-              }
+
             />
           }
 
-          <Button onClick={() => {
-            update(booking)
-          }}>
+          <Button>
             Сохранить
           </Button>
         </Flex>

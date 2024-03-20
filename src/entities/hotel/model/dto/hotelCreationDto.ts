@@ -1,5 +1,0 @@
-class HotelCreationDto {
-  
-}
-
-export { HotelCreationDto };

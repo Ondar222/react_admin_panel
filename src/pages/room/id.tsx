@@ -1,86 +1,67 @@
-import { RoomUpdateDto, useRoom } from "@/entities/room"
-import { RoomUpdateForm } from "@/widget/room/creation-form.tsx/ui"
+import { useRoom } from "@/entities/room"
 import { MainLayout } from "@/shared/layouts/layout"
-import { Button, Checkbox, Col, Flex, Image, Row, Switch, Typography } from "antd"
-import { ColorFactory } from "antd/es/color-picker/color"
-import { FC, useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { RoomLockListUI } from "@/widget/room-lock/list"
-import { useRoomLock } from "@/entities/room-lock/api/useRoomLock"
+import { Col, Row } from "antd"
+import { FC, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import { RoomlockListUI } from "@/widget/room-lock/list"
+import { useRoomLock } from "@/entities/roomlock/api/useRoomlock"
+import { RoomDtlsPgHdr } from "@/widget/room/details_page_header/ui"
+import { LoadingPage } from "@/widget/loading_page"
+import { UpdateCurrentRoomForm } from "@/widget/room/UpdateCurrentRoomForm/UpdateCurrentRoomForm"
 
 const RoomDetailsPage: FC = () => {
-  // room details
   const { id } = useParams()
-  const { currentRoom, findById, changeVisibility, deleteRoom } = useRoom()
-  const { locks, findByRoomId } = useRoomLock()
-  // room update
-  const { update } = useRoom()
-  const [room, setRoom] = useState<RoomUpdateDto>(new RoomUpdateDto())
 
-
-  const [visibility, setVisibility] = useState<boolean>(currentRoom?.visibility)
-  const navigate = useNavigate()
+  const { room_details, getRoomDetailsByID } = useRoom()
+  const { roomlocks, getRoomlocksByRoomID, deleteRoomlock } = useRoomLock()
 
   useEffect(() => {
-    if (id) {
-      findById(id)
-      findByRoomId(id, 'active')
-    }
+    getRoomDetailsByID(Number(id))
+    getRoomlocksByRoomID(Number(id))
   }, [])
 
-  useEffect(() => {
-    if (currentRoom)
-      setRoom(new RoomUpdateDto(currentRoom))
-  }, [currentRoom])
-
-  useEffect(() => {
-    if (locks) {
-
-    }
-  }, [locks])
+  if (!room_details || room_details.id != Number(id))
+    return <LoadingPage />
 
   return (
     <MainLayout
-      header={
-        <Flex justify="space-between" align="center">
-          <Typography.Title level={3}>
-            Номер #${id} ${currentRoom?.name}
-          </Typography.Title>
-          <Row gutter={[16, 16]}>
-            <Col>
-              <Button danger onClick={() => {
-                navigate('/room')
-                deleteRoom(Number(id))
-
-              }} >Удалить</Button>
-            </Col>
-
-            <Col>
-              <Switch title="Показывать в поиске" value={visibility} onChange={() => {
-                changeVisibility(room.id, !visibility)
-                setVisibility(!visibility)
-              }} />
-            </Col>
-            <Col>
-              <Typography.Text>Показывать в поиске</Typography.Text>
-            </Col>
-          </Row>
-        </Flex>
-      }
-      footer="Пагинация"
-
+      header={<RoomDtlsPgHdr room={room_details} />}
     >
-      <Row gutter={[16, 16]}>
-        <Col span={14}>
-          <RoomUpdateForm
-            room={room}
-            setRoom={setRoom}
-            onSaveButtonClick={() => {
-              update(room)
-            }} />
+      <Row justify={"space-between"} gutter={[16, 16]}>
+        <Col span={10}>
+          <UpdateCurrentRoomForm room={{
+            id: room_details.id,
+            name: room_details.name,
+            description: room_details.description,
+
+            price: room_details.price,
+            number: room_details.number,
+
+            capacity: room_details.capacity,
+            visibility: room_details.visibility,
+            type: room_details.type,
+
+            hotel_id: room_details.hotel.id,
+
+            cover: room_details.cover != null ? [{
+              uid: room_details.cover.id,
+              name: room_details.cover.id,
+              thumbUrl: room_details.cover.link,
+              url: room_details.cover.link
+            }] : undefined,
+            images: room_details.images.map((image) => ({
+              uid: image.id,
+              name: image.id,
+              thumbUrl: image.link,
+              url: image.link
+            })),
+          }} />
+
         </Col>
-        <Col span={8}>
-          <RoomLockListUI room_locks={locks} />
+        <Col span={10}>
+
+          <RoomlockListUI roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
+
         </Col>
       </Row>
 

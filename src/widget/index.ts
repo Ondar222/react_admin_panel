@@ -1,0 +1,1 @@
+export { AddNewRoomForm } from "./room"

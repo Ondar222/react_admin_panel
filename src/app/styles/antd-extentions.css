@@ -3,10 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;600&display=swap');
 
 .sign_urta_container {
- width: 100%;
- height: 100vh;
- background: #001529
+    width: 100%;
+    height: 100vh;
+    background: #001529
 }
+
 .header_sign_urta {
     position: relative;
     margin: 0 auto;
@@ -16,13 +17,13 @@
     padding-top: 20px;
     cursor: pointer;
     font-family: 'Rubik', sans-serif;
-    
+
 }
 
 .header_sign_urta>h1 {
     margin: 0 auto;
     color: #fff;
-    
+
 }
 
 
@@ -32,29 +33,30 @@
     justify-content: center;
     margin-top: 8rem;
 }
+
 .col_yurta {
     background: #caeaee;
     border-radius: 5px;
     position: relative;
     margin: 0 auto;
-   height: 500px;
-   padding: 20px 20px;
+    height: 500px;
+    padding: 20px 20px;
 }
 
 .col_yurta>.login_form {
-  display: flex;
-  justify-content: center;
-  font-size: 25px;
-  font-family: 'Rubik', sans-serif;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    font-family: 'Rubik', sans-serif;
 }
 
-.col_yurta>input{
+.col_yurta>input {
     height: 50px;
     border-radius: 10px;
     margin: 10px auto;
     cursor: pointer;
-    transition: color  500ms ease;
-    
+    transition: color 500ms ease;
+
 }
 
 .bottom_block_account {
@@ -66,7 +68,7 @@
     text-align: center;
     position: absolute;
     bottom: 0;
-   
+
 }
 
 .bottom_block_account b {
@@ -74,15 +76,15 @@
     cursor: pointer;
 }
 
-.bottom_block_account b:hover{
+.bottom_block_account b:hover {
     color: #ec7474;
     transform: scale(1.0);
 }
 
 .col_yurta>input:hover,
-.col_yurta>input.active{
+.col_yurta>input.active {
     color: #88b7f0;
-   transform: scale(1.0);
+    transform: scale(1.0);
 }
 
 
@@ -100,8 +102,8 @@
     border-radius: 10px;
     position: relative;
     margin: 0 auto;
-   height: 500px;
-   padding: 20px 20px;
+    height: 500px;
+    padding: 20px 20px;
 }
 
 .col_yurta_registr>.registr_form {
@@ -133,14 +135,14 @@
 
 .bottom_block_sign_in_yurta>Button {
     background: #002140;
-    
+
 }
 
 .sign_in_button {
     width: 100%;
     background: #1677ff;
     color: #fff;
-  
+
 }
 
 .forgot_your_password_button {
@@ -180,4 +182,72 @@
     gap: 20px;
 }
 
+.Table_www {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80vw;
+    height: 60vh;
+    background: #f1ecec;
+    margin: 0 auto;
+    top: 20px;
+}
 
+
+.table_list_view {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+
+
+}
+
+.back_button_list {
+    width: 80px;
+    margin-left: 20px;
+    margin-top: 50px;
+    z-index: 1;
+}
+
+.header_list_view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.title_list_view {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+}
+
+.container_brick {
+    
+}
+
+.container_brick.Card {
+    border: 1px solid red;
+}
+
+.Button_more_detalis_tiles {
+    background: rgb(143, 202, 211);
+    color: #fff;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.lover_block_of_brick {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.lover_block_of_brick_container {
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+ width: 230px;
+}

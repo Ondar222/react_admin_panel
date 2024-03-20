@@ -1,5 +1,5 @@
 import { FC } from "react"
-import Sidebar from "../../sidebar/ui"
+import { Sidebar } from "../../sidebar/ui"
 import { ILayout } from "../model"
 import { Layout as AntdLayout } from "antd"
 import styled from "styled-components"

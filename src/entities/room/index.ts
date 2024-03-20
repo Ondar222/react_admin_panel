@@ -1,3 +1,2 @@
-export * from "./api";
+export * from "./api/useRoom";
 export * from "./model";
-// export * from "./ui";

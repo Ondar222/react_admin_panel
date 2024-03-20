@@ -1,16 +1,16 @@
-import { IDirectusResponse } from "@/shared/directus/model/interface";
 import axios from "axios";
 import { create } from "zustand";
 import { IUseUsers } from "../model/interface";
 import { useCredentails } from "@/features/auth";
 import { DirectusUserResponse } from "../model/decoder";
+import { ApiResponse } from "@/app/types";
 
 const useUsers = create<IUseUsers>((set) => ({
   users: [],
   getUsers: async () => {
     const { access_token } = useCredentails.getState();
     const users = await axios
-      .get<IDirectusResponse<DirectusUserResponse[]>>(
+      .get<ApiResponse<DirectusUserResponse[]>>(
         `${import.meta.env.VITE_API}/users`,
         {
           headers: {
@@ -28,7 +28,7 @@ const useUsers = create<IUseUsers>((set) => ({
   findUserByPhone: async (phone, callback: Function) => {
     const { access_token } = useCredentails.getState();
     const users = await axios
-      .get<IDirectusResponse<DirectusUserResponse[]>>(
+      .get<ApiResponse<DirectusUserResponse[]>>(
         `${import.meta.env.VITE_API}/user/findManyByPhone?phone=${phone}`,
         {
           headers: {

@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { IUseCalendar } from ".";
 import axios from "axios";
 import { useCredentails } from "@/features/auth";
-import { IDirectusResponse } from "@/shared/directus/model/interface";
 import { ICalendar } from "../model/interface";
+import { ApiResponse } from "@/app/types";
 
 const useCalendar = create<IUseCalendar>((set) => ({
   calendar: [],
@@ -11,7 +11,7 @@ const useCalendar = create<IUseCalendar>((set) => ({
   getAll: async () => {
     const { access_token } = useCredentails.getState();
     const calendar = await axios
-      .get<IDirectusResponse<ICalendar[]>>(
+      .get<ApiResponse<ICalendar[]>>(
         `${import.meta.env.VITE_API}/calendar`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -27,7 +27,7 @@ const useCalendar = create<IUseCalendar>((set) => ({
   findByDate: async (date: string) => {
     const { access_token } = useCredentails.getState();
     const calendar = await axios
-      .get<IDirectusResponse<ICalendar>>(
+      .get<ApiResponse<ICalendar>>(
         `${import.meta.env.VITE_API}/calendar/${date}`,
         {
           headers: {

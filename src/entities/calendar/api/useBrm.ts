@@ -2,9 +2,9 @@ import { create } from "zustand";
 import { IUseBrm } from "./interface";
 import axios from "axios";
 import { useCredentails } from "@/features/auth";
-import { IDirectusResponse } from "@/shared/directus/model/interface";
 import { IBrm } from "../model/interface";
-import { RoomLock } from "@/entities/room-lock/model/room_lock";
+import { Roomlock } from "@/entities/roomlock/model/Roomlock";
+import { ApiResponse } from "@/app/types";
 
 const useBrm = create<IUseBrm>((set, get) => ({
   brm: [],
@@ -12,7 +12,7 @@ const useBrm = create<IUseBrm>((set, get) => ({
     const brm = [];
     const { access_token } = useCredentails.getState();
     await axios
-      .get<IDirectusResponse<IBrm[]>>(`${import.meta.env.VITE_API}/brm`, {
+      .get<ApiResponse<IBrm[]>>(`${import.meta.env.VITE_API}/brm`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -34,7 +34,7 @@ const useBrm = create<IUseBrm>((set, get) => ({
       });
   },
 
-  addRoomLock: (lock: RoomLock) => {
+  addRoomLock: (lock: Roomlock) => {
     set({
       brm: [
         ...get().brm,

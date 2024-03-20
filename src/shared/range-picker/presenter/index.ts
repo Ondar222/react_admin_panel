@@ -17,23 +17,23 @@ const today = Date.now()
 const RangePickerPresenter = (props: IRangePicker) => {
     const [start_date, end_date] = props.value
     const [value, setValue] = useState<[Dayjs, Dayjs]>([
-        dayjs(start_date * 1000).tz(tz),
-        dayjs(end_date * 1000).tz(tz)
+        dayjs(start_date * 1000).tz(),
+        dayjs(end_date * 1000).tz()
     ])
 
     const handleChange: RangePickerProps["onChange"] = (e) => {
-        const start_date = e[0].tz(tz).unix()
-        const end_date = e[1].tz(tz).unix()
+        const start_date = e[0].unix()
+        const end_date = e[1].unix()
 
         setValue([e[0], e[1]])
-
+        console.log(start_date, end_date)
         props.onChange([start_date, end_date])
     }
 
     return {
         label: props.label,
         value: value,
-        defaultValue: [dayjs(today).tz(tz), dayjs(today).tz(tz)],
+        defaultValue: [dayjs(today), dayjs(today)],
         onChange: handleChange,
         locale: locale.DatePicker
     }
