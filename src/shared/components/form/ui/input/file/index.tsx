@@ -57,12 +57,6 @@ const YurtaUpload: FC<YurtaUploadProps> = (props) => {
       }
     }))
 
-    console.group('from component')
-    console.log(info)
-    console.log(info.file.status)
-    console.groupEnd()
-
-
     setFileList(images)
 
     if (props.onChange)

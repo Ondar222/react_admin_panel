@@ -4,13 +4,10 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import momentPlugin from "@fullcalendar/moment"
 import listPlugin from '@fullcalendar/list'
 import dayjs from "dayjs";
-import { ICalendar } from "../../../entities/calendar";
-import { CalendarOptions, CustomContentGenerator, EventClickArg, EventContentArg, EventInput } from "@fullcalendar/core/index.js";
-import { preventDefault } from "@fullcalendar/core/internal.js";
+import { CalendarOptions, CustomContentGenerator, EventContentArg } from "@fullcalendar/core/index.js";
 import { Booking } from "@/entities/booking";
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import moment from "moment-timezone";
 import { Button } from "antd";
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
@@ -18,7 +15,6 @@ import ruLocale from '@fullcalendar/core/locales/ru';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendarUI } from "../model";
 import { Roomlock } from "@/entities/roomlock";
-import { start } from "repl";
 import { Link, useNavigate } from "react-router-dom";
 
 dayjs.extend(utc)
@@ -52,10 +48,7 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
           title: `${booking.status}`,
           start: dayjs(booking.check_in * 1000).tz(tz).format(),
           end: dayjs(booking.check_out * 1000).tz(tz).format(),
-          onclick: () => {
-            console.log(`/booking/${booking.id}`)
-            navigate(`/booking/${booking.id}`)
-          }
+          url: `/booking/${booking.id}`
         }
       }
 
@@ -68,7 +61,7 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
 
           start: dayjs(roomlock.start * 1000).tz(tz).toDate().toISOString(),
           end: dayjs(roomlock.end * 1000).tz(tz).toDate().toISOString(),
-          url: `/roomlock/${roomlock.id}`,
+          url: `/roomlock/${roomlock.id}`
 
           // onclick: () => navigate(`/roomlock/${roomlock.id}`)
 
@@ -89,7 +82,7 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
 const renderEventContent = (eventInfo: EventContentArg): CustomContentGenerator<EventContentArg> => {
   // const navigate = useNavigate()
   return (
-    <Link to={eventInfo.event.url}  style={{ width: '100%' }}>
+    <Link to={eventInfo.event.url} style={{ width: '100%' }}>
       <Button style={{ width: '100%' }}>
         {`${eventInfo.event.title}`}
       </Button>

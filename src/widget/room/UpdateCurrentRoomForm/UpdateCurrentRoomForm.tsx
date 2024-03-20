@@ -6,6 +6,7 @@ import Upload, { UploadChangeParam } from "antd/es/upload"
 import { validateNumberInputValue } from "@/shared/utils/form/validation"
 import { FormProviderProps } from "antd/es/form/context"
 import { YurtaUpload } from "@/shared/components/form/ui/input/file"
+import { useCredentails } from "@/features/auth"
 
 const ROOM_TYPES_OPTIONS = Object.keys(RoomTypes).map((status) => ({
   value: status,
@@ -13,6 +14,7 @@ const ROOM_TYPES_OPTIONS = Object.keys(RoomTypes).map((status) => ({
 }))
 
 const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
+  const { access_token } = useCredentails()
   const { updateRoom, deleteRoomImage } = useRoom()
   const [form] = Form.useForm<RoomUpdateDto>()
 
@@ -86,7 +88,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
         layout="vertical"
         size="large"
       >
-        <Form.Item name={id} initialValue={props.room.id}>
+        <Form.Item name={"id"} initialValue={props.room.id}>
           <Input disabled />
         </Form.Item>
 
@@ -153,56 +155,44 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
           initialValue={props.room.cover}
         >
           <Upload
-            maxCount={1}
+            method="POST"
+            name="cover"
+            action={`${import.meta.env.VITE_API}/room/${props.room.id}/images`}
+            headers={{
+              Authorization: `Bearer ${access_token}`
+            }}
+            multiple={false}
             listType="picture-card"
-            beforeUpload={() => false}
-            fileList={props.room.cover}
+            defaultFileList={props.room?.cover}
+            maxCount={1}
+            onChange={(info) => handleImageChange("cover", info)}
+            onRemove={(file) => handleImageRemove("cover", file)}
           >
             Загрузить
           </Upload>
         </Form.Item>
 
         <Form.Item
-          name={"images"}
+          name="images"
           label="Изображения"
           initialValue={props.room.images}>
           <Upload
-            maxCount={10}
+            method="POST"
+            name="images"
+            action={`${import.meta.env.VITE_API}/room/${props.room.id}/images`}
+            headers={{
+              Authorization: `Bearer ${access_token}`
+            }}
             multiple={true}
-            fileList={props.room.images}
             listType="picture-card"
-            beforeUpload={() => false}
+            defaultFileList={props.room?.cover}
+            maxCount={10}
+            onChange={(info) => handleImageChange("images", info)}
+            onRemove={(file) => handleImageRemove("images", file)}
           >
             Загрузить
           </Upload>
         </Form.Item>
-
-        <YurtaUpload
-          method="POST"
-          name="cover"
-          action={`${import.meta.env.VITE_API}/room/${props.room.id}/images`}
-          label="Обложка"
-          multiple={false}
-          listType="picture-card"
-          fileList={props.room?.cover}
-          maxCount={1}
-          onChange={handleImageChange}
-          onRemove={handleImageRemove}
-        />
-
-        <YurtaUpload
-          method="POST"
-          name="images"
-          action={`${import.meta.env.VITE_API}/room/${props.room.id}/images`}
-          label="Изображения"
-          multiple={true}
-          listType="picture-card"
-          fileList={props.room?.images}
-          maxCount={10}
-          onChange={handleImageChange}
-          onRemove={handleImageRemove}
-        />
-
         <Button htmlType="submit" >Сохранить</Button>
       </Form>
     </Form.Provider >
