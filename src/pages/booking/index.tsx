@@ -9,6 +9,7 @@ import { useBrm } from "@/entities/calendar/api/useBrm"
 import { RoomlockCreationForm } from "@/widget/room-lock/creation_form"
 import { BookingList } from "@/widget/booking/list-view"
 import { BookingBrick } from "@/widget/booking/brick-view"
+import Button from "antd"
 
 enum BookingPageVM {
   calendar = 'calendar',

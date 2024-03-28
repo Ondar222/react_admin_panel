@@ -20,3 +20,6 @@ root.render(
     </ConfigProvider>
   </React.StrictMode>
 )
+
+
+{/* <BrowserRouter basename='partners'> */}
