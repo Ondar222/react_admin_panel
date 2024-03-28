@@ -1,33 +1,31 @@
 import React, { FC, useEffect, useState } from "react"
 import { useAuth } from "../.."
 import { isEmail } from "class-validator"
-import { useNavigate } from "react-router-dom"
-import { Button, Col, Flex, Input, Row, Typography, Divider } from "antd"
+import { Link, useNavigate } from "react-router-dom"
+import { Button, Col, Flex, Input, Row, Typography, Divider, Form, FormProps } from "antd"
 import { useAccount } from "@/entities/account"
 import { FloatButton } from "antd/lib"
+import { FormProviderProps } from "antd/es/form/context"
+
+type AuthForm = {
+    email: string
+    password: string
+}
 
 const AuthForm: FC = () => {
-    const [email, setEmail] = useState<string>("asankheya@yurta.ru")
-    const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false)
-    const [password, setPassword] = useState<string>("B858CB282617FB0956D960215C8E84D1CCF909C6")
+    // const [email, setEmail] = useState<string>("asankheya@yurta.ru")
+    // const [password, setPassword] = useState<string>("B858CB282617FB0956D960215C8E84D1CCF909C6")
     const { isAuth, login, logout, checkAuth } = useAuth()
     const { me } = useAccount()
-    const [open, setOpen] = React.useState(false)
+    const [form] = Form.useForm<AuthForm>()
+    const email = Form.useWatch("email", form)
+    const password = Form.useWatch("password", form)
 
     const navigate = useNavigate()
 
     useEffect(() => {
         checkAuth()
     }, [])
-
-    useEffect(() => {
-        if (isEmail(email) || !email) {
-            setIsEmailInvalid(false)
-        }
-        else {
-            setIsEmailInvalid(true)
-        }
-    }, [email])
 
     const handleClick = async () => {
         await login(email, password)
@@ -36,57 +34,68 @@ const AuthForm: FC = () => {
         if (isAuth) {
             navigate("/booking")
         }
-
     }
-    return <Flex vertical className="sign_urta_container">
-        <FloatButton onClick={() => console.log('onClick')} />;
-        <Col>
-            <Row>
-                <Col className="header_sign_urta">
-                    <Typography.Title>
-                        YURTA APP
-                    </Typography.Title>
-                </Col>
 
-            </Row>
-            {!isAuth && <Row className="container_sign_in_yurta">
-                <Col className="col_yurta">
-                    <Typography.Title className="login_form" style={{ color: "#000000" }}>
-                        Форма входа
-                    </Typography.Title>
-                    <Divider />
-                    <Input
-                        type="email"
-                        // isInvalid={isEmailInvalid}
-                        placeholder="электронная почта"
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value)
-                        }}
-                    />
+    const onFormFinish: FormProviderProps["onFormFinish"] = async (name, info) => {
+        if (name == "auth_form") {
+            await login(email, password)
+            await me()
 
-                    <Input
-                        type="password"
-                        placeholder="пароль"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+            if (isAuth) {
+                navigate("/hotel")
+            }
+        }
+    }
 
-                    <Row className="bottom_block_sign_in_yurta">
-                        <Col span={12}>
-                            <Button className="sign_in_button" onClick={() => handleClick()}>Войти</Button>
-                        </Col>
-                        <Col className="forgot_your_password_button" span={12}>
-                            <Button onClick={() => { }}>Забыли пароль?</Button>
-                        </Col>
-                        <Divider style={{ bottom: "30px", position: "absolute" }} />
-                        <Typography.Text className="bottom_block_account">
+    return (
+        <Col span={24}
+            style={{
+                borderRadius: 10,
+                background: "#fff",
+                padding: 20
+            }}>
+            {!isAuth &&
+                <Form.Provider onFormFinish={onFormFinish}>
+                    <Form form={form} layout="vertical" name="auth_form" style={{
+                        minWidth: "300px"
+                    }}>
+                        <Flex vertical justify="space-between" gap={5}>
+                            <Typography.Title level={3}>
+                                Форма входа
+                            </Typography.Title>
 
-                            Нет учетной записи?<a href="/partners/sign_up">Зарегистрироваться</a>
-                        </Typography.Text>
-                    </Row>
-                </Col>
-            </Row>}
+                            <Form.Item label="Адрес электронной почты" name="email">
+                                <Input
+                                    type="email"
+                                    placeholder="электронная почта"
+                                    value={email}
+                                />
+                            </Form.Item>
+
+                            <Form.Item label="Пароль" name="password">
+                                <Input
+                                    type="password"
+                                    placeholder="пароль"
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Row justify={"space-between"}>
+                                    <Col>
+                                        <Button htmlType="submit" >
+                                            Войти
+                                        </Button>
+                                    </Col>
+                                    <Col>
+                                        <Button>
+                                            <Link to="/partners/sign_up">Зарегистрироваться</Link>
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Form.Item>
+                        </Flex>
+                    </Form>
+                </Form.Provider>
+            }
             {
                 isAuth && (
                     <Row className="modal_signIn_yurta">
@@ -102,12 +111,10 @@ const AuthForm: FC = () => {
                             </Row>
                         </Col>
                     </Row>
-
-
                 )
             }
         </Col>
+    )
 
-    </Flex >
 }
 export default AuthForm

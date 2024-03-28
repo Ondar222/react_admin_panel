@@ -3,6 +3,9 @@ type OtpCreationDto = {
 }
 
 interface UseOtp {
+    statusCode: number,
+    isLoading: boolean,
+    error: Error | null,
     verifyPhoneNumber: (dto: OtpCreationDto) => Promise<void>
 }
 

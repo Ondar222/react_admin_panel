@@ -1,8 +1,17 @@
 import { MainLayout } from "@/shared/layouts/layout"
-import { Spin } from "antd"
+import { Layout, Spin } from "antd"
 import { FC } from "react"
 
-const LoadingPage: FC = () => {
+type LoadingPageProps = {
+  layout: "main" | "empty"
+}
+
+const LoadingPage: FC<LoadingPageProps> = ({ layout }) => {
+
+  if (layout === "empty") {
+    return <Spin fullscreen tip={<div>Готовим ваши данные</div>} />
+  }
+
   return (
     <MainLayout header={""}>
       <Spin fullscreen tip={<div>Готовим ваши данные</div>} />

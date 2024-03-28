@@ -45,7 +45,7 @@ const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
     setHotel((prev) => ({ ...prev, description: html }))
   }
 
-  if (!hotel || !images || !cover) return <LoadingPage />
+  if (!hotel || !images || !cover) return <LoadingPage layout="main" />
 
   return (
     <HotelUpdateFormUI
