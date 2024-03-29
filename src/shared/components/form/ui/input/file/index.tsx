@@ -25,7 +25,7 @@ interface IYurtaUploadUIProps extends Omit<UploadProps, "onChange" | "onRemove">
 
 
 const YurtaUpload: FC<YurtaUploadProps> = (props) => {
-  const [fileList, setFileList] = useState<Array<UploadFile>>(props.fileList)
+  const [fileList, setFileList] = useState<Array<UploadFile> | undefined>(props.fileList)
   const [previewImage, setPreviewImage] = useState<string>()
   const [previewOpen, setPreviewOpen] = useState<boolean>()
   const { access_token } = useCredentails()

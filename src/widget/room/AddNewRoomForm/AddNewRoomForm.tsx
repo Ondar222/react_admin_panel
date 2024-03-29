@@ -20,19 +20,19 @@ const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
 
   const name = Form.useWatch("name", form)
   const number = Form.useWatch("number", form)
-  const price = Form.useWatch("price", form)
+  const price = Form.useWatch<number>("price", form)
   const description = Form.useWatch("description", form)
   const capacity = Form.useWatch("capacity", form)
-  const type = Form.useWatch("type", form)
+  const type = Form.useWatch<RoomTypes>("type", form)
   const cover = Form.useWatch<UploadChangeParam>("cover", form)
   const images = Form.useWatch<UploadChangeParam>("images", form)
 
-  const handleSubmit: FormProviderProps["onFormFinish"] = (form_name, info) => {
+  const handleSubmit: FormProviderProps["onFormFinish"] = async (form_name, info) => {
     if (form_name === "room_creation") {
-      createRoom({
+      await createRoom({
         name,
         number,
-        price,
+        price: Number(price),
         type,
         capacity,
         description,
@@ -87,10 +87,12 @@ const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
           />
         </Form.Item>
 
+
         <Form.Item
           name={"type"}
           label="Тип номера"
-          rules={[{ required: true }]}
+          rules={[]}
+
         >
           <Select options={ROOM_TYPES_OPTIONS} />
         </Form.Item>
@@ -125,7 +127,12 @@ const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
 
         <Form.Item
           name={"images"}
-          label="Изображения">
+          label="Изображения"
+          rules={[
+            {
+              required: true
+            }
+          ]}>
           <Upload
             maxCount={10}
             multiple={true}

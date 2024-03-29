@@ -15,9 +15,9 @@ const AccountPage: FC = () => {
 
   useEffect(() => {
     me()
-  })
+  }, [])
 
-  if (!account || !hotel) return <LoadingPage />
+  if (!account || !hotel) return <LoadingPage layout="main" />
 
   return (
     <MainLayout
