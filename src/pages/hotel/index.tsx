@@ -15,7 +15,7 @@ const HotelPage: FC = () => {
   }, [])
 
   if (!hotel)
-    return <LoadingPage />
+    return <LoadingPage layout="empty" />
 
   return (
     <MainLayout header={<Typography.Title level={2}>Мой отель</Typography.Title>}>

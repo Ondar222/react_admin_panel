@@ -21,7 +21,7 @@ const RoomDetailsPage: FC = () => {
   }, [])
 
   if (!room_details || room_details.id != Number(id))
-    return <LoadingPage />
+    return <LoadingPage layout="empty" />
 
   return (
     <MainLayout

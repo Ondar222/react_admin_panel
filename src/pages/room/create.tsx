@@ -13,7 +13,7 @@ const RoomCreationPage: FC = () => {
   }, [])
 
   if (!hotel)
-    return <LoadingPage />
+    return <LoadingPage layout="empty" />
 
   return (
     <MainLayout header="Создание нового номера" footer="">
