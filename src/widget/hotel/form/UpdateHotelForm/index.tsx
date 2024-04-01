@@ -12,16 +12,16 @@ import { useAuth, useCredentails } from "@/features/auth";
 const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
   const [hotel, setHotel] = useState<HotelUpdateDto>(new HotelUpdateDto(props.hotel))
   const [cover, setCover] = useState<Array<UploadFile>>([{
-    uid: props.hotel.cover.id,
-    name: props.hotel.cover.id,
-    url: props.hotel.cover.link,
-    thumbUrl: props.hotel.cover.link
+    uid: props.hotel.cover?.id,
+    name: props.hotel.cover?.id,
+    url: props.hotel.cover?.link,
+    thumbUrl: props.hotel.cover?.link
   }])
   const [images, setImages] = useState<Array<UploadFile>>(props.hotel.images.map((file) => ({
-    uid: file.id,
-    name: file.id,
-    url: file.link,
-    thumbUrl: file.link
+    uid: file?.id,
+    name: file?.id,
+    url: file?.link,
+    thumbUrl: file?.link
   })))
 
   const { updateHotel, deleteImage } = useHotel()
@@ -39,7 +39,7 @@ const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
   }
 
   const handleFileRemove = async (name: string, file: UploadFile) => {
-    await deleteImage(name, file.uid)
+    await deleteImage(name, file?.uid)
   }
 
   const handleEditorChange = async (html: any) => {

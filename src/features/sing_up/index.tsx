@@ -1,12 +1,10 @@
 import { FC } from "react";
-import { Form, Col, Row, Typography, Checkbox, Button, Divider, Input, notification, Switch } from "antd";
+import { Form, Col, Row, Typography, Button, Input, notification, Switch } from "antd";
 import { useOtp } from "@/features/otp";
-import { SignUpDto, SignUpFormUIProps } from "./model";
+import { SignUpDto, } from "./model";
 import { FormProviderProps } from "antd/es/form/context";
-import { useAuth } from "@/features/auth";
 import { useSignUp } from "./api/useSignUp";
 import { useNavigate } from "react-router-dom";
-import { LoadingPage } from "@/widget/loading_page";
 import { AxiosError } from "axios";
 
 const SignUpForm: FC = () => {
@@ -28,13 +26,10 @@ const SignUpForm: FC = () => {
         if (form_name === "sign-up_form") {
             const user = await signUp(form.getFieldsValue())
                 .then((res) => {
-                    navigate("/hotel")
+                    navigate("/auth")
                     return res
                 })
                 .catch((e: AxiosError) => {
-                    console.group("sign up error")
-                    console.error(e)
-                    console.groupEnd()
 
                     if (e.response.status === 401) {
                         notification.error({
