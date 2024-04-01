@@ -10,11 +10,11 @@ import { useRoomLock } from "../../../entities/roomlock/api/useRoomlock";
 import { LockReasonSelect } from "../../../shared/reason-select";
 import { useBrm } from "@/entities/calendar/api/useBrm";
 import dayjs from "dayjs";
+import { AxiosError } from "axios";
 
 const RoomlockCreationForm: FC = () => {
   const { hotel, getHotelDetails } = useHotel()
   const { createRoomlock } = useRoomLock()
-  const { addRoomLock } = useBrm()
 
   const [reason, setReason] = useState<string>("")
   const [dates, setDates] = useState<[number, number]>([dayjs().unix(), dayjs().unix()])
@@ -26,7 +26,6 @@ const RoomlockCreationForm: FC = () => {
   }, [])
 
   const handleDatePickerChange: IRangePicker["onChange"] = (dates) => {
-    console.log(dates)
     setDates([dates[0], dates[1]])
   }
 
@@ -38,14 +37,20 @@ const RoomlockCreationForm: FC = () => {
   }
 
   const handleSaveButtonClick = async () => {
-    await createRoomlock({ room_id: room_id, start: dates[0], end: dates[1], reason: reason })
+    const data = await createRoomlock({
+      room_id: room_id,
+      start: dates[0],
+      end: dates[1],
+      reason: reason
+    })
       .then((res) => {
-        console.log(res)
         message.success("Номер заблокирован")
       })
-      .catch((error) => {
-        console.error(error)
-        message.error("Произошла ошибка при блокировке номера")
+      .catch((error: AxiosError) => {
+        if (error.response.status === 400) {
+          message.error("Произошла ошибка при блокировке номера")
+          console.error(error)
+        }
       })
   }
 

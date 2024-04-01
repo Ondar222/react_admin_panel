@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useBooking } from "@/entities/booking"
 import { Col, Row, Select } from "antd"
 import { DetailsHeader } from "@/shared/layouts/layout/main/header"
-import { CalendarUI } from "@/widget/calendar/ui"
+import { Calendar } from "@/widget/calendar/ui"
 import { useBrm } from "@/entities/calendar/api/useBrm"
 import { RoomlockCreationForm } from "@/widget/room-lock/creation_form"
 import { BookingList } from "@/widget/booking/list-view"
@@ -71,7 +71,7 @@ const BookingPage: FC = () => {
             <RoomlockCreationForm />
           </Col>
           <Col span={18}>
-            <CalendarUI
+            <Calendar
               brm={brm}
             />
           </Col>

@@ -13,7 +13,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import ruLocale from '@fullcalendar/core/locales/ru';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
-import { ICalendarUI } from "../model";
+import { ICalendar } from "../model";
 import { Roomlock } from "@/entities/roomlock";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -21,8 +21,13 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 const tz = "Asia/Krasnoyarsk"
 
-const CalendarUI: FC<ICalendarUI> = (props) => {
+const Calendar: FC<ICalendar> = (props) => {
   const navigate = useNavigate()
+
+  const handleDateClick: CalendarOptions["dateClick"] = (props) => {
+    console.log(props)
+  }
+
   const calendar_options: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, momentPlugin, momentTimezonePlugin, listPlugin],
     initialView: 'dayGridMonth',
@@ -35,12 +40,10 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
     },
 
     nextDayThreshold: '00:00',
-
+    dateClick: handleDateClick,
     locales: [ruLocale],
     dayMaxEvents: 2,
     events: props.brm.map((brm) => {
-
-
       if (brm.type === 'booking') {
         const booking = brm.item as Booking
         return {
@@ -62,12 +65,11 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
           start: dayjs(roomlock.start * 1000).tz(tz).toDate().toISOString(),
           end: dayjs(roomlock.end * 1000).tz(tz).toDate().toISOString(),
           url: `/roomlock/${roomlock.id}`
-
           // onclick: () => navigate(`/roomlock/${roomlock.id}`)
-
         }
       }
     }),
+
     eventContent: (e) => renderEventContent,
     // eventClick: (arg) => arg.el.click()
   }
@@ -78,17 +80,15 @@ const CalendarUI: FC<ICalendarUI> = (props) => {
   )
 }
 
-// a custom render function
 const renderEventContent = (eventInfo: EventContentArg): CustomContentGenerator<EventContentArg> => {
-  // const navigate = useNavigate()
   return (
     <Link to={eventInfo.event.url} style={{ width: '100%' }}>
       <Button style={{ width: '100%' }}>
-        {`${eventInfo.event.title}`}
+        {eventInfo.event.title}
       </Button>
     </Link>
   )
 }
 
-export { CalendarUI }
+export { Calendar }
 

@@ -2,7 +2,7 @@ import { Booking } from "@/entities/booking";
 import { Roomlock } from "@/entities/roomlock";
 import { CalendarOptions, EventClickArg } from "@fullcalendar/core/index.js";
 
-interface ICalendarUI extends CalendarOptions {
+interface ICalendar extends CalendarOptions {
   brm: {
     type: string;
     item: Booking | Roomlock;
@@ -10,4 +10,4 @@ interface ICalendarUI extends CalendarOptions {
   onClick?: (arg: EventClickArg) => void
 }
 
-export type {ICalendarUI}
+export type { ICalendar }

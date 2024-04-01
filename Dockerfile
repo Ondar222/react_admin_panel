@@ -7,4 +7,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-VOLUME "/var/www/admin/dist"
+EXPOSE 3010
+
+VOLUME [ "/var/www/admin" ]
+CMD ["npm", "run", "preview"]
