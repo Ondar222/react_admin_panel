@@ -39,7 +39,7 @@ const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
   }
 
   const handleFileRemove = async (name: string, file: UploadFile) => {
-    deleteImage(name, file.uid)
+    await deleteImage(name, file.uid)
   }
 
   const handleEditorChange = async (html: any) => {
@@ -131,6 +131,7 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
           <Upload
             action={`${import.meta.env.VITE_API}/hotel/my/images`}
             method="post"
+            multiple={true}
             name="images"
             headers={{
               Authorization: `Bearer ${access_token}`

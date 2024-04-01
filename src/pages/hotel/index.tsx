@@ -17,8 +17,8 @@ const HotelPage: FC = () => {
 
   return (
     <MainLayout header={<Typography.Title level={2}>Мой отель</Typography.Title>}>
-      <UpdateHotelForm hotel={hotel} />
-      {/* <HotelUpdateForm hotel={hotel} /> */}
+      {/* <UpdateHotelForm hotel={hotel} /> */}
+      <HotelUpdateForm hotel={hotel} />
     </MainLayout >
   )
 }

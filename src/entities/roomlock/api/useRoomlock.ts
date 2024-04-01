@@ -6,6 +6,7 @@ import { useCredentails } from "@/features/auth";
 import { Roomlock } from "../model/Roomlock";
 import { useBrm } from "@/entities/calendar/api/useBrm";
 import { RoomlockCreationDto } from "../model/dto/RoomlockCreateDto";
+import { notification } from "antd";
 
 const useRoomLock = create<UseRoomLock>((set, get) => ({
   roomlocks: undefined,
@@ -76,8 +77,7 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
         useBrm.getState().addRoomLock(res.data.data)
       } )
       .catch((e) => {
-        console.log(e)
-        throw new AxiosError()
+        throw e
       });
 
     ;

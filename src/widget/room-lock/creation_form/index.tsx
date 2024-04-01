@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { IRoomLockCreationFormUI } from "../../../entities/roomlock/model/Roomlock";
 import { RoomSelect } from "@/widget/room/RoomSelect";
 import { YurtaDatePicker } from "@/shared/range-picker";
-import { Form, Button, message } from "antd";
+import { Form, Button, message, notification } from "antd";
 import { IRangePicker } from "@/shared/range-picker/model";
 import { Room } from "@/entities/room";
 import { useHotel } from "@/entities/hotel";
@@ -47,10 +47,10 @@ const RoomlockCreationForm: FC = () => {
         message.success("Номер заблокирован")
       })
       .catch((error: AxiosError) => {
-        if (error.response.status === 400) {
-          message.error("Произошла ошибка при блокировке номера")
-          console.error(error)
-        }
+        notification.error({
+          message: "Произошла ошибка при блокировке номера",
+          placement: "topRight"
+        })
       })
   }
 
