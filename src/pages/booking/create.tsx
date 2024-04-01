@@ -1,7 +1,7 @@
 import { MainLayout } from "@/shared/layouts/layout";
 import { Button, Typography } from "antd";
 import React, { FC } from "react";
-import { RoomlockCreationForm } from "@/widget/room-lock/creation_form";
+import { RoomlockCreationForm } from "@/widget/roomlock/creation_form";
 import { message } from "antd"
 
 const BookingCreationPage: FC = React.memo(() => {

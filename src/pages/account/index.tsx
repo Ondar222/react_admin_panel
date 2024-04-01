@@ -53,7 +53,7 @@ const AccountPage: FC = () => {
                   </Typography.Text>
 
                   <Typography.Text>
-                    {account?.role}
+                    Администратор
                   </Typography.Text>
                 </Flex>
               </Flex>

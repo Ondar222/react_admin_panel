@@ -104,7 +104,7 @@ const AuthForm: FC = () => {
                                 <Typography.Text style={{ fontWeight: "600" }}>Уже выполнен вход</Typography.Text>
                             </Row>
                             <Row className="modal_container_signIn_yurta_buttons">
-                                <Button onClick={() => navigate("/booking")} type="primary">Продолжить</Button>
+                                <Button onClick={() => navigate("/hotel")} type="primary">Продолжить</Button>
                                 <Button onClick={() => {
                                     logout()
                                 }}>Войти в другой аккаунт</Button>

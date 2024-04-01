@@ -8,22 +8,24 @@ import { Room } from "@/entities/room";
 import { useHotel } from "@/entities/hotel";
 import { useRoomLock } from "../../../entities/roomlock/api/useRoomlock";
 import { LockReasonSelect } from "../../../shared/reason-select";
-import { useBrm } from "@/entities/calendar/api/useBrm";
 import dayjs from "dayjs";
 import { AxiosError } from "axios";
+import { useRoomlockForm } from "@/features/useRoomlockForm";
+
 
 const RoomlockCreationForm: FC = () => {
   const { hotel, getHotelDetails } = useHotel()
   const { createRoomlock } = useRoomLock()
+  const { dates, setDates } = useRoomlockForm()
 
   const [reason, setReason] = useState<string>("")
-  const [dates, setDates] = useState<[number, number]>([dayjs().unix(), dayjs().unix()])
   const [room_id, setRoomId] = useState<number>(0)
 
   useEffect(() => {
     if (!hotel)
       getHotelDetails()
   }, [])
+
 
   const handleDatePickerChange: IRangePicker["onChange"] = (dates) => {
     setDates([dates[0], dates[1]])
@@ -55,42 +57,34 @@ const RoomlockCreationForm: FC = () => {
   }
 
   return (
-    <RoomLockCreationFormUI
-      hotel={hotel}
-      room_id={{ id: room_id }}
-      dates={dates}
-      onDatePickerChange={handleDatePickerChange}
-      onSaveButtonClick={handleSaveButtonClick}
-      onRoomSelect={handleRoomSelectChange}
-      onReasonSelectChange={handleLockReason} />
+    <>
+      <Form layout="vertical" size="large" >
+
+        <LockReasonSelect onChange={handleLockReason} />
+
+        <YurtaDatePicker
+          label="Даты недоступности"
+          value={dates}
+          onChange={handleDatePickerChange}
+        />
+
+        {
+          hotel && <RoomSelect
+            isMultiple={false}
+            value={{ id: room_id }}
+            rooms={hotel.rooms}
+            onChange={(e) => {
+              const room: Pick<Room, 'id'> = e as Pick<Room, 'id'>
+              handleRoomSelectChange(room)
+            }}
+          />
+        }
+
+        <Button onClick={handleSaveButtonClick}>Забронировать</Button>
+      </Form>
+    </>
+
   )
 }
-
-const RoomLockCreationFormUI: FC<IRoomLockCreationFormUI> = (props) =>
-  <Form layout="vertical" size="large" >
-
-    <LockReasonSelect onChange={props.onReasonSelectChange} />
-
-    <YurtaDatePicker
-      label="Даты недоступности"
-      value={props.dates}
-      onChange={props.onDatePickerChange}
-    />
-
-    {
-      props.hotel && <RoomSelect
-        isMultiple={false}
-        value={props.room_id}
-        rooms={props.hotel.rooms}
-        onChange={(e) => {
-          const room: Pick<Room, 'id'> = e as Pick<Room, 'id'>
-          props.onRoomSelect(room)
-        }}
-      />
-    }
-
-    <Button onClick={props.onSaveButtonClick}>Забронировать</Button>
-  </Form>
-
 
 export { RoomlockCreationForm }

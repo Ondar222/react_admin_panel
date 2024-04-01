@@ -20,11 +20,11 @@ const useBrm = create<IUseBrm>((set, get) => ({
       .then((res) => {
         res.data.data.forEach((item) => {
           if (item.booking) {
-            brm.push({ type: "booking", item: item.booking });
+            brm.push({ type: "booking", item: item.booking, room: item.rooms });
           }
 
           if (item.lock) {
-            brm.push({ type: "room_lock", item: item.lock });
+            brm.push({ type: "room_lock", item: item.lock, room: item.rooms });
           }
         });
 
