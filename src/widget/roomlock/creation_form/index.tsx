@@ -31,14 +31,18 @@ const RoomlockCreationForm: FC = () => {
     setDates([dates[0], dates[1]])
   }
 
-  const handleRoomSelectChange = (e: Pick<Room, "id">) =>
+  const handleRoomSelectChange = (e: Pick<Room, "id">) => {
+    console.log(e)
     setRoomId(e.id)
+  }
+    
 
   const handleLockReason = (e) => {
     setReason(e)
   }
 
   const handleSaveButtonClick = async () => {
+    
     const data = await createRoomlock({
       room_id: room_id,
       start: dates[0],

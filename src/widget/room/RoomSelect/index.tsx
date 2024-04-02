@@ -7,12 +7,16 @@ const RoomSelect: FC<IYurtaRoomSelectProps> = (props) => {
     const { value, options, onChange } = useRoomSelect(props)
 
     return (
-        <YurtaRoomSelectUI
-            {...props}
-            options={options}
-            value={value}
-            onChange={(e) => onChange(e)}
-        />
+        <>
+            {JSON.stringify(options)}
+            <YurtaRoomSelectUI
+                {...props}
+                options={options}
+                value={value}
+                onChange={(e) => onChange(e)}
+            />
+        </>
+
     )
 }
 

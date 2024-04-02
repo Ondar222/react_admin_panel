@@ -18,7 +18,6 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, onboardCheck = true
     }
 
     if (onboardCheck === true && onboardingStatus != "finish") {
-        console.log(onboardingStatus)
         return <Navigate to="/onboarding" replace />;
     }
 
