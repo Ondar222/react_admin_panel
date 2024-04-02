@@ -11,7 +11,7 @@ const useHotel = create(persist<UseHotel>((set, get) => ({
   hotel: undefined,
 
   getHotelDetails: async () => {
-    if (!get().hotel.id) {
+    if (!get().hotel?.id) {
       console.log('updated hotel object')
       const { access_token } = useCredentails.getState();
       const hotel = await axios
