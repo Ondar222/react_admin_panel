@@ -23,7 +23,16 @@ const SignUpForm: FC = () => {
     const navigate = useNavigate()
 
     const handleFormSubmit: FormProviderProps["onFormFinish"] = async (form_name, info) => {
+        if (repeat_password != password) {
+            notification.error({
+                message: "Пароли не совпадают",
+                placement: "topRight"
+            })
+            throw new Error("Пароли не совпадают")
+        }
+
         if (form_name === "sign-up_form") {
+
             const user = await signUp(form.getFieldsValue())
                 .then((res) => {
                     navigate("/auth")

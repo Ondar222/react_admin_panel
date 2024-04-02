@@ -11,23 +11,21 @@ const useHotel = create(persist<UseHotel>((set, get) => ({
   hotel: undefined,
 
   getHotelDetails: async () => {
-    if (!get().hotel?.id) {
-      console.log('updated hotel object')
-      const { access_token } = useCredentails.getState();
-      const hotel = await axios
-        .get<ApiResponse<Hotel>>(`${import.meta.env.VITE_API}/hotel/my`, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        })
-        .then((res) => {
-          return res.data.data;
-        });
-
-      set({
-        hotel,
+    console.log('updated hotel object')
+    const { access_token } = useCredentails.getState();
+    const hotel = await axios
+      .get<ApiResponse<Hotel>>(`${import.meta.env.VITE_API}/hotel/my`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.data;
       });
-    }
+
+    set({
+      hotel,
+    });
   },
 
   createHotel: async (dto) => {
