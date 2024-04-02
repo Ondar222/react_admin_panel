@@ -3,18 +3,25 @@ import { useNavigate } from "react-router-dom"
 import { Button, Form, Input, Select, Upload, message } from "antd"
 import type { FormProviderProps } from "antd/es/form/context"
 import type { UploadChangeParam } from "antd/es/upload"
-import { RoomCreationDto, RoomTypes, useRoom } from "@/entities/room"
+import { Room, RoomCreationDto, RoomTypes, useRoom } from "@/entities/room"
 import { YurtaEditor } from "@/shared/editor"
 import { validateNumberInputValue } from "@/shared/utils/form/validation"
+import { ApiResponse } from "@/app/types"
+import { AxiosError } from "axios"
+
+interface AddNewRoomFormProps {
+  hotel_id: number
+  successCallback: (data: ApiResponse<Room>) => void
+  rejectCallback: (error: Error | AxiosError) => void
+}
 
 const ROOM_TYPES_OPTIONS = Object.keys(RoomTypes).map((status) => ({
   value: status,
   label: RoomTypes[status]
 }))
 
-const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
-  const { createRoom } = useRoom()
-  const navigate = useNavigate()
+const AddNewRoomForm: FC<AddNewRoomFormProps> = ({ hotel_id, successCallback, rejectCallback }) => {
+  const { createRoom, getHotelRelatedRooms } = useRoom()
 
   const [form] = Form.useForm<RoomCreationDto>()
 
@@ -28,7 +35,10 @@ const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
   const images = Form.useWatch<UploadChangeParam>("images", form)
 
   const handleSubmit: FormProviderProps["onFormFinish"] = async (form_name, info) => {
+    
+    console.log('submitter')
     if (form_name === "room_creation") {
+      console.log('submitter')
       await createRoom({
         name,
         number,
@@ -43,11 +53,13 @@ const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
       })
         .then((res) => {
           message.success("Успешно создан новый номер")
-          navigate(`/room/${res.data.data.id}`)
+          getHotelRelatedRooms()
+          successCallback(res.data)
         })
         .catch((e) => {
-          console.log(e)
           message.error("Ошибка при создании номера")
+          rejectCallback(e)
+          throw e
         })
     }
   }
@@ -55,6 +67,7 @@ const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
   return (
     <Form.Provider
       onFormFinish={handleSubmit}
+      
     >
       <Form
         form={form}
@@ -143,7 +156,10 @@ const AddNewRoomForm: FC<{ hotel_id: number }> = ({ hotel_id }) => {
           </Upload>
         </Form.Item>
 
-        <Button htmlType="submit" >Сохранить</Button>
+        <Form.Item>
+          <Button htmlType="submit" >Сохранить</Button>
+        </Form.Item>
+
       </Form>
     </Form.Provider>
   )

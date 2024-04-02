@@ -6,18 +6,17 @@ import { FC, useState } from "react";
 import { HotelUpdatePageProps, UpdateHotelFormT } from "./model";
 import { HotelUpdateFormUI } from "./ui";
 import { YurtaEditor } from "@/shared/editor";
-import { IImage } from "@/app/types";
-import { useAuth, useCredentails } from "@/features/auth";
+import { useCredentails } from "@/features/auth";
 
 const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
   const [hotel, setHotel] = useState<HotelUpdateDto>(new HotelUpdateDto(props.hotel))
   const [cover, setCover] = useState<Array<UploadFile>>([{
-    uid: props.hotel.cover?.id,
-    name: props.hotel.cover?.id,
-    url: props.hotel.cover?.link,
-    thumbUrl: props.hotel.cover?.link
+    uid: props.hotel?.cover?.id,
+    name: props.hotel?.cover?.id,
+    url: props.hotel?.cover?.link,
+    thumbUrl: props.hotel?.cover?.link
   }])
-  const [images, setImages] = useState<Array<UploadFile>>(props.hotel.images.map((file) => ({
+  const [images, setImages] = useState<Array<UploadFile>>(props.hotel?.images.map((file) => ({
     uid: file?.id,
     name: file?.id,
     url: file?.link,
@@ -87,7 +86,7 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
       onFormFinish={async (name, info) => {
         if (name === 'hotel_update') {
           await updateHotel({
-            id: props.hotel.id,
+            id: props.hotel?.id,
             name: hotel_name,
             description: description,
             address: {},
@@ -99,16 +98,16 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
         }
       }}>
       <Form form={form} layout="vertical" name="hotel_update" >
-        <Form.Item name={"id"} initialValue={props.hotel.id}>
+        <Form.Item name={"id"} initialValue={props.hotel?.id}>
           <Input disabled />
         </Form.Item>
-        <Form.Item name={"name"} initialValue={props.hotel.name}>
+        <Form.Item name={"name"} initialValue={props.hotel?.name}>
           <Input />
         </Form.Item>
-        <Form.Item name={"description"} initialValue={props.hotel.description}>
+        <Form.Item name={"description"} initialValue={props.hotel?.description}>
           <YurtaEditor />
         </Form.Item>
-        <Form.Item name={"cover"} initialValue={props.hotel.cover || undefined}>
+        <Form.Item name={"cover"} initialValue={props.hotel?.cover || undefined}>
           <Upload
             action={`${import.meta.env.VITE_API}/hotel/my/images`}
             method="post"
@@ -116,10 +115,10 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
             headers={{
               Authorization: `Bearer ${access_token}`
             }}
-            defaultFileList={props.hotel.cover ? [{
-              uid: props.hotel.cover.id ? props.hotel.cover.id : null,
-              name: props.hotel.cover.id ? props.hotel.cover.id : null,
-              url: props.hotel.cover.id ? props.hotel.cover.link : null
+            defaultFileList={props.hotel?.cover ? [{
+              uid: props.hotel?.cover?.id ? props.hotel?.cover?.id : null,
+              name: props.hotel?.cover?.id ? props.hotel?.cover?.id : null,
+              url: props.hotel?.cover?.id ? props.hotel?.cover.link : null
             }] : undefined}
             maxCount={1}
             listType="picture-card"
@@ -127,7 +126,7 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
             Загрузить
           </Upload>
         </Form.Item>
-        <Form.Item name={"images"} initialValue={props.hotel.images}>
+        <Form.Item name={"images"} initialValue={props.hotel?.images}>
           <Upload
             action={`${import.meta.env.VITE_API}/hotel/my/images`}
             method="post"

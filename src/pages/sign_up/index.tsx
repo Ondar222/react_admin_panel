@@ -1,8 +1,7 @@
 import { Layout, Spin } from "antd"
-import { FC, useState } from "react"
+import { FC } from "react"
 import { SignUpForm } from "@/features/sing_up"
 import { useOtp } from "@/features/otp"
-import { LoadingPage } from "@/widget/loading_page"
 
 const SignUpPage: FC = () => {
     const { isLoading } = useOtp()

@@ -1,9 +1,8 @@
-import { Flex, Layout, Space } from "antd"
 import { FC } from "react"
+import { Layout, Space } from "antd"
 import { AuthForm } from "@/features/auth/ui"
 
 const SignInPage: FC = () => {
-
   return (
     <Layout style={{
       position: "relative",

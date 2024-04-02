@@ -1,8 +1,10 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { Sidebar } from "../../sidebar/ui"
 import { ILayout } from "../model"
 import { Layout as AntdLayout } from "antd"
 import styled from "styled-components"
+import { useLoading } from "@/processes/loading/LoadingProvider"
+import { LoadingPage } from "@/widget/loading_page"
 
 export const Layout = styled(AntdLayout)`
   background: none;
@@ -24,22 +26,31 @@ export const Footer = styled(AntdLayout.Footer)`
 `
 
 const MainLayout: FC<ILayout> = ({ header, children, footer }) => {
+  const {loading} = useLoading()
   const { Sider, Content } = Layout
 
+  if (loading) {
+    return <LoadingPage layout="empty" />
+  }
+
   return (
-    <Layout>
-      <Sider collapsible
+    <Layout hasSider>
+      <Sider
+        collapsible
       >
         <Sidebar />
       </Sider>
 
-      <Layout className="container__workspace">
+      <Layout
+        className="container__wrap">
         <Header>
           {header}
         </Header>
-        <Content className="container__workspace__content" >
+
+        <Content className="container__content" >
           {children}
         </Content>
+
         {
           footer && (
             <Footer className="container__workspace__footer">

@@ -3,25 +3,26 @@ import { MainLayout } from "@/shared/layouts/layout"
 import { Col, Row } from "antd"
 import { FC, useEffect } from "react"
 import { useParams } from "react-router-dom"
-import { RoomlockListUI } from "@/widget/roomlock/list"
+import { RoomlockList } from "@/widget/roomlock/list"
 import { useRoomLock } from "@/entities/roomlock/api/useRoomlock"
 import { RoomDtlsPgHdr } from "@/widget/room/details_page_header/ui"
-import { LoadingPage } from "@/widget/loading_page"
 import { UpdateCurrentRoomForm } from "@/widget/room/UpdateCurrentRoomForm/UpdateCurrentRoomForm"
+import { useLoading, withLoading } from "@/processes"
 
 const RoomDetailsPage: FC = () => {
   const { id } = useParams()
 
   const { room_details, getRoomDetailsByID } = useRoom()
   const { roomlocks, getRoomlocksByRoomID, deleteRoomlock } = useRoomLock()
+  const { setLoading } = useLoading()
+  const fetchData = async () => {
+    await getRoomDetailsByID(Number(id))
+    await getRoomlocksByRoomID(Number(id))
+  }
 
   useEffect(() => {
-    getRoomDetailsByID(Number(id))
-    getRoomlocksByRoomID(Number(id))
+    withLoading(fetchData, setLoading)
   }, [])
-
-  if (!room_details || room_details.id != Number(id))
-    return <LoadingPage layout="empty" />
 
   return (
     <MainLayout
@@ -30,26 +31,17 @@ const RoomDetailsPage: FC = () => {
       <Row justify={"space-between"} gutter={[16, 16]}>
         <Col span={10}>
           <UpdateCurrentRoomForm room={{
-            id: room_details.id,
-            name: room_details.name,
-            description: room_details.description,
+            ...room_details,
 
-            price: room_details.price,
-            number: room_details.number,
+            hotel_id: room_details?.hotel?.id,
 
-            capacity: room_details.capacity,
-            visibility: room_details.visibility,
-            type: room_details.type,
-
-            hotel_id: room_details.hotel.id,
-
-            cover: room_details.cover != null ? [{
+            cover: room_details?.cover != null ? [{
               uid: room_details.cover.id,
               name: room_details.cover.id,
               thumbUrl: room_details.cover.link,
               url: room_details.cover.link
             }] : undefined,
-            images: room_details.images.map((image) => ({
+            images: room_details?.images.map((image) => ({
               uid: image.id,
               name: image.id,
               thumbUrl: image.link,
@@ -59,9 +51,7 @@ const RoomDetailsPage: FC = () => {
 
         </Col>
         <Col span={10}>
-
-          <RoomlockListUI roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
-
+          <RoomlockList roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
         </Col>
       </Row>
 

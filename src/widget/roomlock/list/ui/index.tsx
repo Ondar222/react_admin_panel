@@ -1,4 +1,4 @@
-import { Button, Col, Flex, List, Row, Tag } from "antd";
+import { Col, List, Row, Tag } from "antd";
 import { FC } from "react";
 import { IRoomLockListUI } from "../model";
 import { RangePickerUI } from "@/shared/range-picker/ui";
@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { IconButton } from "@/shared/components/button/action-buttons";
 import { DeleteIcon } from "@/assets/icons/delete";
 
-const RoomlockListUI: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
+const RoomlockList: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
   <List
     bordered
     header={<div style={{ position: "sticky", top: 0 }}>Активные блокировки</div>}
@@ -48,4 +48,4 @@ const RoomlockListUI: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
   />
 
 
-export { RoomlockListUI }
+export { RoomlockList }

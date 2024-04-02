@@ -18,6 +18,7 @@ const BookingDetailPage: FC = () => {
   const { hotel, getHotelDetails } = useHotel()
 
   useEffect(() => {
+    
     if (id) {
       getHotelDetails()
       getBookingDetailsByID(Number(id))

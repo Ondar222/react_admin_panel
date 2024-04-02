@@ -2,52 +2,97 @@ import {
   Route,
   Routes
 } from "react-router-dom";
-import { NotAuthorizedPage, SignInPage } from "../../pages/auth";
-import { BookingPage } from "../../pages/booking";
-import { SignUpPage } from "@/pages/sign_up";
-import { BookingDetailPage } from "../../pages/booking/id";
-import BookingCreationPage from "@/pages/booking/create";
-import { YurtaCalendarDateDetailsPage } from "@/pages/calendar/[date]";
-import { RoomDetailsPage } from "@/pages/room/id";
-import RoomPage from "@/pages/room";
-import { RoomCreationPage } from "@/pages/room/create";
-import { AccountPage } from "@/pages/account";
-import { HotelPage } from "@/pages/hotel";
-import { HotelCreationPage } from "@/pages/hotel/create";
-import { RoomlockPage } from "@/pages/roomlock";
-import { RoomlockDetailsPage } from "@/pages/roomlock/id";
+import {
+  AccountPage,
+  HotelPage,
+  SignUpPage,
+  SignInPage,
+  BookingPage,
+  BookingDetailPage,
+  RoomPage,
+  RoomDetailsPage,
+  RoomCreationPage,
+  RoomlockDetailsPage,
+  FirstStart
+} from "@/pages";
+import { AuthProvider } from "@/features/auth/api/authProvider";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const Router = () =>
   <Routes>
+
     <Route path="/" element={<SignUpPage />} />
 
     <Route path="/auth" element={<SignInPage />} />
-    <Route path="/auth-error" element={<NotAuthorizedPage />} />
     <Route path="/sign_up" element={<SignUpPage />} />
 
-    <Route path="/booking" element={<BookingPage />} />
-    <Route path="/booking/:id" element={<BookingDetailPage />} />
-    <Route path="/booking/+" element={<BookingCreationPage />} />
+    <Route path="/booking"
+      element={
+        <ProtectedRoute>
+          <BookingPage />
+        </ProtectedRoute>
+      } />
 
-    <Route path="/hotel" element={<HotelPage />} />
-    <Route path="/hotel/+" element={<HotelCreationPage />} />
+    <Route path="/booking/:id"
+      element={
+        <ProtectedRoute>
+          <BookingDetailPage />
+        </ProtectedRoute>
+      } />
 
-    <Route path="/room" element={<RoomPage />} />
-    <Route path="/room/:id" element={<RoomDetailsPage />} />
-    <Route path="/room/+" element={<RoomCreationPage />} />
+    <Route path="/hotel"
+      element={
+        <ProtectedRoute onboardCheck={true}>
+          <HotelPage />
+        </ProtectedRoute>
+      } />
 
-    <Route path="/calendar" element={<YurtaCalendarDateDetailsPage />} />
-    <Route path="/calendar/:date" element={<YurtaCalendarDateDetailsPage />} />
+    <Route path="/room"
+      element={
+        <ProtectedRoute>
+          <RoomPage />
+        </ProtectedRoute>
+      } />
+    <Route path="/room/:id"
+      element={
+        <ProtectedRoute>
+          <RoomDetailsPage />
+        </ProtectedRoute>
+      } />
 
-    <Route path="/account" element={<AccountPage />} />
+    <Route path="/room/+"
+      element={
+        <ProtectedRoute>
+          <RoomCreationPage />
+        </ProtectedRoute>
+      } />
 
-    <Route path="/roomlock" element={<RoomlockPage />} />
-    <Route path="/roomlock/:id" element={<RoomlockDetailsPage />} />
+    <Route path="/account"
+      element={
+        <ProtectedRoute>
+          <AccountPage />
+        </ProtectedRoute>
+      } />
+
+    <Route path="/roomlock/:id"
+      element={
+        <ProtectedRoute>
+          <RoomlockDetailsPage />
+        </ProtectedRoute>
+      } />
 
     <Route path="/404" element={<div></div>} />
+
+
+    <Route
+      path="/onboarding"
+      element={
+        <ProtectedRoute onboardCheck={false}>
+          <FirstStart />
+        </ProtectedRoute>
+        
+      } />
   </Routes>
-
-
 
 export default Router;
 

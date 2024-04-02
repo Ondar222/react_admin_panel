@@ -8,14 +8,12 @@ type LoadingPageProps = {
 
 const LoadingPage: FC<LoadingPageProps> = ({ layout }) => {
 
-  if (layout === "empty") {
-    return <Spin fullscreen tip={<div>Готовим ваши данные</div>} />
-  }
-
   return (
-    <MainLayout header={""}>
-      <Spin fullscreen tip={<div>Готовим ваши данные</div>} />
-    </MainLayout>
+    <Spin
+      fullscreen
+      tip={
+        <div>Готовим ваши данные</div>
+      } />
   )
 }
 

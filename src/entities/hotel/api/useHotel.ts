@@ -5,25 +5,29 @@ import { ApiResponse } from "@/app/types";
 import type { Hotel } from "@/entities/hotel";
 import type { UseHotel } from "@/entities/hotel";
 import { UploadFile } from "antd";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-const useHotel = create<UseHotel>((set, get) => ({
+const useHotel = create(persist<UseHotel>((set, get) => ({
   hotel: undefined,
 
   getHotelDetails: async () => {
-    const { access_token } = useCredentails.getState();
-    const hotel = await axios
-      .get<ApiResponse<Hotel>>(`${import.meta.env.VITE_API}/hotel/my`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-      .then((res) => {
-        return res.data.data;
-      });
+    if (!get().hotel.id) {
+      console.log('updated hotel object')
+      const { access_token } = useCredentails.getState();
+      const hotel = await axios
+        .get<ApiResponse<Hotel>>(`${import.meta.env.VITE_API}/hotel/my`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        })
+        .then((res) => {
+          return res.data.data;
+        });
 
-    set({
-      hotel,
-    });
+      set({
+        hotel,
+      });
+    }
   },
 
   createHotel: async (dto) => {
@@ -53,7 +57,7 @@ const useHotel = create<UseHotel>((set, get) => ({
       .then((res) => res.data.data);
   },
 
-  deleteHotel: () => {},
+  deleteHotel: () => { },
 
   // completed
   uploadImage: async (fieldName, file) => {
@@ -104,6 +108,9 @@ const useHotel = create<UseHotel>((set, get) => ({
       },
     });
   },
+}), {
+  name: "hotel_store",
+  storage: createJSONStorage(() => localStorage)
 }));
 
 export { useHotel };

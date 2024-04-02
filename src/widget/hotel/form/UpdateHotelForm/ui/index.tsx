@@ -10,7 +10,7 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
     <YurtaInput
       label="Название"
       name="name"
-      value={props.hotel.name}
+      value={props.hotel?.name}
       onChange={props.handleChange}
     />
 

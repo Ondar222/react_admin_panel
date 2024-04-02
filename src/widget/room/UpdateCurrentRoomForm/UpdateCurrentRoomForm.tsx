@@ -175,7 +175,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
         <Form.Item
           name="images"
           label="Изображения"
-          initialValue={props.room.images}>
+          initialValue={props.room?.images}>
           <Upload
             method="POST"
             name="images"

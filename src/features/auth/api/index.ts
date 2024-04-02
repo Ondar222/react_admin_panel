@@ -1,2 +1,2 @@
-export { default as useAuth } from "./useAuth";
+export { useAuth } from "./useAuth";
 export { default as useCredentails } from "./useCredentails";
