@@ -1,18 +1,19 @@
 import { create } from "zustand";
 import { UseRoomLock } from "../model/UseRoomlock";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/app/types";
 import { useCredentails } from "@/features/auth";
 import { Roomlock } from "../model/Roomlock";
 import { useBrm } from "@/entities/calendar/api/useBrm";
 import { RoomlockCreationDto } from "../model/dto/RoomlockCreateDto";
+import { notification } from "antd";
 
 const useRoomLock = create<UseRoomLock>((set, get) => ({
   roomlocks: undefined,
   roomlock_details: undefined,
 
   async getRoomLocks() {
-    
+
   },
 
   async getRoomlocksByRoomID(room_id) {
@@ -71,9 +72,15 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
           },
         }
       )
-      .then((res) => res.data.data);
+      .then((res) => {
+        console.log(res)
+        useBrm.getState().addRoomLock(res.data.data)
+      } )
+      .catch((e) => {
+        throw e
+      });
 
-    useBrm.getState().addRoomLock(created_roomlock);
+    ;
   },
 
   async deleteRoomlock(id: number) {

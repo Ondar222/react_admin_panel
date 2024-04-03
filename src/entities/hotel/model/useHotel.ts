@@ -6,7 +6,7 @@ import { HotelCreateDto } from "./dto/HotelCreateDto";
 interface UseHotel {
   hotel: Hotel | undefined;
 
-  getHotelDetails: () => void;
+  getHotelDetails: () => Promise<void>;
 
   createHotel: (dto: HotelCreateDto) => void;
   updateHotel: (dto: HotelUpdateDto) => Promise<void>;
