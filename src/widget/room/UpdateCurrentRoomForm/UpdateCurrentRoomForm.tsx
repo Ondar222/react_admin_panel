@@ -175,7 +175,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
         <Form.Item
           name="images"
           label="Изображения"
-          initialValue={props.room.images}>
+          initialValue={props.room?.images}>
           <Upload
             method="POST"
             name="images"
@@ -185,7 +185,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
             }}
             multiple={true}
             listType="picture-card"
-            defaultFileList={props.room?.cover}
+            defaultFileList={props.room?.images}
             maxCount={10}
             onChange={(info) => handleImageChange("images", info)}
             onRemove={(file) => handleImageRemove("images", file)}

@@ -9,4 +9,5 @@ RUN npm run build
 
 EXPOSE 3010
 
+VOLUME [ "/var/www/admin" ]
 CMD ["npm", "run", "preview"]

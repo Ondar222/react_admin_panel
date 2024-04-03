@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@ant-design/pro-components": "^2.7.0",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.1",
     "@ckeditor/ckeditor5-basic-styles": "^40.2.0",

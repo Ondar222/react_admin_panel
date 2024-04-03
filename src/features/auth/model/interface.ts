@@ -18,4 +18,9 @@ interface IUseCredentails extends IAuthResponse {
   getRefreshToken: () => string | undefined;
 }
 
-export type { IUseAuth, IAuthResponse, IUseCredentails };
+type AuthFormDto = {
+  email: string
+  password: string
+}
+
+export type { IUseAuth, IAuthResponse, IUseCredentails, AuthFormDto };

@@ -5,8 +5,9 @@ import { Room, RoomCreationDto, RoomUpdateDto } from "..";
 import { ApiResponse } from "@/app/types";
 import { useCredentails } from "@/features/auth";
 import { UploadFile } from "antd";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-const useRoom = create<UseRoom>((set, get) => ({
+const useRoom = create(persist<UseRoom>((set, get) => ({
   rooms: undefined,
   room_details: undefined,
 
@@ -39,7 +40,7 @@ const useRoom = create<UseRoom>((set, get) => ({
     }
 
     const data = await axios
-      .post(`${import.meta.env.VITE_API}/room`, formData, {
+      .post<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room`, formData, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -200,6 +201,9 @@ const useRoom = create<UseRoom>((set, get) => ({
         });
       });
   },
+}), {
+  name: "room_store",
+  storage: createJSONStorage(() => localStorage)
 }));
 
 export { useRoom };

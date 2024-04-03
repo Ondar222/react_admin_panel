@@ -10,7 +10,7 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
     <YurtaInput
       label="Название"
       name="name"
-      value={props.hotel.name}
+      value={props.hotel?.name}
       onChange={props.handleChange}
     />
 
@@ -24,7 +24,7 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       multiple={false}
       maxCount={1}
       listType="picture-card"
-      fileList={props.cover}
+      fileList={props.cover || undefined}
       onChange={props.onFileChange}
       onRemove={props.onFileRemove} />
 
@@ -36,7 +36,7 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       multiple={true}
       maxCount={10}
       listType="picture-card"
-      fileList={props.images}
+      fileList={props.images || undefined}
       onChange={props.onFileChange}
       onRemove={props.onFileRemove} />
 

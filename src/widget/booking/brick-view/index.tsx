@@ -65,7 +65,7 @@ const BookingBrickUI: FC<IBookingBrickUI> = ({ booking }) =>
     {
       booking?.map((item) => {
         return (
-          <Col xs={24} sm={24} md={12} lg={8} xl={6}>
+          <Col xs={24} sm={24} md={12} lg={10} xl={6}>
             <Card
               title={`Бронь №${item.id}`}
               bordered={false}
@@ -79,7 +79,7 @@ const BookingBrickUI: FC<IBookingBrickUI> = ({ booking }) =>
               <Row>
                 {
                   item.rooms.map((room) => {
-                    return <Col span={12} className="lover_block_of_brick">
+                    return <Col span={13} className="lover_block_of_brick">
                       <Row className="lover_block_of_brick_container">
                         <Card title={`Номер ${room.id}`}>
                           <Image src={room.cover.link} />
