@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useOnboarding } from '@/processes/onboarding/api/onboardingProvider';
+import { useAuth } from '@/features/auth';
 
 const menuItems: ItemType[] = [
   {
@@ -38,8 +39,9 @@ const menuItems: ItemType[] = [
 ]
 
 export const Sidebar: FC = () => {
+  const { logout } = useAuth()
   const [selectedKey, setSelectedKey] = useState('/hotel')
-  const {onboardingStatus} = useOnboarding()
+  const { onboardingStatus } = useOnboarding()
   const navigate = useNavigate();
 
 
@@ -54,6 +56,12 @@ export const Sidebar: FC = () => {
       selectedKeys={[`/${window.location.pathname.split("/")[2]}`]}
       defaultSelectedKeys={[selectedKey]}
       onClick={({ key }) => {
+        if (key === "logout") {
+          logout()
+          navigate("/auth")
+          return
+        }
+
         setSelectedKey(key)
         navigate(`/${key}`)
       }}

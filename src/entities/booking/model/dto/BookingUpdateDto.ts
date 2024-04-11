@@ -57,7 +57,7 @@ class BookingUpdateDto {
   check_in: number;
   check_out: number;
   rooms: Array<Pick<Room, "id">>;
-  avatar: IImage;
+  avatar: IImage | null;
 }
 
 export { BookingUpdateDto };

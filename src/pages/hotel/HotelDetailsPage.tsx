@@ -2,7 +2,7 @@ import { useHotel } from "@/entities/hotel";
 import { MainLayout } from "@/shared/layouts/layout";
 import { Typography, } from "antd";
 import { FC, useEffect } from "react";
-import { UpdateHotelForm } from "@/widget/hotel/form/UpdateHotelForm";
+import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { useLoading, withLoading } from "@/processes";
 
 const HotelPage: FC = () => {
@@ -10,7 +10,8 @@ const HotelPage: FC = () => {
   const { setLoading } = useLoading()
 
   const fetchData = async () => {
-    await getHotelDetails()
+    if (!hotel)
+      await getHotelDetails()
   }
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const HotelPage: FC = () => {
 
   return (
     <MainLayout header={<Typography.Title level={2}>Мой отель</Typography.Title>}>
-      <UpdateHotelForm hotel={hotel} />
+      <HotelUpdateForm hotel={hotel} />
     </MainLayout >
   )
 }

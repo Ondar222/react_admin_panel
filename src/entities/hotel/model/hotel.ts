@@ -16,8 +16,8 @@ type Hotel = {
   arrival: string;
   departure: string;
 
-  images: Array<IImage>;
-  cover: IImage;
+  images: Array<IImage> | null;
+  cover: IImage | null;
 };
 
 export type { Hotel };
