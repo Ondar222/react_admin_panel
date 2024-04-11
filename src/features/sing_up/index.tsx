@@ -18,7 +18,7 @@ const SignUpForm: FC = () => {
     const name = Form.useWatch<string>("name", form)
     const agreement = Form.useWatch<boolean>("agreement", form)
 
-    const { error, statusCode, verifyPhoneNumber } = useOtp()
+    const { verifyPhoneNumber } = useOtp()
     const { signUp } = useSignUp()
     const navigate = useNavigate()
 
@@ -35,8 +35,11 @@ const SignUpForm: FC = () => {
 
             const user = await signUp(form.getFieldsValue())
                 .then((res) => {
+                    notification.success({
+                        message: "Пользователь создан",
+                        placement: "topRight",
+                    })
                     navigate("/auth")
-                    return res
                 })
                 .catch((e: AxiosError) => {
 

@@ -19,7 +19,8 @@ const contentStyle: React.CSSProperties = {
 };
 
 const FirstStart: FC = () => {
-    const { updateCookie } = useCookie("onboarding")
+    const [isOnboardingFinishable, setIsOnboardingFinishable] = useState(false)
+    const { value, updateCookie } = useCookie("onboarding", "process")
     const [step, setStep] = useState<number>(0)
 
     const next = () => {
@@ -36,12 +37,10 @@ const FirstStart: FC = () => {
     } = useOnboarding()
 
     const { hotel, getHotelDetails } = useHotel()
-    const { rooms, getHotelRelatedRooms } = useRoom()
     const { setLoading } = useLoading()
     const navigate = useNavigate()
 
     useEffect(() => {
-        withLoading(getHotelRelatedRooms, setLoading)
         withLoading(getHotelDetails, setLoading)
     }, [])
 
@@ -51,12 +50,13 @@ const FirstStart: FC = () => {
         },
         {
             content: <AddNewRoomForm
-                hotel_id={hotel.id}
+                hotel_id={hotel?.id}
                 successCallback={(res) => {
+                    setIsOnboardingFinishable(true)
                     console.log(res)
                 }}
                 rejectCallback={() => {
-                    console.log('data')
+                    message.error("Номер не был создан, повторите еще раз")
                 }} />
         }
     ]
@@ -84,19 +84,15 @@ const FirstStart: FC = () => {
                         </Button>
                     )}
                     {step === items.length - 1 && (
-                        <Button type="primary" onClick={() => {
+                        <Button type="primary" disabled={!isOnboardingFinishable} onClick={() => {
 
-                            if (checkOnboardingStatus()) {
-                                message.success('Processing complete!')
-                                updateCookie("finish", { expires: 20000000000 })
-                                navigate("/hotel")
-                            }
+                            checkOnboardingStatus()
                         }}>
                             Завершить
                         </Button>
                     )}
                     {step < items.length - 1 && (
-                        <Button type="primary" onClick={() => next()}>
+                        <Button type="primary"  onClick={() => next()}>
                             Следующий
                         </Button>
                     )}

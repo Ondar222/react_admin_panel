@@ -41,16 +41,7 @@ const AuthForm: FC = () => {
                 })
                 .finally(async () => {
                     console.log('первый вызов чек онбординг')
-                    const isOnboardingFinished = await checkOnboardingStatus()
-                    if (isOnboardingFinished) {
-                        navigate("/hotel")
-                    }
-                    else {
-                        navigate("/onboarding")
-                    }
-                })
-                .catch((res) => {
-
+                    await checkOnboardingStatus()
                 })
         }
     }
@@ -103,21 +94,6 @@ const AuthForm: FC = () => {
                     </Flex>
                 </Form>
             </Form.Provider>
-            {/* {isAuth && (
-                <Row className="modal_signIn_yurta">
-                    <Col className="modal_container_signIn_yurta">
-                        <Row className="modal_container_signIn_yurta_title">
-                            <Typography.Text style={{ fontWeight: "600" }}>Уже выполнен вход</Typography.Text>
-                        </Row>
-                        <Row className="modal_container_signIn_yurta_buttons">
-                            <Button onClick={() => navigate("/hotel")} type="primary">Продолжить</Button>
-                            <Button onClick={() => {
-                                logout()
-                            }}>Войти в другой аккаунт</Button>
-                        </Row>
-                    </Col>
-                </Row>
-            )} */}
         </Col>
     )
 
