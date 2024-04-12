@@ -7,7 +7,7 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 4000
 
 VOLUME [ "/var/www/admin" ]
-CMD ["npx", "serve", "-s", "dist"]
+CMD ["npm", "run", "serve"]

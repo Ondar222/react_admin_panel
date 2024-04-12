@@ -3,11 +3,10 @@ import { MainLayout } from "../../shared/layouts/layout"
 import { EBookingStatus, useBooking } from "@/entities/booking"
 import { useParams } from "react-router-dom"
 import { BookingUpdateDto } from "@/entities/booking/model/dto/BookingUpdateDto"
-import { Flex, Form, Button } from "antd"
+import { Flex, Form, Button, Typography } from "antd"
 import { useHotel } from "@/entities/hotel"
 import { RoomSelect } from "@/widget/room/RoomSelect"
 import { YurtaDatePicker } from "@/shared/range-picker"
-import { DetailsHeader } from "@/shared/layouts/layout/main/header"
 import { YurtaInput } from "@/shared/components/form/ui/input/text"
 import { YurtaSelect } from "@/shared/components/form/ui/select/default"
 
@@ -18,7 +17,7 @@ const BookingDetailPage: FC = () => {
   const { hotel, getHotelDetails } = useHotel()
 
   useEffect(() => {
-    
+
     if (id) {
       getHotelDetails()
       getBookingDetailsByID(Number(id))
@@ -31,12 +30,7 @@ const BookingDetailPage: FC = () => {
 
   return (
     <MainLayout
-      header={<DetailsHeader
-        title={`#${id}`}
-        onSave={() => { }}
-      />
-      }
-      footer={<></>}
+      header={<Typography>{id}</Typography>}
     >
       <Form layout="vertical" size="large">
         <Flex vertical gap={2}>

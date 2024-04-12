@@ -15,7 +15,6 @@ const NotFoundPage: FC = () => {
             }
             else {
                 navigate("/auth")
-
             }
             clearInterval(countdown)
             clearTimeout(redirect)
@@ -67,7 +66,6 @@ const NotFoundPage: FC = () => {
         <Layout style={{
             position: "relative",
             width: "100vw",
-            height: "100vh",
             background: '#001529',
             display: "flex",
             justifyContent: "center",
