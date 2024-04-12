@@ -62,7 +62,6 @@ const SignUpForm: FC = () => {
     }
 
     const handleVerifyPhoneNumber = async () => {
-        console.log(phone)
         const result = await verifyPhoneNumber({
             phone: phone
         })

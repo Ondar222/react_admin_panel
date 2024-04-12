@@ -35,10 +35,8 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({ hotel_id, successCallback, re
   const images = Form.useWatch<UploadChangeParam>("images", form)
 
   const handleSubmit: FormProviderProps["onFormFinish"] = async (form_name, info) => {
-    
-    console.log('submitter')
     if (form_name === "room_creation") {
-      console.log('submitter')
+
       await createRoom({
         name,
         number,
@@ -67,7 +65,7 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({ hotel_id, successCallback, re
   return (
     <Form.Provider
       onFormFinish={handleSubmit}
-      
+
     >
       <Form
         form={form}

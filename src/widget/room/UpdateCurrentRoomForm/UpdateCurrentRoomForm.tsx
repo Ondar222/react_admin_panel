@@ -30,16 +30,6 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
 
   const handleSubmit: FormProviderProps["onFormFinish"] = async (form_name, info) => {
     if (form_name === "UpdateCurrentRoomForm") {
-      console.log({
-        id,
-        name,
-        number,
-        price,
-        description,
-        capacity,
-        type,
-        hotel_id: props.room.hotel_id
-      })
       await updateRoom({
         id: props.room.id,
         name,
@@ -52,11 +42,9 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
       })
         .then((res) => {
           message.success("Номер обновлен")
-          console.log(res)
         })
         .catch((e) => {
           message.error("Произошла ошибка")
-          console.error(e)
         })
     }
   }
@@ -64,7 +52,6 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
   const handleImageChange = async (fieldName: string, info) => {
     const status = info.file.status
     if (status === "done") {
-      console.log('uploaded')
       // await uploadRoomImage(fieldName, info.file);
     }
 

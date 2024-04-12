@@ -28,7 +28,6 @@ const Calendar: FC<ICalendar> = (props) => {
   const { isRoomlockCreationFormOpen, setIsRoomlockCreationFormOpen, dates, setDates } = useRoomlockForm()
 
   const handleDateClick: CalendarOptions["dateClick"] = (props) => {
-    console.log(props)
     setIsRoomlockCreationFormOpen(true)
     setDates([dayjs(props.dateStr).unix(), dayjs(props.dateStr).unix()])
   }

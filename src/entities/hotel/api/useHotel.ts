@@ -11,7 +11,6 @@ const useHotel = create(persist<UseHotel>((set, get) => ({
   hotel: undefined,
 
   getHotelDetails: async () => {
-    console.log('updated hotel object')
     const { access_token } = useCredentails.getState();
     const hotel = await axios
       .get<ApiResponse<Hotel>>(`${import.meta.env.VITE_API}/hotel/my`, {

@@ -38,7 +38,6 @@ const useAuth = create(
 
           return res.data.data
         }).catch((e) => {
-          console.log("auth error")
           throw e
         })
 

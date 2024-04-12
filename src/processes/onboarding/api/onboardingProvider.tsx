@@ -42,16 +42,11 @@ const OnboardingProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const { rooms } = useRoom()
 
     const checkOnboardingStatus = async (): Promise<void> => {
-        console.group("onboarding status")
-        console.log(onboardingStatus)
-        console.log(value)
-        console.groupEnd()
         if (onboardingStatus === "finish") {
             setOnboardingStatus("finish");
             setCurrentStep(OnboardingSteps.CompleteOnboarding);
             setCurrentStepProgress([1, 1]);
             navigate("/booking")
-            console.log("onboarding finished");
             return
         }
         else {
@@ -60,14 +55,12 @@ const OnboardingProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 setCurrentStep(OnboardingSteps.HotelUpdate);
                 setCurrentStepProgress([1, 1]);
                 navigate("/onboarding")
-                console.log("hotel update step");
             }
             else if (!rooms || rooms?.length === 0) {
                 setOnboardingStatus("process");
                 setCurrentStep(OnboardingSteps.RoomCreation);
                 setCurrentStepProgress([1, 1]);
                 navigate("/onboarding")
-                console.log("room create step");
             }
             else {
                 setOnboardingStatus("finish");
@@ -75,7 +68,7 @@ const OnboardingProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 setCurrentStepProgress([1, 1]);
                 updateCookie("finish", { expires: 20000000000 })
                 message.success('Онбординг завершен!')
-                console.log("onboarding finished");
+      
                 navigate("/booking")
             }
         }

@@ -45,10 +45,6 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
           Authorization: `Bearer ${access_token}`,
         },
       })
-      .then((res) => {
-        console.log(res);
-        return res;
-      });
 
     set({
       rooms: [
@@ -85,7 +81,6 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
           Authorization: `Bearer ${access_token}`,
         },
       })
-      .then((res) => console.log(res));
 
     set({
       rooms: get().rooms.filter((room) => room.id != room_id)
@@ -142,9 +137,6 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
           },
         }
       )
-      .then((res) => {
-        console.log(res);
-      });
   },
 
   // completed
@@ -174,7 +166,6 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
           data,
         }
       )
-      .then((res) => console.log(res));
   },
 
   // completed

@@ -37,15 +37,13 @@ const RoomlockDetailsPage: FC = () => {
         await deleteRoomlock(roomlock_details.id)
             .then((res) => navigate('/booking'))
             .catch((e) => {
-                console.log(e)
                 navigate('/booking')
             })
     }
 
     const handleSubmit: FormProviderProps["onFormFinish"] = async (name, info) => {
         if (name === "roomlock_update") {
-            console.log(name)
-            console.log(info)
+            
         }
     }
 

@@ -32,7 +32,6 @@ const RoomlockCreationForm: FC = () => {
   }
 
   const handleRoomSelectChange = (e: Pick<Room, "id">) => {
-    console.log(e)
     setRoomId(e.id)
   }
     

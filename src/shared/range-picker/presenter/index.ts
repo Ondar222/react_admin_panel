@@ -26,7 +26,6 @@ const RangePickerPresenter = (props: IRangePicker) => {
         const end_date = e[1].unix()
 
         setValue([e[0], e[1]])
-        console.log(start_date, end_date)
         props.onChange([start_date, end_date])
     }
 

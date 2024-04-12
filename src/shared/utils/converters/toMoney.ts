@@ -3,8 +3,6 @@ const convertToMoneyString = (money: number) => {
     style: "currency",
     currency: "RUB",
   }).format(money / 100);
-
-  console.log(money / 100, Math.floor(money % 100), 2);
   return result;
 };
 

@@ -53,7 +53,6 @@ const FirstStart: FC = () => {
                 hotel_id={hotel?.id}
                 successCallback={(res) => {
                     setIsOnboardingFinishable(true)
-                    console.log(res)
                 }}
                 rejectCallback={() => {
                     message.error("Номер не был создан, повторите еще раз")

@@ -73,7 +73,6 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
         }
       )
       .then((res) => {
-        console.log(res)
         useBrm.getState().addRoomLock(res.data.data)
       } )
       .catch((e) => {

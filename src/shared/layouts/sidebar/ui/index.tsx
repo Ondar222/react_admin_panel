@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
@@ -8,7 +8,6 @@ import { useAuth } from '@/features/auth';
 
 const menuItems: ItemType[] = [
   {
-
     key: '/booking',
     icon: <CalendarFilled />,
     label: "Бронь"
@@ -44,16 +43,11 @@ export const Sidebar: FC = () => {
   const { onboardingStatus } = useOnboarding()
   const navigate = useNavigate();
 
-
-  useEffect(() => {
-    setSelectedKey(`/${window.location.pathname.split("/")[2]}`)
-  }, [])
-
   return (
     <Menu
       disabled={onboardingStatus != "finish"}
       theme='dark'
-      selectedKeys={[`/${window.location.pathname.split("/")[2]}`]}
+      selectedKeys={[`${window.location.pathname}`]}
       defaultSelectedKeys={[selectedKey]}
       onClick={({ key }) => {
         if (key === "logout") {
@@ -63,7 +57,7 @@ export const Sidebar: FC = () => {
         }
 
         setSelectedKey(key)
-        navigate(`/${key}`)
+        navigate(key)
       }}
       items={menuItems}>
     </Menu>

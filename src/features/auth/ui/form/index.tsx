@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react"
 import { useAuth } from "../.."
-import { Link, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import { Button, Col, Flex, Input, Row, Typography, Form } from "antd"
 import { useAccount } from "@/entities/account"
 import { FormProviderProps } from "antd/es/form/context"
@@ -40,7 +40,6 @@ const AuthForm: FC = () => {
                     await withLoading(fetchData, setLoading)
                 })
                 .finally(async () => {
-                    console.log('первый вызов чек онбординг')
                     await checkOnboardingStatus()
                 })
         }
@@ -86,7 +85,7 @@ const AuthForm: FC = () => {
                                 </Col>
                                 <Col>
                                     <Button>
-                                        <Link to="/sign_up">Зарегистрироваться</Link>
+                                        <NavLink to="/sign_up">Зарегистрироваться</NavLink>
                                     </Button>
                                 </Col>
                             </Row>

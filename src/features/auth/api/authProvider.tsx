@@ -23,7 +23,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     useEffect(() => {
         checkAuth()
-        console.log('auth state is', isAuth)
     }, [])
 
     return (

@@ -17,7 +17,6 @@ import {
   NotFoundPage
 } from "@/pages";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { OnboardingProvider } from "@/processes/onboarding/api/onboardingProvider";
 
 const Router = () =>
   <Routes>

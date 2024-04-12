@@ -25,7 +25,6 @@ const RoomCreationPage: FC = () => {
           navigate(`/room/${res.data.id}`)
         }} 
         rejectCallback={(e) => {
-          console.log(e)
           throw e
         }}
         />
