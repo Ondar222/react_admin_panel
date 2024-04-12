@@ -16,12 +16,12 @@ const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
     url: props.hotel?.cover?.link,
     thumbUrl: props.hotel?.cover?.link
   }])
-  const [images, setImages] = useState<Array<UploadFile>>(props.hotel?.images.map((file) => ({
+  const [images, setImages] = useState<Array<UploadFile>>(props.hotel?.images?.map((file) => ({
     uid: file?.id,
     name: file?.id,
     url: file?.link,
     thumbUrl: file?.link
-  })))
+  })) || null)
 
   const { updateHotel, deleteImage } = useHotel()
 

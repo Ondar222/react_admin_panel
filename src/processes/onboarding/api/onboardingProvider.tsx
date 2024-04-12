@@ -1,6 +1,8 @@
 import { Hotel, useHotel } from "@/entities/hotel";
 import { Room, useRoom } from "@/entities/room";
+import useCookie from "@/features/cookie/api/useCookie";
 import { useLoading, withLoading } from "@/processes";
+import { message } from "antd";
 import { FC, ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +12,8 @@ interface OnboardingContextProps {
     currentStep: OnboardingSteps,
     setCurrentStep: React.Dispatch<React.SetStateAction<number>>,
     currentStepProgress: [number, number],
-    setCurrentStepProgress: React.Dispatch<React.SetStateAction<[number, number]>>
+    setCurrentStepProgress: React.Dispatch<React.SetStateAction<[number, number]>>,
+    checkOnboardingStatus: () => Promise<void>
 }
 
 enum OnboardingSteps {
@@ -25,47 +28,59 @@ const OnboardingContext = createContext<OnboardingContextProps>({
     currentStep: OnboardingSteps.HotelUpdate,
     setCurrentStep: undefined,
     currentStepProgress: [0, 0],
-    setCurrentStepProgress: undefined
+    setCurrentStepProgress: undefined,
+    checkOnboardingStatus: undefined
 })
 
 const OnboardingProvider: FC<{ children: ReactNode }> = ({ children }) => {
-    const [onboardingStatus, setOnboardingStatus] = useState<"wait" | "process" | "finish" | "error">()
+    const { value, updateCookie } = useCookie("onboarding", "process")
+    const [onboardingStatus, setOnboardingStatus] = useState<"wait" | "process" | "finish" | "error">(value as "wait" | "process" | "finish" | "error")
     const [currentStep, setCurrentStep] = useState<OnboardingSteps>(OnboardingSteps.HotelUpdate)
     const [currentStepProgress, setCurrentStepProgress] = useState<[number, number]>([0, 0])
     const navigate = useNavigate()
+    const { hotel } = useHotel()
+    const { rooms } = useRoom()
 
-    const { hotel, getHotelDetails } = useHotel()
-    const { rooms, getHotelRelatedRooms } = useRoom()
-    const { setLoading } = useLoading()
-
-    const fetchData = async () => {
-        await getHotelDetails()
-        await getHotelRelatedRooms()
-    }
-
-    useEffect(() => {
-        withLoading(fetchData, setLoading)
-    }, [])
-
-    useEffect(() => {
-        console.group("api data")
-        console.log(hotel)
-        console.log(rooms)
+    const checkOnboardingStatus = async (): Promise<void> => {
+        console.group("onboarding status")
+        console.log(onboardingStatus)
+        console.log(value)
         console.groupEnd()
-    }, [])
+        if (onboardingStatus === "finish") {
+            setOnboardingStatus("finish");
+            setCurrentStep(OnboardingSteps.CompleteOnboarding);
+            setCurrentStepProgress([1, 1]);
+            navigate("/booking")
+            console.log("onboarding finished");
+            return
+        }
+        else {
+            if (!hotel?.id) {
+                setOnboardingStatus("process");
+                setCurrentStep(OnboardingSteps.HotelUpdate);
+                setCurrentStepProgress([1, 1]);
+                navigate("/onboarding")
+                console.log("hotel update step");
+            }
+            else if (!rooms || rooms?.length === 0) {
+                setOnboardingStatus("process");
+                setCurrentStep(OnboardingSteps.RoomCreation);
+                setCurrentStepProgress([1, 1]);
+                navigate("/onboarding")
+                console.log("room create step");
+            }
+            else {
+                setOnboardingStatus("finish");
+                setCurrentStep(OnboardingSteps.CompleteOnboarding);
+                setCurrentStepProgress([1, 1]);
+                updateCookie("finish", { expires: 20000000000 })
+                message.success('Онбординг завершен!')
+                console.log("onboarding finished");
+                navigate("/booking")
+            }
+        }
 
-    useEffect(() => {
-        checkOnboardingStatus(
-            setOnboardingStatus,
-            setCurrentStep,
-            setCurrentStepProgress,
-            hotel,
-            rooms,
-        ).then((res) => {
-            if (onboardingStatus === "finish")
-                navigate("/hotel")
-        })
-    }, [])
+    };
 
     return (
         <OnboardingContext.Provider
@@ -75,7 +90,8 @@ const OnboardingProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 currentStep,
                 setCurrentStep,
                 currentStepProgress,
-                setCurrentStepProgress
+                setCurrentStepProgress,
+                checkOnboardingStatus,
             }}>
             {children}
         </OnboardingContext.Provider>
@@ -87,36 +103,6 @@ const useOnboarding = () => {
     return context
 }
 
-const checkOnboardingStatus = async (
-    setOnboardingStatus: React.Dispatch<React.SetStateAction<"wait" | "process" | "finish" | "error">>,
-    setCurrentStep: (step: OnboardingSteps) => void,
-    setCurrentStepProgress: React.Dispatch<React.SetStateAction<[number, number]>>,
-    hotel: Hotel | undefined,
-    rooms: Room[] | undefined,
-): Promise<void> => {
-    console.log(!hotel?.id)
-    if (!hotel?.id) {
-        setOnboardingStatus("process");
-        setCurrentStep(OnboardingSteps.HotelUpdate);
-        setCurrentStepProgress([1, 1]);
-        console.log("hotel update step");
-        return
-    }
-    console.log(rooms)
-    console.log(!rooms || rooms?.length === 0)
-    if (!rooms || rooms?.length === 0) {
-        setOnboardingStatus("process");
-        setCurrentStep(OnboardingSteps.RoomCreation);
-        setCurrentStepProgress([1, 1]);
-        console.log("room create step");
-        return
-    }
 
 
-    setOnboardingStatus("finish");
-    setCurrentStep(OnboardingSteps.CompleteOnboarding);
-    setCurrentStepProgress([1, 1]);
-    console.log("onboarding finished");
-};
-
-export { OnboardingProvider, useOnboarding, checkOnboardingStatus }
+export { OnboardingProvider, useOnboarding }

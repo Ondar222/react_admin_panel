@@ -24,7 +24,7 @@ const AccountPage: FC = () => {
   const { setLoading } = useLoading()
 
   useEffect(() => {
-    if (!account) {
+    if (!account?.id) {
       withLoading(me, setLoading)
     }
 

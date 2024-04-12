@@ -13,10 +13,11 @@ import {
   RoomDetailsPage,
   RoomCreationPage,
   RoomlockDetailsPage,
-  FirstStart
+  FirstStart,
+  NotFoundPage
 } from "@/pages";
-import { AuthProvider } from "@/features/auth/api/authProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { OnboardingProvider } from "@/processes/onboarding/api/onboardingProvider";
 
 const Router = () =>
   <Routes>
@@ -80,18 +81,14 @@ const Router = () =>
           <RoomlockDetailsPage />
         </ProtectedRoute>
       } />
-
-    <Route path="/404" element={<div></div>} />
-
-
     <Route
       path="/onboarding"
       element={
         <ProtectedRoute onboardCheck={false}>
           <FirstStart />
         </ProtectedRoute>
-        
       } />
+    <Route path="/*" element={<NotFoundPage />} />
   </Routes>
 
 export default Router;

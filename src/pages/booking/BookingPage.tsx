@@ -55,8 +55,8 @@ const BookingPage: FC = () => {
       }
       footer={<></>}
     >
-      <Flex justify="space-between" align="center">
-        <Select
+      <Flex justify="end" align="end">
+        {/* <Select
           style={{ width: '150px' }}
           defaultValue={BookingPageVMDecoder[0].name}
           onChange={(e) => setMode(e as BookingPageVM)}
@@ -64,7 +64,7 @@ const BookingPage: FC = () => {
             label: mode.label_ru,
             value: mode.name
           }))}
-        />
+        /> */}
         <Button type="primary" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button>
       </Flex>
 
@@ -81,14 +81,14 @@ const BookingPage: FC = () => {
         </Row>
       }
 
-      {
+      {/* {
         mode === BookingPageVM.list &&
         <BookingList data={brm} />
       }
       {
         mode === BookingPageVM.brick &&
         <BookingBrick data={bookings} />
-      }
+      } */}
 
 
     </MainLayout >

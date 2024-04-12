@@ -7,8 +7,6 @@ const require = createRequire( import.meta.url );
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/partners",
-  // envDir: "./src/app/config/environment",
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },

@@ -50,6 +50,11 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
         return res;
       });
 
+    set({
+      rooms: [
+        ...get().rooms, data.data.data]
+    })
+
     return data;
   },
 
@@ -81,6 +86,10 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
         },
       })
       .then((res) => console.log(res));
+
+    set({
+      rooms: get().rooms.filter((room) => room.id != room_id)
+    })
   },
 
   // completed
@@ -154,8 +163,6 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
     if (Array.isArray(file) === false) {
       data[fieldName] = [file];
     }
-
-    console.log(data);
 
     await axios
       .delete(

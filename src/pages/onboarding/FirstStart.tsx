@@ -4,12 +4,13 @@ import { Button, Steps, message } from "antd";
 import { useHotel } from "@/entities/hotel";
 import { useLoading, withLoading } from "@/processes";
 import { useRoom } from "@/entities/room";
-import { checkOnboardingStatus, useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
+import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { RoomCreationPage } from "..";
 import { AddNewHotelForm } from "@/widget/hotel/form/AddNewHotelForm";
 import { AddNewRoomForm } from "@/widget";
 import { Navigate, useNavigate } from "react-router-dom";
+import useCookie from "@/features/cookie/api/useCookie";
 
 const contentStyle: React.CSSProperties = {
     lineHeight: '260px',
@@ -17,9 +18,9 @@ const contentStyle: React.CSSProperties = {
     marginTop: 16,
 };
 
-
-
 const FirstStart: FC = () => {
+    const [isOnboardingFinishable, setIsOnboardingFinishable] = useState(false)
+    const { value, updateCookie } = useCookie("onboarding", "process")
     const [step, setStep] = useState<number>(0)
 
     const next = () => {
@@ -31,30 +32,16 @@ const FirstStart: FC = () => {
     };
 
     const {
-        currentStep,
-        setCurrentStep,
-        currentStepProgress,
-        setCurrentStepProgress,
         onboardingStatus,
-        setOnboardingStatus
+        checkOnboardingStatus
     } = useOnboarding()
 
     const { hotel, getHotelDetails } = useHotel()
-    const { rooms, getHotelRelatedRooms } = useRoom()
     const { setLoading } = useLoading()
     const navigate = useNavigate()
 
     useEffect(() => {
-        withLoading(getHotelRelatedRooms, setLoading)
         withLoading(getHotelDetails, setLoading)
-
-        checkOnboardingStatus(
-            setOnboardingStatus,
-            setCurrentStep,
-            setCurrentStepProgress,
-            hotel,
-            rooms
-        )
     }, [])
 
     const items: { content: ReactNode }[] = [
@@ -63,12 +50,13 @@ const FirstStart: FC = () => {
         },
         {
             content: <AddNewRoomForm
-                hotel_id={hotel.id}
+                hotel_id={hotel?.id}
                 successCallback={(res) => {
+                    setIsOnboardingFinishable(true)
                     console.log(res)
                 }}
                 rejectCallback={() => {
-                    console.log('data')
+                    message.error("Номер не был создан, повторите еще раз")
                 }} />
         }
     ]
@@ -84,9 +72,6 @@ const FirstStart: FC = () => {
                 <Steps
                     status={onboardingStatus}
                     current={step}
-                // items={items.map((item) => ({
-                //     description: item.content
-                // }))}
                 />
 
                 <div style={contentStyle}>{items[step].content}</div>
@@ -99,21 +84,15 @@ const FirstStart: FC = () => {
                         </Button>
                     )}
                     {step === items.length - 1 && (
-                        <Button type="primary" onClick={() => {
-                            message.success('Processing complete!')
-                            checkOnboardingStatus(
-                                setOnboardingStatus,
-                                setCurrentStep,
-                                setCurrentStepProgress,
-                                hotel,
-                                rooms
-                            )
+                        <Button type="primary" disabled={!isOnboardingFinishable} onClick={() => {
+
+                            checkOnboardingStatus()
                         }}>
                             Завершить
                         </Button>
                     )}
                     {step < items.length - 1 && (
-                        <Button type="primary" onClick={() => next()}>
+                        <Button type="primary"  onClick={() => next()}>
                             Следующий
                         </Button>
                     )}

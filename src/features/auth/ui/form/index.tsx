@@ -6,39 +6,43 @@ import { useAccount } from "@/entities/account"
 import { FormProviderProps } from "antd/es/form/context"
 import { AuthFormDto } from "../../model/interface"
 import { useRedirect } from "../../api/authProvider"
-import { checkOnboardingStatus, useOnboarding } from "@/processes/onboarding/api/onboardingProvider"
+import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider"
+import { useLoading, withLoading } from "@/processes"
+import { useHotel } from "@/entities/hotel"
+import { useRoom } from "@/entities/room"
 
 const AuthForm: FC = () => {
-    const { isAuth, login, logout, checkAuth } = useAuth()
-    const { onboardingStatus } = useOnboarding()
+    const { isAuth, login } = useAuth()
+    const { onboardingStatus, checkOnboardingStatus } = useOnboarding()
     const { } = useRedirect()
     const { me } = useAccount()
     const [form] = Form.useForm<AuthFormDto>()
     const email = Form.useWatch("email", form)
     const password = Form.useWatch("password", form)
+    const { hotel, getHotelDetails } = useHotel()
+    const { rooms, getHotelRelatedRooms } = useRoom()
+    const { setLoading } = useLoading()
+
+    const fetchData = async () => {
+        await getHotelDetails()
+        await getHotelRelatedRooms()
+    }
 
     const navigate = useNavigate()
-
-    const handleClick = async () => {
-        await login(email, password)
-        await me()
-
-        if (isAuth) {
-            navigate("/booking")
-        }
-    }
 
     const onFormFinish: FormProviderProps["onFormFinish"] = async (name, info): Promise<void> => {
         if (name == "auth_form") {
             await login(email, password)
-            await me()
-
-            console.log('onboarbing checked')
-            if (onboardingStatus != "finish") {
-                navigate("/onboarding")
-            }
-
-            navigate("/hotel")
+                .then(async (res) => {
+                    await me()
+                })
+                .then(async () => {
+                    await withLoading(fetchData, setLoading)
+                })
+                .finally(async () => {
+                    console.log('первый вызов чек онбординг')
+                    await checkOnboardingStatus()
+                })
         }
     }
 
@@ -82,7 +86,7 @@ const AuthForm: FC = () => {
                                 </Col>
                                 <Col>
                                     <Button>
-                                        <Link to="/partners/sign_up">Зарегистрироваться</Link>
+                                        <Link to="/sign_up">Зарегистрироваться</Link>
                                     </Button>
                                 </Col>
                             </Row>
@@ -90,21 +94,6 @@ const AuthForm: FC = () => {
                     </Flex>
                 </Form>
             </Form.Provider>
-            {/* {isAuth && (
-                <Row className="modal_signIn_yurta">
-                    <Col className="modal_container_signIn_yurta">
-                        <Row className="modal_container_signIn_yurta_title">
-                            <Typography.Text style={{ fontWeight: "600" }}>Уже выполнен вход</Typography.Text>
-                        </Row>
-                        <Row className="modal_container_signIn_yurta_buttons">
-                            <Button onClick={() => navigate("/hotel")} type="primary">Продолжить</Button>
-                            <Button onClick={() => {
-                                logout()
-                            }}>Войти в другой аккаунт</Button>
-                        </Row>
-                    </Col>
-                </Row>
-            )} */}
         </Col>
     )
 
