@@ -5,9 +5,9 @@ COPY package*.json ./
 COPY . .
 
 RUN npm install
-RUN npm run build
+RUN npm run build:prod
 
-EXPOSE 4000
+EXPOSE 3000
 
 VOLUME [ "/var/www/admin" ]
 CMD ["npm", "run", "serve"]
