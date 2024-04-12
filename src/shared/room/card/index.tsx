@@ -32,7 +32,7 @@ const RoomCardUI: FC<Room> = (room) =>
 
         <Row gutter={[16, 16]}>
             <Col span={12}>
-                <Image src={room?.cover?.id != null ? room.cover.link : "/partners/vite.svg"} height={100} width={"100%"} style={{
+                <Image src={room?.cover?.id != null ? room.cover.link : "/vite.svg"} height={100} width={"100%"} style={{
                     borderRadius: 8,
                     objectFit: "cover"
                 }} />

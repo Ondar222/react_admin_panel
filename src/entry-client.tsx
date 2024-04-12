@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
     <ConfigProvider locale={ru_RU}>
-      <BrowserRouter basename='partners'>
+      <BrowserRouter>
         <LoadingProvider>
           <LoadingWrapper>
             <OnboardingProvider>

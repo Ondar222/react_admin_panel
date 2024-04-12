@@ -86,7 +86,7 @@ const AuthForm: FC = () => {
                                 </Col>
                                 <Col>
                                     <Button>
-                                        <Link to="/partners/sign_up">Зарегистрироваться</Link>
+                                        <Link to="/sign_up">Зарегистрироваться</Link>
                                     </Button>
                                 </Col>
                             </Row>
