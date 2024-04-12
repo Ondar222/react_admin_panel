@@ -8,7 +8,6 @@ const SignUpPage: FC = () => {
 
     return (
         <Layout style={{
-            height: "100vh",
             overflow: "unset",
             background: '#001529',
             display: "flex",

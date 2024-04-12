@@ -18,10 +18,10 @@ const RoomPage: FC = () => {
     <MainLayout
       header={
         <Row justify={"space-between"}>
-          <Col span={18}>
+          <Col>
             <Typography.Title level={2}>Номера</Typography.Title>
           </Col>
-          <Col span={3}>
+          <Col >
             <Button onClick={() => navigate("/room/+")}>
               Создать номер
             </Button>
@@ -30,18 +30,21 @@ const RoomPage: FC = () => {
       }
       footer="Пагинация"
     >
-      <Divider></Divider>
-      <Row gutter={[16, 16]} wrap={true} justify="space-between">
-        {
-          rooms?.map((room, index) => {
-            return (
-              <Col key={index} xs={24} sm={24} md={12} lg={8} xl={6}>
-                <RoomCardUI {...room} />
-              </Col>
-            )
-          })
-        }
-      </Row>
+      <Col>
+        <Divider></Divider>
+        <Row gutter={[16, 16]} wrap={true} justify="space-between">
+          {
+            rooms?.map((room, index) => {
+              return (
+                <Col key={index} xs={24} sm={24} md={12} lg={8} xl={6}>
+                  <RoomCardUI {...room} />
+                </Col>
+              )
+            })
+          }
+        </Row>
+      </Col>
+
     </MainLayout>
   )
 }

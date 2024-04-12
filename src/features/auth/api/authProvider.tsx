@@ -1,8 +1,7 @@
 import { FC, ReactNode, createContext, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './index'
-import { useHotel } from '@/entities/hotel';
-import { Divider, Typography } from 'antd';
+
 // Создаем контекст для хранения информации об авторизации
 const AuthContext = createContext({
     isAuth: false,

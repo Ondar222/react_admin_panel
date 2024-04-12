@@ -8,7 +8,8 @@ export const YurtaEditor: FC<YurtaEditorT> = ({ value, onChange }: { value?: str
 
     return (
         <Editor
-            apiKey={import.meta.env.VITE_TINYMCE_APIKEY}
+            tinymceScriptSrc={'/tinymce/tinymce.min.js'}
+            
             onInit={(evt, editor) => editorRef.current = editor}
             initialValue={value}
 
@@ -17,6 +18,9 @@ export const YurtaEditor: FC<YurtaEditorT> = ({ value, onChange }: { value?: str
                 language_url: "ru.js",
                 height: 500,
                 root_name: "description",
+                promotion: false,
+                branding: false,
+                help_accessibility: false,
                 plugins: [
                     'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
                     'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',

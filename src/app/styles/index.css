@@ -1,17 +1,40 @@
 * {
   padding: 0;
   margin: 0;
+  max-height: 100%;
+  overflow: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.container__sider {
-
+#root {
+  height: 100vh;
+  width: 100vw;
 }
+
+.scroll-wrapper {
+  overflow: scroll;
+}
+
+.ant-layout {
+  height: 100%;
+}
+
+.container__sider {}
 
 .container__wrap {
+  overflow-y: hidden;
 }
 
 .container__content {
+  overflow: scroll;
   padding: 20px 50px;
+}
+
+.container__content>:is([class]),
+.container__content>:not([class]) {
+  height: 100%;
+  overflow: scroll;
 }
 
 .sidebar {

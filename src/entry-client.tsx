@@ -11,12 +11,14 @@ import ru_RU from "antd/lib/locale/ru_RU"
 import { LoadingProvider, LoadingWrapper } from './processes/loading/LoadingProvider'
 import { OnboardingProvider } from './processes/onboarding/api/onboardingProvider'
 
+// const basename = import.meta.env.PROD ? "/" : "partners"
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 
 root.render(
   <React.StrictMode>
     <ConfigProvider locale={ru_RU}>
-      <BrowserRouter basename='/'>
+      <BrowserRouter basename={"/"}>
         <LoadingProvider>
           <LoadingWrapper>
             <OnboardingProvider>

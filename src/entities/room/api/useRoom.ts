@@ -66,6 +66,10 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
         },
       })
       .then((res) => {
+        set({
+          room_details: { ...res.data },
+          rooms: [...get().rooms, get().room_details]
+        })
         return res;
       });
   },
@@ -92,13 +96,14 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
   getRoomDetailsByID: async (id) => {
     const { access_token } = useCredentails.getState();
 
-    const room_details = await axios
-      .get<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room/${id}`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-      .then((res) => res.data.data);
+    const room_details = await
+      axios
+        .get<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room/${id}`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        })
+        .then((res) => res.data.data);
 
     set({ room_details });
   },

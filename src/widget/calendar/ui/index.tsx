@@ -15,7 +15,7 @@ import ruLocale from '@fullcalendar/core/locales/ru';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendar } from "../model";
 import { Roomlock } from "@/entities/roomlock";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RoomlockCreationForm } from "@/widget/roomlock/creation_form";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
 
