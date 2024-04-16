@@ -63,8 +63,12 @@ const AccountPage: FC = () => {
               </Flex>
 
               <Row gutter={[16, 16]} wrap>
-                <Col span={12}><YurtaInput label="Фамилия" placeholder="Фамилия" value={account?.surname} /></Col>
-                <Col span={12}><YurtaInput label="Имя" placeholder="Имя" value={account?.name} /></Col>
+                <Col span={12}>
+                  <YurtaInput label="Фамилия" placeholder="Фамилия" value={account?.surname} />
+                </Col>
+                <Col span={12}>
+                  <YurtaInput label="Имя" placeholder="Имя" value={account?.name} />
+                </Col>
               </Row>
 
               <Row gutter={[16, 16]}>

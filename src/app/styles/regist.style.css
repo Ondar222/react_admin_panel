@@ -73,3 +73,20 @@
     cursor: pointer;
 
 }
+
+
+.sign-up_form {
+
+}
+
+.sign-up_form>.ant-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.sign-up_form>.ant-row>.ant-col {
+    width: 100%;
+    max-width: 300px;
+}

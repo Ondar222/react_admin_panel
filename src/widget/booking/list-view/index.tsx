@@ -3,8 +3,8 @@ import { Space, Table, Divider } from 'antd';
 import type { TableProps } from 'antd';
 import { Booking } from "@/entities/booking";
 import { Roomlock } from "@/entities/roomlock";
-import moment from "moment-timezone";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 
 
@@ -32,9 +32,9 @@ const columns: TableProps<{
       key: 'date',
       render: (item) => {
         if (new Object(item).hasOwnProperty('check_in')) {
-          return <a>{moment(item.check_in * 1000).toString()}</a>
+          return <a>{dayjs(item.check_in * 1000).toString()}</a>
         }
-        return <a>{moment(item.start * 1000).toString()}</a>
+        return <a>{dayjs(item.start * 1000).toString()}</a>
       },
     },
     {
@@ -43,9 +43,9 @@ const columns: TableProps<{
       key: 'date',
       render: (item) => {
         if (new Object(item).hasOwnProperty('check_out')) {
-          return <a>{moment(item.check_out * 1000).toString()}</a>
+          return <a>{dayjs(item.check_out * 1000).toString()}</a>
         }
-        return <a>{moment(item.end * 1000).toString()}</a>
+        return <a>{dayjs(item.end * 1000).toString()}</a>
       },
     },
     {

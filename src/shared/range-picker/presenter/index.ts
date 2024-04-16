@@ -1,6 +1,4 @@
 import locale from "antd/locale/ru_RU"
-
-
 import { IRangePicker } from "../model"
 import { useState } from "react"
 import { RangePickerProps } from "antd/lib/date-picker"
@@ -15,10 +13,10 @@ const tz = "Asia/Krasnoyarsk"
 const today = Date.now()
 
 const RangePickerPresenter = (props: IRangePicker) => {
-    const [start_date, end_date] = props.value
+    const [start_date, end_date] = props?.value
     const [value, setValue] = useState<[Dayjs, Dayjs]>([
-        dayjs(start_date * 1000).tz(),
-        dayjs(end_date * 1000).tz()
+        dayjs(start_date * 1000).tz(tz),
+        dayjs(end_date * 1000).tz(tz)
     ])
 
     const handleChange: RangePickerProps["onChange"] = (e) => {
@@ -30,7 +28,6 @@ const RangePickerPresenter = (props: IRangePicker) => {
     }
 
     return {
-        label: props.label,
         value: value,
         defaultValue: [dayjs(today), dayjs(today)],
         onChange: handleChange,

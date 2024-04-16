@@ -5,7 +5,8 @@ import { Layout as AntdLayout } from "antd"
 import styled from "styled-components"
 import { useLoading } from "@/processes/loading/LoadingProvider"
 import { LoadingPage } from "@/widget/loading_page"
-import withScrollLock from "@/shared/scrollWrapper"
+
+const { Content } = AntdLayout
 
 export const Layout = styled(AntdLayout)`
   background: none;
@@ -14,34 +15,31 @@ export const Layout = styled(AntdLayout)`
   min-height: 100dvh;
 `
 
+export const Sider = styled(AntdLayout.Sider)`
+`
+
 export const Header = styled(AntdLayout.Header)`
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  height: 100px;
+  height: fit-content;
   background: white;
   padding: 20px 50px;
 `
 
 export const Footer = styled(AntdLayout.Footer)`
+  background: none;
 `
-const { Sider, Content } = Layout
-const UnscrollableContent = withScrollLock(Content)
+
+
 
 const MainLayout: FC<ILayout> = ({ header, children, footer }) => {
   const { loading } = useLoading()
 
-
-
   if (loading) {
     return <LoadingPage layout="empty" />
   }
-
+  
   return (
     <Layout hasSider>
-      <Sider
-        collapsible
-      >
+      <Sider>
         <Sidebar />
       </Sider>
 

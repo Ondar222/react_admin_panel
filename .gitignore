@@ -8,6 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 VSCodeCounter
 **/*/.env
+public/tinymce
 
 node_modules
 package-lock.json

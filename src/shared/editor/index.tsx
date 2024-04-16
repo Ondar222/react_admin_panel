@@ -9,17 +9,19 @@ export const YurtaEditor: FC<YurtaEditorT> = ({ value, onChange }: { value?: str
     return (
         <Editor
             tinymceScriptSrc={'/tinymce/tinymce.min.js'}
-            
             onInit={(evt, editor) => editorRef.current = editor}
             initialValue={value}
 
             init={{
+                license_key: 'gpl',
                 language: "ru",
                 language_url: "ru.js",
                 height: 500,
+            
                 root_name: "description",
                 promotion: false,
                 branding: false,
+                
                 help_accessibility: false,
                 plugins: [
                     'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
@@ -30,6 +32,7 @@ export const YurtaEditor: FC<YurtaEditorT> = ({ value, onChange }: { value?: str
                 toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
             }}
+            
             tagName="description"
             onChange={() => onChange(editorRef.current.getContent())}
         />

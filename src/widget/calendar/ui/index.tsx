@@ -48,6 +48,8 @@ const Calendar: FC<ICalendar> = (props) => {
       center: "title",
       right: 'prev,dayGridMonth,next',
     },
+    // height: "100vh",
+    // contentHeight: "500px",
     nextDayThreshold: '00:00',
     dateClick: handleDateClick,
     locales: [ruLocale],

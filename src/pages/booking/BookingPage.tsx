@@ -57,7 +57,7 @@ const BookingPage: FC = () => {
       header={<BookingPageHeader />}
       footer={<></>}
     >
-      <Col span={24}>
+      <Col span={24} style={{height: "100%"}}>
         {/* <Flex justify="end" align="end">
           <Select
           style={{ width: '150px' }}
@@ -77,7 +77,6 @@ const BookingPage: FC = () => {
           <Calendar
             brm={brm}
           />
-
         }
 
         {/* {

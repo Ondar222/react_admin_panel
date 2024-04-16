@@ -78,7 +78,7 @@ export { HotelPage }
 
 const HotelPageHeader: FC = () => {
   return (
-    <Typography.Title level={1}>
+    <Typography.Title level={2}>
       Мой отель
     </Typography.Title>
   )

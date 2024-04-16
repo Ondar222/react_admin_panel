@@ -5,9 +5,24 @@ import { Button, Col, Divider, Row, Typography } from "antd";
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+const RoomPageHeader: FC = () => {
+  const navigate = useNavigate()
+  return (
+    <Row justify={"space-between"}>
+      <Col>
+        <Typography.Title level={2}>Номера</Typography.Title>
+      </Col>
+      <Col >
+        <Button onClick={() => navigate("/room/+")}>
+          Создать номер
+        </Button>
+      </Col>
+    </Row>
+  )
+}
+
 const RoomPage: FC = () => {
   const { rooms, getHotelRelatedRooms, changeVisibility } = useRoom()
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (!rooms)
@@ -16,23 +31,10 @@ const RoomPage: FC = () => {
 
   return (
     <MainLayout
-      header={
-        <Row justify={"space-between"}>
-          <Col>
-            <Typography.Title level={2}>Номера</Typography.Title>
-          </Col>
-          <Col >
-            <Button onClick={() => navigate("/room/+")}>
-              Создать номер
-            </Button>
-          </Col>
-        </Row>
-      }
-      footer="Пагинация"
+      header={<RoomPageHeader />}
     >
       <Col>
-        <Divider></Divider>
-        <Row gutter={[16, 16]} wrap={true} justify="space-between">
+        <Row gutter={[16, 16]} wrap={true}>
           {
             rooms?.map((room, index) => {
               return (

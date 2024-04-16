@@ -20,21 +20,4 @@ interface DirectusUserResponse extends Object {
   phone: string;
 }
 
-class UserResponseDecoder {
-  constructor(user: DirectusUserResponse) {
-    this.id = user.id;
-    this.name = user.name;
-    this.surname = user.surname;
-    this.phone = user.phone;
-    this.email = user.email;
-  }
-
-  id: string;
-  name: string;
-  surname: string;
-  phone: string;
-  email: string;
-}
-
-export { UserResponseDecoder };
 export type { DirectusUserResponse };
