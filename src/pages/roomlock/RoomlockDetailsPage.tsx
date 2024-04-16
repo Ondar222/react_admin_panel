@@ -1,8 +1,9 @@
 import { useHotel } from "@/entities/hotel";
 import { useRoomLock } from "@/entities/roomlock";
+import { useLoading, withLoading } from "@/processes";
 import { MainLayout } from "@/shared/layouts/layout";
 import { LoadingPage } from "@/widget/loading_page";
-import { Button, Col, DatePicker, Form, FormProps, Input, Row, Select } from "antd";
+import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import { FormProviderProps } from "antd/es/form/context";
 import dayjs from "dayjs";
 import { FC, useEffect } from "react";
@@ -13,13 +14,16 @@ const RoomlockDetailsPage: FC = () => {
     const { roomlock_details, getRoomLockDetailsByID, deleteRoomlock } = useRoomLock()
     const { hotel, getHotelDetails } = useHotel()
     const navigate = useNavigate()
+    const { setLoading } = useLoading()
+
+    const fetchData = async () => {
+        await getHotelDetails()
+        await getRoomLockDetailsByID(Number(id))
+    }
 
     useEffect(() => {
-        getHotelDetails()
-        getRoomLockDetailsByID(Number(id))
+        withLoading(fetchData, setLoading)
     }, [])
-
-
 
     const selectableRooms = hotel?.rooms.map((room) => ({
         value: room.id,
@@ -27,35 +31,27 @@ const RoomlockDetailsPage: FC = () => {
     }))
 
     const [form] = Form.useForm()
+
     const roomlock_id = Form.useWatch("id", form)
     const status = Form.useWatch("status", form)
     const dates = Form.useWatch("dates", form)
     const room = Form.useWatch("room", form)
 
-
     const handleRoomlockDelete = async () => {
         await deleteRoomlock(roomlock_details.id)
-            .then((res) => navigate('/booking'))
-            .catch((e) => {
-                navigate('/booking')
-            })
+        navigate('/booking')
     }
 
     const handleSubmit: FormProviderProps["onFormFinish"] = async (name, info) => {
         if (name === "roomlock_update") {
-            
         }
     }
 
-    if (roomlock_details?.id != Number(id) || !roomlock_details) return <LoadingPage layout="empty" />
+    if (roomlock_details?.id != Number(id) || !roomlock_details)
+        return <LoadingPage layout="empty" />
 
     return (
-        <MainLayout header={
-            <div>
-
-            </div>}
-
-            footer={<div></div>}  >
+        <MainLayout header={""}>
             <Form.Provider
                 onFormFinish={handleSubmit}
             >

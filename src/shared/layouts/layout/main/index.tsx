@@ -6,6 +6,8 @@ import styled from "styled-components"
 import { useLoading } from "@/processes/loading/LoadingProvider"
 import { LoadingPage } from "@/widget/loading_page"
 
+const { Content } = AntdLayout
+
 export const Layout = styled(AntdLayout)`
   background: none;
   color: black;
@@ -13,41 +15,42 @@ export const Layout = styled(AntdLayout)`
   min-height: 100dvh;
 `
 
-export const Header = styled(AntdLayout.Header)`
-  position: sticky;
-  top: 0;
-  z-index: 10;
+export const Sider = styled(AntdLayout.Sider)`
+`
 
+export const Header = styled(AntdLayout.Header)`
+  height: fit-content;
   background: white;
   padding: 15px 50px;
 `
 
 export const Footer = styled(AntdLayout.Footer)`
+  background: none;
 `
 
+
+
 const MainLayout: FC<ILayout> = ({ header, children, footer }) => {
-  const {loading} = useLoading()
-  const { Sider, Content } = Layout
+  const { loading } = useLoading()
 
   if (loading) {
     return <LoadingPage layout="empty" />
   }
-
+  
   return (
     <Layout hasSider>
-      <Sider
-        collapsible
-      >
+      <Sider>
         <Sidebar />
       </Sider>
 
       <Layout
         className="container__wrap">
+
         <Header>
           {header}
         </Header>
 
-        <Content className="container__content" >
+        <Content className="container__content">
           {children}
         </Content>
 

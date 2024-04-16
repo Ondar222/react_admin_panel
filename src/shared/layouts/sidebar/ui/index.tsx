@@ -1,40 +1,64 @@
 import { FC, useState } from 'react';
-import { Menu } from 'antd';
+import { Menu as AntdMenu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useOnboarding } from '@/processes/onboarding/api/onboardingProvider';
 import { useAuth } from '@/features/auth';
+import styled from 'styled-components';
+
+const Menu = styled(AntdMenu)`
+  height: 100%;
+`
 
 const menuItems: ItemType[] = [
   {
-    key: '/booking',
-    icon: <CalendarFilled />,
-    label: "Бронь"
-  },
-  {
-    key: '/room',
-    icon: <CalendarFilled />,
-    label: "Номера"
-  },
-  {
-    key: "/hotel",
-    icon: <CalendarFilled />,
-    label: "Отель"
-  },
-  {
-    key: "/account",
-    icon: <UserOutlined />,
-    label: "Аккаунт"
-  },
+    type: "group",
+    children: [
+      {
 
-  { type: "divider" },
-
-  {
-    key: 'logout',
-    icon: <LogoutOutlined />,
-    label: "Выйти"
+        key: '/booking',
+        icon: <CalendarFilled />,
+        label: "Бронь"
+      },
+      {
+        key: '/room',
+        icon: <CalendarFilled />,
+        label: "Номера"
+      },
+      {
+        key: "/hotel",
+        icon: <CalendarFilled />,
+        label: "Отель"
+      },
+    ]
   },
+  {
+    style: {
+      position: "fixed",
+      bottom: 0
+    },
+    type: "group",
+    children: [
+      {
+        key: "account-group",
+        icon: <UserOutlined />,
+        label: "Аккаунт",
+        children: [
+          {
+            key: '/account',
+            icon: <UserOutlined />,
+            label: "Профиль"
+          },
+          {
+            key: 'logout',
+            icon: <LogoutOutlined />,
+            label: "Выйти"
+          },
+        ]
+      }
+    ]
+  }
 ]
 
 export const Sidebar: FC = () => {
@@ -46,7 +70,6 @@ export const Sidebar: FC = () => {
   return (
     <Menu
       disabled={onboardingStatus != "finish"}
-      theme='dark'
       selectedKeys={[`${window.location.pathname}`]}
       defaultSelectedKeys={[selectedKey]}
       onClick={({ key }) => {
@@ -59,7 +82,9 @@ export const Sidebar: FC = () => {
         setSelectedKey(key)
         navigate(key)
       }}
-      items={menuItems}>
+      items={menuItems}
+
+    >
     </Menu>
   )
 }

@@ -8,6 +8,7 @@ import { useRoomLock } from "@/entities/roomlock/api/useRoomlock"
 import { RoomDtlsPgHdr } from "@/widget/room/details_page_header/ui"
 import { UpdateCurrentRoomForm } from "@/widget/room/UpdateCurrentRoomForm/UpdateCurrentRoomForm"
 import { useLoading, withLoading } from "@/processes"
+import { LoadingPage } from "@/widget/loading_page"
 
 const RoomDetailsPage: FC = () => {
   const { id } = useParams()
@@ -23,6 +24,10 @@ const RoomDetailsPage: FC = () => {
   useEffect(() => {
     withLoading(fetchData, setLoading)
   }, [])
+
+  if (!room_details) {
+    return <LoadingPage layout={"main"} />
+  }
 
   return (
     <MainLayout

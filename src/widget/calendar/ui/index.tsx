@@ -15,7 +15,7 @@ import ruLocale from '@fullcalendar/core/locales/ru';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendar } from "../model";
 import { Roomlock } from "@/entities/roomlock";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RoomlockCreationForm } from "@/widget/roomlock/creation_form";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
 
@@ -48,6 +48,8 @@ const Calendar: FC<ICalendar> = (props) => {
       center: "title",
       right: 'prev,dayGridMonth,next',
     },
+    // height: "100vh",
+    // contentHeight: "500px",
     nextDayThreshold: '00:00',
     dateClick: handleDateClick,
     locales: [ruLocale],

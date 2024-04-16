@@ -1,6 +1,5 @@
-import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { YurtaSelect } from "@/shared/components/form/ui/select/default";
-import { Drawer, DrawerProps, Form } from "antd";
+import { Drawer, DrawerProps, Form, Input } from "antd";
 import { FC } from "react";
 
 interface IAddressBuilderUI extends DrawerProps {
@@ -14,8 +13,7 @@ interface IAddressBuilderUI extends DrawerProps {
 const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
   return (
     <>
-      <YurtaInput
-        label="Адрес"
+      <Input
         value={props.address.region}
         onClick={props.onInputClick}
         contentEditable={false}
@@ -29,21 +27,48 @@ const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
         width={"30%"}
       >
         <Form layout="vertical">
-          <YurtaInput label="Индекс" value={props.address.postal_code} />
-          <YurtaInput label="Страна" value={props.address.country} />
-          <YurtaInput label="Регион" value={props.address.region} />
+          <Form.Item label="Индекс" >
+            <Input value={props.address.postal_code} />
+          </Form.Item>
+          <Form.Item label="Страна">
+            <Input value={props.address.country} />
+          </Form.Item>
+
+          <Form.Item label="Регион">
+            <Input value={props.address.region} />
+          </Form.Item>
+
+
           <YurtaSelect label="Тип населенного пункта" value={props.address.settlement_type} />
-          <YurtaInput label="Название населенного пункта" value={props.address.settlement} />
+
+          <Form.Item label="Название населенного пункта">
+            <Input value={props.address.settlement} />
+          </Form.Item>
+
           <YurtaSelect label="Тип улицы" value={props.address.street_type} />
-          <YurtaInput label="Название улицы" value={props.address.street} />
-          <YurtaInput label="Дом" value={props.address.house} />
-          <YurtaInput label="Строение" value={props.address.block} />
-          <YurtaInput label="Литера дом" value={props.address.house_litera} />
-          <YurtaInput label="Координаты" value={props.address.coordinates} />
-          <YurtaInput label="Долгота" value={props.address.longitude} />
-          <YurtaInput label="Широта" value={props.address.latitude} />
+          <Form.Item label="Название улицы">
+            <Input value={props.address.street} />
+          </Form.Item>
+          <Form.Item label="Дом">
+            <Input value={props.address.house} />
+          </Form.Item>
+          <Form.Item label="Строение">
+            <Input value={props.address.block} />
+          </Form.Item>
+          <Form.Item label="Литера дом">
+            <Input value={props.address.house_litera} />
+          </Form.Item>
+          <Form.Item label="Координаты">
+            <Input value={props.address.coordinates} />
+          </Form.Item>
+          <Form.Item label="Долгота">
+            <Input value={props.address.longitude} />
+          </Form.Item>
+          <Form.Item label="Широта">
+            <Input value={props.address.latitude} />
+          </Form.Item>
         </Form>
-      </Drawer>
+      </Drawer >
     </>
 
   )

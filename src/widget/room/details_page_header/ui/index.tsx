@@ -1,9 +1,8 @@
-import { Room, useRoom } from "@/entities/room"
+import { Room } from "@/entities/room"
 import { RoomDeleteButton } from "@/shared/room/delete_buttom"
 import { RoomVsbltSwitch } from "@/shared/room/visibility_switch"
-import { Flex, Typography, Row, Col, Button, Switch } from "antd"
+import { Flex, Typography, Row, Col } from "antd"
 import { FC } from "react"
-import { useNavigate } from "react-router-dom"
 
 export const RoomDtlsPgHdr: FC<{ room: Room }> = ({ room }) =>
     <RoomDtlsPgHdrUI room={room} />

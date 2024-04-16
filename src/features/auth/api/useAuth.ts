@@ -88,7 +88,7 @@ const useAuth = create(
 
   }), {
     name: "auth_store",
-    storage: createJSONStorage(() => localStorage)
+    storage: createJSONStorage(() => sessionStorage)
   }));
 
 export { useAuth };

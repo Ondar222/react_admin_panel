@@ -7,7 +7,7 @@ interface UseBooking {
   booking_details: Booking | undefined;
 
   getAllBookings: () => void;
-  getBookingDetailsByID: (id: number) => void;
+  getBookingDetailsByID: (id: number) => Promise<void>;
 }
 
 interface UseBookingHotel extends UseBooking {}

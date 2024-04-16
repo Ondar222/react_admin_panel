@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Form, Col, Row, Typography, Button, Input, notification, Switch } from "antd";
+import { Form, Col, Row, Typography, Button, Input, notification, Switch, Flex, Checkbox } from "antd";
 import { useOtp } from "@/features/otp";
 import { SignUpDto, } from "./model";
 import { FormProviderProps } from "antd/es/form/context";
@@ -93,137 +93,138 @@ const SignUpForm: FC = () => {
                     padding: 20,
                     borderRadius: 10
                 }}
-                name="sign-up_form">
+                name="sign-up_form"
+                className="sign-up_form">
+                <Row>
+                    <Typography.Title level={2}>
+                        Регистрация
+                    </Typography.Title>
+                </Row>
+                <Row justify={"space-between"}>
+                    <Col>
+                        <Form.Item label="Имя" name={"name"} required
+                            rules={[{
+                                required: true
+                            }]}>
+                            <Input placeholder="Имя" />
+                        </Form.Item>
+                    </Col>
+                    <Col>
+                        <Form.Item
+                            label="Фамилия"
+                            name={"surname"}
+                            required
+                            rules={[{
+                                required: true
+                            }]}>
+                            <Input placeholder="Фамилия" />
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                <Col>
-                    <Row gutter={[16, 16]}>
-                        <Typography.Title level={2}>
-                            Регистрация
-                        </Typography.Title>
-                    </Row>
-                    <Row gutter={[16, 16]}>
-                        <Col span={12}>
-                            <Form.Item label="Имя" name={"name"} required
-                                rules={[{
-                                    required: true
-                                }]}>
-                                <Input placeholder="Имя" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Фамилия"
-                                name={"surname"}
-                                required
-                                rules={[{
-                                    required: true
-                                }]}>
-                                <Input placeholder="Фамилия" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                <Row justify={"space-between"}>
+                    <Col>
+                        <Form.Item
+                            label="Номер телефона"
+                            name="phone"
+                            required
+                            rules={[{
+                                required: true
+                            }]}>
+                            <Input
+                                placeholder="79001234567"
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col>
+                        <Form.Item
+                            label="Адрес электронной почты"
+                            name="email"
+                            required
+                            rules={[{
+                                required: true
+                            }]}
+                        >
+                            <Input type="email" placeholder="example@yurta.site" />
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                    <Row gutter={[16, 16]}>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Номер телефона"
-                                name="phone"
-                                required
-                                rules={[{
-                                    required: true
-                                }]}>
-                                <Input
-                                    placeholder="79001234567"
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Адрес электронной почты"
-                                name="email"
-                                required
-                                rules={[{
-                                    required: true
-                                }]}
-                            >
-                                <Input type="email" placeholder="example@yurta.site" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-
-                    <Row gutter={[16, 16]} align={"middle"}>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Код подтверждения"
-                                name="code"
-                                required
-                                rules={[{
-                                    required: true
-                                }]}>
-                                <Input placeholder="XXXXXX" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item label=" ">
-                                <Button
-                                    style={{
-                                        width: "100%"
-                                    }}
-                                    onClick={handleVerifyPhoneNumber}>
-                                    Подтвердить номер
-                                </Button>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={[16, 16]}>
-                        <Col span={12}>
-                            <Form.Item label="Пароль" name={"password"} required
-                                rules={[{
-                                    required: true
-                                }]}>
-                                <Input type="password" placeholder="********" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                            <Form.Item
-                                label="Повторите пароль"
-                                name={"repeat_password"}
-                                required
-                                rules={[{
-                                    required: true
-                                }]}>
-                                <Input type="password" placeholder="********" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={[16, 16]}>
-                        <Col span={12}>
-                            <Row gutter={[16, 16]}>
-                                <Col span={3}>
-                                    <Form.Item name={"agreement"}>
-                                        <Switch title="asd" size="small" />
-                                    </Form.Item>
-                                </Col>
-                                <Col span={20}>
-                                    <Typography.Text>
-                                        Я согласен с условиями <a href="#">Пользовательского соглашения</a>
-                                    </Typography.Text>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col span={12} >
+                <Row justify={"space-between"}>
+                    <Col>
+                        <Form.Item
+                            label="Код подтверждения"
+                            name="code"
+                            required
+                            rules={[{
+                                required: true
+                            }]}>
+                            <Input placeholder="XXXXXX" />
+                        </Form.Item>
+                    </Col>
+                    <Col>
+                        <Form.Item label=" ">
                             <Button
-                                disabled={!agreement}
-                                type="primary"
-                                htmlType="submit"
                                 style={{
                                     width: "100%"
-                                }}>
-                                Зарегистрироваться
+                                }}
+                                onClick={handleVerifyPhoneNumber}>
+                                Подтвердить номер
                             </Button>
-                        </Col>
-                    </Row>
-                </Col>
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row justify={"space-between"}>
+                    <Col>
+                        <Form.Item label="Пароль" name={"password"} required
+                            rules={[{
+                                required: true
+                            }]}>
+                            <Input type="password" placeholder="********" />
+                        </Form.Item>
+                    </Col>
+                    <Col>
+                        <Form.Item
+                            label="Повторите пароль"
+                            name={"repeat_password"}
+                            required
+                            rules={[{
+                                required: true
+                            }]}>
+                            <Input type="password" placeholder="********" />
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col>
+                        <Row justify={"center"}>
+                            <Col span={4}>
+                                <Form.Item name={"agreement"}>
+                                    <Switch size="small" />
+                                </Form.Item>
+                            </Col>
+                            <Col span={20}>
+                                <Typography.Text>
+                                    Я согласен с условиями <a href="#">Пользовательского соглашения</a>
+                                </Typography.Text>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col>
+                        <Button
+                            disabled={!agreement}
+                            type="primary"
+                            htmlType="submit"
+                            style={{
+                                width: "100%"
+                            }}>
+                            Зарегистрироваться
+                        </Button>
+                    </Col>
+
+
+                </Row>
             </Form>
         </Form.Provider>
     )

@@ -8,7 +8,6 @@ import { Room } from "@/entities/room";
 import { useHotel } from "@/entities/hotel";
 import { useRoomLock } from "../../../entities/roomlock/api/useRoomlock";
 import { LockReasonSelect } from "../../../shared/reason-select";
-import dayjs from "dayjs";
 import { AxiosError } from "axios";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
 
@@ -66,7 +65,6 @@ const RoomlockCreationForm: FC = () => {
         <LockReasonSelect onChange={handleLockReason} />
 
         <YurtaDatePicker
-          label="Даты недоступности"
           value={dates}
           onChange={handleDatePickerChange}
         />

@@ -1,16 +1,17 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { MainLayout } from "@/shared/layouts/layout";
-import { Button, Steps, message } from "antd";
+import { Button, Steps, Typography, message } from "antd";
 import { useHotel } from "@/entities/hotel";
 import { useLoading, withLoading } from "@/processes";
-import { useRoom } from "@/entities/room";
 import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
-import { RoomCreationPage } from "..";
-import { AddNewHotelForm } from "@/widget/hotel/form/AddNewHotelForm";
 import { AddNewRoomForm } from "@/widget";
 import { Navigate, useNavigate } from "react-router-dom";
 import useCookie from "@/features/cookie/api/useCookie";
+
+const OnboardingPageHeader: FC = () => {
+    return <Typography.Title level={2}>Добро пожаловать</Typography.Title>
+}
 
 const contentStyle: React.CSSProperties = {
     lineHeight: '260px',
@@ -66,8 +67,7 @@ const FirstStart: FC = () => {
 
     if (onboardingStatus === "process")
         return (
-            <MainLayout header="Добро пожаловать">
-                {onboardingStatus}
+            <MainLayout header={<OnboardingPageHeader />}>
                 <Steps
                     status={onboardingStatus}
                     current={step}
@@ -91,7 +91,7 @@ const FirstStart: FC = () => {
                         </Button>
                     )}
                     {step < items.length - 1 && (
-                        <Button type="primary"  onClick={() => next()}>
+                        <Button type="primary" onClick={() => next()}>
                             Следующий
                         </Button>
                     )}

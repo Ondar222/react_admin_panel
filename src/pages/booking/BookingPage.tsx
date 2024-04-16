@@ -1,13 +1,10 @@
-import { FC, useMemo, useState } from "react"
+import { FC, useState } from "react"
 import { MainLayout } from "../../shared/layouts/layout"
 import { useEffect } from "react"
 import { useBooking } from "@/entities/booking"
-import { Col, Row, Select, Button, Typography, Flex, Divider } from "antd"
+import { Col, Row, Button, Typography, Flex, Divider, Space } from "antd"
 import { Calendar } from "@/widget/calendar/ui"
 import { useBrm } from "@/entities/calendar/api/useBrm"
-import { RoomlockCreationForm } from "@/widget/roomlock/creation_form"
-import { BookingList } from "@/widget/booking/list-view"
-import { BookingBrick } from "@/widget/booking/brick-view"
 import { useRoomlockForm } from "@/features/useRoomlockForm"
 
 enum BookingPageVM {
@@ -34,6 +31,16 @@ const BookingPageVMDecoder = [
   }
 ]
 
+const BookingPageHeader: FC = () => {
+  const { setIsRoomlockCreationFormOpen } = useRoomlockForm()
+  return (
+    <Flex justify="space-between" align="center">
+      <Typography.Title level={2}>Активные брони</Typography.Title>
+      <Button type="primary" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button>
+    </Flex>
+  )
+}
+
 const BookingPage: FC = () => {
   const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar)
   const { setIsRoomlockCreationFormOpen } = useRoomlockForm()
@@ -47,16 +54,12 @@ const BookingPage: FC = () => {
 
   return (
     <MainLayout
-      header={
-        <Flex justify="space-between" align="center">
-          <Typography.Title level={2}>Активные брони</Typography.Title>
-
-        </Flex>
-      }
+      header={<BookingPageHeader />}
       footer={<></>}
     >
-      <Flex justify="end" align="end">
-        {/* <Select
+      <Col span={24} style={{height: "100%"}}>
+        {/* <Flex justify="end" align="end">
+          <Select
           style={{ width: '150px' }}
           defaultValue={BookingPageVMDecoder[0].name}
           onChange={(e) => setMode(e as BookingPageVM)}
@@ -64,24 +67,19 @@ const BookingPage: FC = () => {
             label: mode.label_ru,
             value: mode.name
           }))}
-        /> */}
-        <Button type="primary" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button>
-      </Flex>
+        />
 
-      <Divider />
+        </Flex> */}
 
-      {
-        mode === BookingPageVM.calendar &&
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <Calendar
-              brm={brm}
-            />
-          </Col>
-        </Row>
-      }
+        {
+          mode === BookingPageVM.calendar &&
 
-      {/* {
+          <Calendar
+            brm={brm}
+          />
+        }
+
+        {/* {
         mode === BookingPageVM.list &&
         <BookingList data={brm} />
       }
@@ -89,6 +87,8 @@ const BookingPage: FC = () => {
         mode === BookingPageVM.brick &&
         <BookingBrick data={bookings} />
       } */}
+      </Col>
+
 
 
     </MainLayout >
