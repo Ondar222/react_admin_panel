@@ -15,7 +15,7 @@ export const YurtaEditor: FC<YurtaEditorT> = ({ value, onChange }: { value?: str
             init={{
                 license_key: 'gpl',
                 language: "ru",
-                language_url: "/public/ru.js",
+                language_url: "/ru.js",
                 height: 500,
             
                 root_name: "description",
