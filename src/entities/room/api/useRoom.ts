@@ -39,39 +39,40 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
       formData.append("cover", room.cover[0].originFileObj, room.cover[0].name);
     }
 
-    const data = await axios
+    const new_room = await axios
       .post<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room`, formData, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
+      .then((res) => res.data.data)
 
     set({
       rooms: [
-        ...get().rooms, data.data.data]
+        ...get().rooms,
+        new_room
+      ]
     })
 
-    return data;
+    return new_room;
   },
 
   // completed
   // don't touch it
-  updateRoom: async (room: Omit<RoomUpdateDto, "hotel_id" | "cover" | "images" | "visibility">) => {
+  updateRoom: async (dto: Omit<RoomUpdateDto, "hotel_id" | "cover" | "images" | "visibility">) => {
     const { access_token } = useCredentails.getState();
 
-    await axios
-      .patch(`${import.meta.env.VITE_API}/room/${room.id}`, room, {
+    const updated_room = await axios
+      .patch<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room/${dto.id}`, dto, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
-      .then((res) => {
-        set({
-          room_details: { ...res.data },
-          rooms: [...get().rooms, get().room_details]
-        })
-        return res;
-      });
+      .then((res) => res.data.data);
+
+    set({
+      room_details: updated_room
+    })
   },
 
   // completed

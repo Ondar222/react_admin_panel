@@ -9,7 +9,7 @@ interface UseRoom {
 
   createRoom: (
     room: RoomCreationDto
-  ) => Promise<AxiosResponse<ApiResponse<Room>>>;
+  ) => Promise<Room>;
   updateRoom: (room: Omit<RoomUpdateDto, "cover" | "images" | "visibility">) => Promise<void>;
   deleteRoom: (room_id: number) => Promise<void>;
 

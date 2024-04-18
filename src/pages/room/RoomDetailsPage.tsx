@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom"
 import { RoomlockList } from "@/widget/roomlock/list"
 import { useRoomLock } from "@/entities/roomlock/api/useRoomlock"
 import { RoomDtlsPgHdr } from "@/widget/room/details_page_header/ui"
-import { UpdateCurrentRoomForm } from "@/widget/room/UpdateCurrentRoomForm/UpdateCurrentRoomForm"
+import { UpdateCurrentRoomForm } from "@/widget"
 import { useLoading, withLoading } from "@/processes"
 import { LoadingPage } from "@/widget/loading_page"
 
@@ -25,9 +25,9 @@ const RoomDetailsPage: FC = () => {
     withLoading(fetchData, setLoading)
   }, [])
 
-  if (!room_details) {
-    return <LoadingPage layout={"main"} />
-  }
+  // if (!room_details) {
+  //   return <LoadingPage layout={"main"} />
+  // }
 
   return (
     <MainLayout
@@ -46,7 +46,7 @@ const RoomDetailsPage: FC = () => {
               thumbUrl: room_details.cover.link,
               url: room_details.cover.link
             }] : undefined,
-            images: room_details?.images.map((image) => ({
+            images: room_details?.images?.map((image) => ({
               uid: image.id,
               name: image.id,
               thumbUrl: image.link,

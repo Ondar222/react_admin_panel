@@ -7,7 +7,6 @@ import { Form, Button, Typography, Col, Input, DatePicker, Select, Avatar, Row, 
 import { useHotel } from "@/entities/hotel"
 import { useLoading, withLoading } from "@/processes"
 import dayjs from "dayjs"
-import { useRoomSelect } from "@/widget/room/RoomSelect/presenter"
 import { Room, useRoom } from "@/entities/room"
 
 const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ booking, room_options }) => {

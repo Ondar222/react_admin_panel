@@ -25,8 +25,7 @@ const RoomPage: FC = () => {
   const { rooms, getHotelRelatedRooms, changeVisibility } = useRoom()
 
   useEffect(() => {
-    if (!rooms)
-      getHotelRelatedRooms()
+    getHotelRelatedRooms()
   }, [])
 
   return (

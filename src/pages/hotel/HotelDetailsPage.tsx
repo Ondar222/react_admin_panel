@@ -48,7 +48,7 @@ const HotelPage: FC = () => {
         <Col span={8}>
           <Row>
             <Typography.Title level={3}>
-              Журнал изменений
+              Журнал изменений (beta)
             </Typography.Title>
           </Row>
           <Row>

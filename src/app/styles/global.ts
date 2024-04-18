@@ -4,6 +4,10 @@ const GlobalStyles = createGlobalStyle`
 * {
     padding: 0;
     margin: 0;
+    
+}
+
+*>not[.bcr-cell] {
     overflow: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -20,6 +24,7 @@ const GlobalStyles = createGlobalStyle`
 
 .container__wrap {
     overflow-y: hidden;
+    padding: 0 0 20px 0;
 }
 
 .scroll-wrapper {
@@ -36,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
   
 .container__content {
     overflow: scroll;
-    padding: 0px 50px;
+    padding: 20px 50px;
 }
   
 .container__content>:is([class]),
@@ -45,8 +50,15 @@ const GlobalStyles = createGlobalStyle`
 }
   
 .brm-cell {
-    max-height: 10%;
-    white-space: initial
+    white-space: initial;
+}
+
+.brm-event {
+}
+
+.brm-event>button {
+    // width: 100%;
+    color: white;
 }
 
 .fc {
@@ -54,6 +66,7 @@ const GlobalStyles = createGlobalStyle`
 }
   
 .fc-event {
+    width: 100%;
     margin: 0 0 30px 0;
 }
 `

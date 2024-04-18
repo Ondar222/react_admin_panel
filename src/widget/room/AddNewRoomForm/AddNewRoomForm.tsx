@@ -1,5 +1,4 @@
 import { FC } from "react"
-import { useNavigate } from "react-router-dom"
 import { Button, Form, Input, Select, Upload, message } from "antd"
 import type { FormProviderProps } from "antd/es/form/context"
 import type { UploadChangeParam } from "antd/es/upload"
@@ -8,10 +7,11 @@ import { YurtaEditor } from "@/shared/editor"
 import { validateNumberInputValue } from "@/shared/utils/form/validation"
 import { ApiResponse } from "@/app/types"
 import { AxiosError } from "axios"
+import { useLoading, withLoading } from "@/processes"
 
 interface AddNewRoomFormProps {
   hotel_id: number
-  successCallback: (data: ApiResponse<Room>) => void
+  successCallback: (data: Room) => void
   rejectCallback: (error: Error | AxiosError) => void
 }
 
@@ -22,6 +22,7 @@ const ROOM_TYPES_OPTIONS = Object.keys(RoomTypes).map((status) => ({
 
 const AddNewRoomForm: FC<AddNewRoomFormProps> = ({ hotel_id, successCallback, rejectCallback }) => {
   const { createRoom, getHotelRelatedRooms } = useRoom()
+  const { setLoading } = useLoading()
 
   const [form] = Form.useForm<RoomCreationDto>()
 
@@ -34,38 +35,40 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({ hotel_id, successCallback, re
   const cover = Form.useWatch<UploadChangeParam>("cover", form)
   const images = Form.useWatch<UploadChangeParam>("images", form)
 
+  const createRoomWithLoading = async () => {
+    await createRoom({
+      name,
+      number,
+      price: price * 100,
+      type,
+      capacity,
+      description,
+      cover: cover.fileList,
+      images: images.fileList,
+      hotel_id,
+      visibility: false
+    })
+      .then((res) => {
+        message.success("Успешно создан новый номер")
+        getHotelRelatedRooms()
+        successCallback(res)
+      })
+      .catch((e) => {
+        message.error("Ошибка при создании номера")
+        rejectCallback(e)
+        throw e
+      })
+  }
+
   const handleSubmit: FormProviderProps["onFormFinish"] = async (form_name, info) => {
     if (form_name === "room_creation") {
-
-      await createRoom({
-        name,
-        number,
-        price: Number(price),
-        type,
-        capacity,
-        description,
-        cover: cover.fileList,
-        images: images.fileList,
-        hotel_id,
-        visibility: false
-      })
-        .then((res) => {
-          message.success("Успешно создан новый номер")
-          getHotelRelatedRooms()
-          successCallback(res.data)
-        })
-        .catch((e) => {
-          message.error("Ошибка при создании номера")
-          rejectCallback(e)
-          throw e
-        })
+      withLoading(createRoomWithLoading, setLoading)
     }
   }
 
   return (
     <Form.Provider
       onFormFinish={handleSubmit}
-
     >
       <Form
         form={form}
@@ -155,9 +158,8 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({ hotel_id, successCallback, re
         </Form.Item>
 
         <Form.Item>
-          <Button htmlType="submit" >Сохранить</Button>
+          <Button htmlType="submit" >Создать</Button>
         </Form.Item>
-
       </Form>
     </Form.Provider>
   )

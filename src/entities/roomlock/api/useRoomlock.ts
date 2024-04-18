@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { UseRoomLock } from "../model/UseRoomlock";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { ApiResponse } from "@/app/types";
 import { useCredentails } from "@/features/auth";
 import { Roomlock } from "../model/Roomlock";
@@ -57,7 +57,7 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
       reason: dto.reason,
     };
 
-    const created_roomlock = await axios
+    const created_roomlock: Roomlock = await axios
       .post<ApiResponse<Roomlock>>(
         `${import.meta.env.VITE_API}/roomlock`,
         {
@@ -72,14 +72,12 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
           },
         }
       )
-      .then((res) => {
-        useBrm.getState().addRoomLock(res.data.data)
-      } )
+      .then((res) => res.data.data)
       .catch((e) => {
         throw e
       });
 
-    ;
+    useBrm.getState().addRoomLock(created_roomlock)
   },
 
   async deleteRoomlock(id: number) {

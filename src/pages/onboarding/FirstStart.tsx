@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { MainLayout } from "@/shared/layouts/layout";
-import { Button, Steps, Typography, message } from "antd";
+import { Button, Col, Row, Steps, Typography, message } from "antd";
 import { useHotel } from "@/entities/hotel";
 import { useLoading, withLoading } from "@/processes";
 import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
@@ -13,11 +13,6 @@ const OnboardingPageHeader: FC = () => {
     return <Typography.Title level={2}>Добро пожаловать</Typography.Title>
 }
 
-const contentStyle: React.CSSProperties = {
-    lineHeight: '260px',
-    textAlign: 'center',
-    marginTop: 16,
-};
 
 const FirstStart: FC = () => {
     const [isOnboardingFinishable, setIsOnboardingFinishable] = useState(false)
@@ -58,6 +53,27 @@ const FirstStart: FC = () => {
                 rejectCallback={() => {
                     message.error("Номер не был создан, повторите еще раз")
                 }} />
+        },
+        {
+            content: (
+                <>
+                    {
+                        isOnboardingFinishable && (
+                            <Typography.Title>
+                                Поздравляем с завершением онбординга
+                            </Typography.Title>
+                        )
+                    }
+                    {
+                        !isOnboardingFinishable && (
+                            <Typography.Title type="warning">
+                                Возможно вы пропустили шаг
+                            </Typography.Title>
+                        )
+                    }
+
+                </>
+            )
         }
     ]
 
@@ -68,34 +84,62 @@ const FirstStart: FC = () => {
     if (onboardingStatus === "process")
         return (
             <MainLayout header={<OnboardingPageHeader />}>
-                <Steps
-                    status={onboardingStatus}
-                    current={step}
-                />
+                {/* {JSON.stringify(hotel)} */}
+                <Row gutter={[16, 16]}>
+                    <Col span={12}>
+                        {items[step].content}
+                    </Col>
+                    <Col span={12}>
+                        <Steps
+                            direction="vertical"
+                            status={onboardingStatus}
+                            current={step}
+                            items={[
+                                {
+                                    title: 'Обновление данных отеля',
+                                    description: ""
+                                },
+                                {
+                                    title: 'Создание первого номера',
+                                    description: "",
+                                },
+                                {
+                                    title: 'Завершение онбординга',
+                                    description: "",
+                                },
+                            ]}
+                        />
 
-                <div style={contentStyle}>{items[step].content}</div>
+                        <div style={{ marginTop: 24 }}>
+                            {step > 0 && (
+                                <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
+                                    Назад
+                                </Button>
+                            )}
+                            {step === items.length - 1 && (
+                                <Button
+                                    type="primary"
+                                    disabled={!isOnboardingFinishable} onClick={() => {
+                                        checkOnboardingStatus()
+                                    }}
+                                >
+                                    Завершить
+                                </Button>
+                            )}
+                            {step < items.length - 1 && (
+                                <Button
+                                    type="primary"
+                                    onClick={() => {
+                                        next()
+                                    }}>
+                                    Следующий
+                                </Button>
+                            )}
+                        </div>
+                    </Col>
+                </Row>
 
-                <div style={{ marginTop: 24 }}>
 
-                    {step > 0 && (
-                        <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-                            Назад
-                        </Button>
-                    )}
-                    {step === items.length - 1 && (
-                        <Button type="primary" disabled={!isOnboardingFinishable} onClick={() => {
-
-                            checkOnboardingStatus()
-                        }}>
-                            Завершить
-                        </Button>
-                    )}
-                    {step < items.length - 1 && (
-                        <Button type="primary" onClick={() => next()}>
-                            Следующий
-                        </Button>
-                    )}
-                </div>
             </MainLayout >
         )
 }

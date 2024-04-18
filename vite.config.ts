@@ -8,7 +8,10 @@ const require = createRequire(import.meta.url);
 export default ({ mode }) => {
   console.log(mode)
   const envDir = path.resolve(process.cwd(), "src/app/config/")
+  
   process.env = { ...process.env, ...loadEnv(mode, envDir) };
+
+  console.log(process.env.VITE_API)
 
   return defineConfig({
 

@@ -5,8 +5,9 @@ import { YurtaEditor } from "@/shared/editor"
 import Upload, { UploadChangeParam } from "antd/es/upload"
 import { validateNumberInputValue } from "@/shared/utils/form/validation"
 import { FormProviderProps } from "antd/es/form/context"
-import { YurtaUpload } from "@/shared/components/form/ui/input/file"
 import { useCredentails } from "@/features/auth"
+import { LoadingPage } from "@/widget/loading_page"
+import { useLoading, withLoading } from "@/processes"
 
 const ROOM_TYPES_OPTIONS = Object.keys(RoomTypes).map((status) => ({
   value: status,
@@ -14,6 +15,7 @@ const ROOM_TYPES_OPTIONS = Object.keys(RoomTypes).map((status) => ({
 }))
 
 const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
+  const { setLoading } = useLoading()
   const { access_token } = useCredentails()
   const { updateRoom, deleteRoomImage } = useRoom()
   const [form] = Form.useForm<RoomUpdateDto>()
@@ -28,24 +30,28 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
   const cover = Form.useWatch<UploadChangeParam>("cover", form)
   const images = Form.useWatch<UploadChangeParam>("images", form)
 
-  const handleSubmit: FormProviderProps["onFormFinish"] = async (form_name, info) => {
-    if (form_name === "UpdateCurrentRoomForm") {
-      await updateRoom({
-        id: props.room.id,
-        name,
-        number,
-        price,
-        description,
-        capacity,
-        type,
-        hotel_id: props.room.hotel_id
+  const updateRoomWithLoading = async () => {
+    await updateRoom({
+      id: props.room.id,
+      name,
+      number,
+      price: price * 100,
+      description,
+      capacity,
+      type,
+      hotel_id: props.room.hotel_id
+    })
+      .then((_res) => {
+        message.success("Номер обновлен")
       })
-        .then((res) => {
-          message.success("Номер обновлен")
-        })
-        .catch((e) => {
-          message.error("Произошла ошибка")
-        })
+      .catch((_e) => {
+        message.error("Произошла ошибка")
+      })
+  }
+
+  const handleFormFinish: FormProviderProps["onFormFinish"] = async (form_name, info) => {
+    if (form_name === "UpdateCurrentRoomForm") {
+      withLoading(updateRoomWithLoading, setLoading)
     }
   }
 
@@ -67,7 +73,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
 
   return (
     <Form.Provider
-      onFormFinish={handleSubmit}
+      onFormFinish={handleFormFinish}
     >
       <Form
         form={form}
@@ -100,8 +106,12 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
         <Form.Item
           name="price"
           label="Стоимость"
-          rules={[{ required: true, validator: validateNumberInputValue }]}
-          initialValue={props.room.price}
+          rules={[{
+            required: true,
+            validator: validateNumberInputValue,
+            transform: (value: number) => value / 100
+          }]}
+          initialValue={props.room.price / 100}
         >
           <Input
             type="number"

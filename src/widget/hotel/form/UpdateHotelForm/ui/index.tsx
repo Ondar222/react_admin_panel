@@ -24,7 +24,7 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       multiple={false}
       maxCount={1}
       listType="picture-card"
-      fileList={props.cover || undefined}
+      fileList={props?.cover || undefined}
       onChange={props.onFileChange}
       onRemove={props.onFileRemove} />
 
@@ -36,7 +36,8 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       multiple={true}
       maxCount={10}
       listType="picture-card"
-      fileList={props.images || undefined}
+      defaultFileList={props?.images || []}
+      fileList={props?.images || []}
       onChange={props.onFileChange}
       onRemove={props.onFileRemove} />
 

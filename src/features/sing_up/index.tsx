@@ -6,6 +6,7 @@ import { FormProviderProps } from "antd/es/form/context";
 import { useSignUp } from "./api/useSignUp";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { Logo } from "../auth/ui/form";
 
 const SignUpForm: FC = () => {
     const [form] = Form.useForm<SignUpDto>()
@@ -89,19 +90,25 @@ const SignUpForm: FC = () => {
                 layout="vertical"
                 size="middle"
                 style={{
+                    width: 550,
                     background: "#fff",
                     padding: 20,
                     borderRadius: 10
                 }}
                 name="sign-up_form"
                 className="sign-up_form">
-                <Row>
-                    <Typography.Title level={2}>
-                        Регистрация
+                <Flex
+                    align="center"
+                    gap={5}>
+                    <Logo src="/favicon_black.jpg" />
+                    <Typography.Title level={2} style={{ marginBottom: 0 }}>
+                        Yurta App: Регистрация
                     </Typography.Title>
-                </Row>
-                <Row justify={"space-between"}>
-                    <Col>
+                </Flex>
+
+
+                <Row gutter={[16, 16]} justify={"space-between"}>
+                    <Col span={12}>
                         <Form.Item label="Имя" name={"name"} required
                             rules={[{
                                 required: true
@@ -109,7 +116,7 @@ const SignUpForm: FC = () => {
                             <Input placeholder="Имя" />
                         </Form.Item>
                     </Col>
-                    <Col>
+                    <Col span={12}>
                         <Form.Item
                             label="Фамилия"
                             name={"surname"}
@@ -120,10 +127,7 @@ const SignUpForm: FC = () => {
                             <Input placeholder="Фамилия" />
                         </Form.Item>
                     </Col>
-                </Row>
-
-                <Row justify={"space-between"}>
-                    <Col>
+                    <Col span={12}>
                         <Form.Item
                             label="Номер телефона"
                             name="phone"
@@ -136,7 +140,7 @@ const SignUpForm: FC = () => {
                             />
                         </Form.Item>
                     </Col>
-                    <Col>
+                    <Col span={12}>
                         <Form.Item
                             label="Адрес электронной почты"
                             name="email"
@@ -148,10 +152,7 @@ const SignUpForm: FC = () => {
                             <Input type="email" placeholder="example@yurta.site" />
                         </Form.Item>
                     </Col>
-                </Row>
-
-                <Row justify={"space-between"}>
-                    <Col>
+                    <Col span={12}>
                         <Form.Item
                             label="Код подтверждения"
                             name="code"
@@ -162,7 +163,7 @@ const SignUpForm: FC = () => {
                             <Input placeholder="XXXXXX" />
                         </Form.Item>
                     </Col>
-                    <Col>
+                    <Col span={12}>
                         <Form.Item label=" ">
                             <Button
                                 style={{
@@ -173,9 +174,7 @@ const SignUpForm: FC = () => {
                             </Button>
                         </Form.Item>
                     </Col>
-                </Row>
-                <Row justify={"space-between"}>
-                    <Col>
+                    <Col span={12}>
                         <Form.Item label="Пароль" name={"password"} required
                             rules={[{
                                 required: true
@@ -183,7 +182,7 @@ const SignUpForm: FC = () => {
                             <Input type="password" placeholder="********" />
                         </Form.Item>
                     </Col>
-                    <Col>
+                    <Col span={12}>
                         <Form.Item
                             label="Повторите пароль"
                             name={"repeat_password"}
@@ -194,24 +193,21 @@ const SignUpForm: FC = () => {
                             <Input type="password" placeholder="********" />
                         </Form.Item>
                     </Col>
-                </Row>
-
-                <Row>
-                    <Col>
-                        <Row justify={"center"}>
-                            <Col span={4}>
-                                <Form.Item name={"agreement"}>
-                                    <Switch size="small" />
-                                </Form.Item>
-                            </Col>
-                            <Col span={20}>
-                                <Typography.Text>
-                                    Я согласен с условиями <a href="#">Пользовательского соглашения</a>
-                                </Typography.Text>
-                            </Col>
-                        </Row>
+                    <Col span={12}>
+                        <Flex
+                            justify={"center"}
+                            align={"center"}
+                            gap={5}
+                        >
+                            <Form.Item name={"agreement"} style={{ marginBottom: 0 }}>
+                                <Switch size="small" />
+                            </Form.Item>
+                            <Typography.Text>
+                                Я согласен с условиями <a href="#">Пользовательского соглашения</a>
+                            </Typography.Text>
+                        </Flex>
                     </Col>
-                    <Col>
+                    <Col span={12}>
                         <Button
                             disabled={!agreement}
                             type="primary"
@@ -222,8 +218,6 @@ const SignUpForm: FC = () => {
                             Зарегистрироваться
                         </Button>
                     </Col>
-
-
                 </Row>
             </Form>
         </Form.Provider>

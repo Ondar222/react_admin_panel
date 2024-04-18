@@ -4,25 +4,34 @@ import { RoomSelect } from "@/widget/room/RoomSelect";
 import { YurtaDatePicker } from "@/shared/range-picker";
 import { Form, Button, message, notification } from "antd";
 import { IRangePicker } from "@/shared/range-picker/model";
-import { Room } from "@/entities/room";
+import { Room, useRoom } from "@/entities/room";
 import { useHotel } from "@/entities/hotel";
 import { useRoomLock } from "../../../entities/roomlock/api/useRoomlock";
 import { LockReasonSelect } from "../../../shared/reason-select";
 import { AxiosError } from "axios";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
+import { LoadingPage } from "@/widget/loading_page";
+import { useLoading, withLoading } from "@/processes";
 
 
 const RoomlockCreationForm: FC = () => {
+  const { setLoading } = useLoading()
   const { hotel, getHotelDetails } = useHotel()
+  const { rooms, getHotelRelatedRooms } = useRoom()
   const { createRoomlock } = useRoomLock()
   const { dates, setDates } = useRoomlockForm()
 
   const [reason, setReason] = useState<string>("")
   const [room_id, setRoomId] = useState<number>(0)
 
+  const fetchData = async () => {
+    
+  }
+
   useEffect(() => {
-    if (!hotel)
-      getHotelDetails()
+    // withLoading(fetchData, setLoading)
+    getHotelRelatedRooms()
+    getHotelDetails()
   }, [])
 
 
@@ -31,16 +40,16 @@ const RoomlockCreationForm: FC = () => {
   }
 
   const handleRoomSelectChange = (e: Pick<Room, "id">) => {
-    setRoomId(e.id)
+    setRoomId(e?.id)
   }
-    
+
 
   const handleLockReason = (e) => {
     setReason(e)
   }
 
   const handleSaveButtonClick = async () => {
-    
+
     const data = await createRoomlock({
       room_id: room_id,
       start: dates[0],
@@ -58,6 +67,10 @@ const RoomlockCreationForm: FC = () => {
       })
   }
 
+  if (!hotel) {
+    return <LoadingPage layout="main" />
+  }
+
   return (
     <>
       <Form layout="vertical" size="large" >
@@ -73,7 +86,7 @@ const RoomlockCreationForm: FC = () => {
           hotel && <RoomSelect
             isMultiple={false}
             value={{ id: room_id }}
-            rooms={hotel.rooms}
+            rooms={rooms}
             onChange={(e) => {
               const room: Pick<Room, 'id'> = e as Pick<Room, 'id'>
               handleRoomSelectChange(room)

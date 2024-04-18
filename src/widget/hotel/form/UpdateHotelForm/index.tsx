@@ -16,12 +16,20 @@ const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
     url: props.hotel?.cover?.link,
     thumbUrl: props.hotel?.cover?.link
   }])
-  const [images, setImages] = useState<Array<UploadFile>>(props.hotel?.images?.map((file) => ({
-    uid: file?.id,
-    name: file?.id,
-    url: file?.link,
-    thumbUrl: file?.link
-  })) || null)
+  const [images, setImages] = useState<Array<UploadFile>>(
+    () => {
+      if (props?.hotel?.images === null) {
+        return []
+      }
+
+      return props.hotel?.images?.map((file) => ({
+        uid: file?.id,
+        name: file?.id,
+        url: file?.link,
+        thumbUrl: file?.link
+      }))
+    }
+  )
 
   const { updateHotel, deleteImage } = useHotel()
 
@@ -134,11 +142,12 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
             headers={{
               Authorization: `Bearer ${access_token}`
             }}
-            defaultFileList={props.hotel?.images?.map((item) => ({
-              uid: item.id,
-              url: item.link,
-              name: item.id,
-            })) || undefined}
+            defaultFileList={
+              props.hotel?.images === null ? [] : props?.hotel?.images?.map((item) => ({
+                uid: item.id,
+                url: item.link,
+                name: item.id,
+              }))}
             maxCount={10}
             listType="picture-card"
           >

@@ -34,12 +34,13 @@ const useAuth = create(
         const authResponse = await axios.post<ApiResponse<IAuthResponse>>(
           `${import.meta.env.VITE_API}/auth/refresh`,
           data
-        ).then((res) => {
-
-          return res.data.data
-        }).catch((e) => {
-          throw e
-        })
+        )
+          .then((res) => {
+            return res.data.data
+          })
+          .catch((e) => {
+            throw e
+          })
 
         useCredentails.getState().setCredentails(authResponse);
 

@@ -28,7 +28,7 @@ const RoomCreationPage: FC = () => {
         <AddNewRoomForm
           hotel_id={hotel?.id}
           successCallback={(res) => {
-            navigate(`/room/${res.data.id}`)
+            navigate(`/room/${res.id}`)
           }}
           rejectCallback={(e) => {
             console.log(e)

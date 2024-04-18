@@ -1,1 +1,1 @@
-export { AddNewRoomForm } from "./room"
+export * from "./room"

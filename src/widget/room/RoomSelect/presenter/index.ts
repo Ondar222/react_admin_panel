@@ -18,10 +18,10 @@ const useRoomSelect = ({
     if (initialValue != null)
       if (isMultiple) {
         const val = initialValue as Room[];
-        setValue(val.map((room) => room.id));
+        setValue(val?.map((room) => room?.id));
       } else {
         const val = initialValue as Room;
-        setValue(val.id);
+        setValue(val?.id);
       }
   }, []);
 
