@@ -1,7 +1,7 @@
-import { FC } from "react"
+import { FC, memo } from "react"
 import { useAuth } from "../.."
 import { NavLink } from "react-router-dom"
-import { Button, Col, Flex, Input, Row, Typography, Form as AntForm, notification, Image, Divider, Empty } from "antd"
+import { Button, Col, Flex, Input, Row, Typography, Form as AntForm, notification, Image } from "antd"
 import { useAccount } from "@/entities/account"
 import { FormProviderProps } from "antd/es/form/context"
 import { AuthFormDto } from "../../model/interface"
@@ -34,8 +34,8 @@ export const Logo = styled(Image)`
     margin: 10px 0;
 `
 
-const AuthForm: FC = () => {
-    const { login } = useAuth()
+const AuthForm: FC = memo(() => {
+    const { login, error } = useAuth()
 
     const [form] = Form.useForm<AuthFormDto>()
     const email = Form.useWatch("email", form)
@@ -45,14 +45,13 @@ const AuthForm: FC = () => {
     const { getHotelDetails } = useHotel()
     const { getHotelRelatedRooms } = useRoom()
     const { checkOnboardingStatus } = useOnboarding()
-    const { setLoading } = useLoading()
+    const { loading, setLoading } = useLoading()
 
     const onLoginSuccess = async () => {
         await me()
         await getHotelDetails()
         await getHotelRelatedRooms()
         await checkOnboardingStatus()
-
     }
 
     const onLoginReject = (e: AxiosError) => {
@@ -78,6 +77,7 @@ const AuthForm: FC = () => {
 
     return (
         <Form.Provider onFormFinish={handleFormFinish}>
+            {error}
             <Form
                 form={form}
                 layout="vertical"
@@ -124,12 +124,12 @@ const AuthForm: FC = () => {
                             gutter={[16, 16]}
                             justify={"space-between"}>
                             <Col>
-                                <Button htmlType="submit" >
+                                <Button disabled={loading} htmlType="submit" >
                                     Войти
                                 </Button>
                             </Col>
                             <Col>
-                                <Button>
+                                <Button disabled={loading}>
                                     <NavLink to="/sign_up">Зарегистрироваться</NavLink>
                                 </Button>
                             </Col>
@@ -140,5 +140,6 @@ const AuthForm: FC = () => {
         </Form.Provider>
     )
 
-}
+})
+
 export default AuthForm
