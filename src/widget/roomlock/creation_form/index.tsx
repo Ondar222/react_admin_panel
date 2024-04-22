@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { IRoomLockCreationFormUI } from "../../../entities/roomlock/model/Roomlock";
 import { RoomSelect } from "@/widget/room/RoomSelect";
 import { YurtaDatePicker } from "@/shared/range-picker";
 import { Form, Button, message, notification } from "antd";
@@ -13,7 +12,6 @@ import { useRoomlockForm } from "@/features/useRoomlockForm";
 import { LoadingPage } from "@/widget/loading_page";
 import { useLoading, withLoading } from "@/processes";
 
-
 const RoomlockCreationForm: FC = () => {
   const { setLoading } = useLoading()
   const { hotel, getHotelDetails } = useHotel()
@@ -24,13 +22,11 @@ const RoomlockCreationForm: FC = () => {
   const [reason, setReason] = useState<string>("")
   const [room_id, setRoomId] = useState<number>(0)
 
-  const fetchData = async () => {
-    
-  }
-
   useEffect(() => {
-    // withLoading(fetchData, setLoading)
     getHotelRelatedRooms()
+      .then((res) => {
+        setRoomId(rooms[0].id)
+      })
     getHotelDetails()
   }, [])
 
@@ -74,26 +70,20 @@ const RoomlockCreationForm: FC = () => {
   return (
     <>
       <Form layout="vertical" size="large" >
-
         <LockReasonSelect onChange={handleLockReason} />
-
         <YurtaDatePicker
           value={dates}
           onChange={handleDatePickerChange}
         />
-
-        {
-          hotel && <RoomSelect
-            isMultiple={false}
-            value={{ id: room_id }}
-            rooms={rooms}
-            onChange={(e) => {
-              const room: Pick<Room, 'id'> = e as Pick<Room, 'id'>
-              handleRoomSelectChange(room)
-            }}
-          />
-        }
-
+        <RoomSelect
+          isMultiple={false}
+          value={{ id: room_id }}
+          rooms={rooms}
+          onChange={(e) => {
+            const room: Pick<Room, 'id'> = e as Pick<Room, 'id'>
+            handleRoomSelectChange(room)
+          }}
+        />
         <Button onClick={handleSaveButtonClick}>Забронировать</Button>
       </Form>
     </>

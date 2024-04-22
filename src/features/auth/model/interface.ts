@@ -1,5 +1,8 @@
 interface IUseAuth {
   isAuth: boolean;
+  error: undefined,
+  isLoading: boolean,
+
   checkAuth: () => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;

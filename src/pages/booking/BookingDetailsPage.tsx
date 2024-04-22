@@ -8,50 +8,58 @@ import { useHotel } from "@/entities/hotel"
 import { useLoading, withLoading } from "@/processes"
 import dayjs from "dayjs"
 import { Room, useRoom } from "@/entities/room"
+import { UserCard } from "@/shared/user/UserCard/UserCard"
 
 const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ booking, room_options }) => {
   const [form] = Form.useForm()
+  const { id, surname, name, phone, email, avatar } = booking.user
 
   return (
     <Form.Provider>
       <Form form={form} layout="vertical">
+
         <Form.Item label="Идентификатор брони" name={"id"}>
           <Input disabled defaultValue={booking?.id} />
         </Form.Item>
 
         <Form.Item label="Сумма" name={"amount"}>
-          <Input disabled defaultValue={booking?.amount} />
+          <Input disabled defaultValue={booking?.amount / 100} />
         </Form.Item>
 
         <Form.Item label="Статус" name={"status"}>
           <Input disabled defaultValue={booking?.status} />
         </Form.Item>
 
-        <Form.Item label="Количество гостей" name={"capacity"}>
-          <Input defaultValue={booking?.capacity} />
+        <Form.Item
+          label="Количество гостей"
+          name={"capacity"}
+        >
+          <Input disabled defaultValue={booking?.capacity} />
         </Form.Item>
 
         <Form.Item label="Даты" name={"dates"}>
           <DatePicker.RangePicker
+            disabled
             defaultValue={[
               dayjs(booking?.check_in * 1000),
               dayjs(booking?.check_out * 1000)
             ]} />
         </Form.Item>
 
-        <Row>
-          <Col>
-            <Image src={"/favicon_black.jpg"} preview={false} height={120} />
-          </Col>
-          <Col>
-            <Row>
-              <Typography.Text>{booking?.user?.surname} {booking?.user?.name}</Typography.Text>
-            </Row>
-            <Row>
-              <Typography.Text>{booking?.user?.phone} {booking?.user?.email}</Typography.Text>
-            </Row>
-          </Col>
-        </Row>
+        {
+          booking?.status && (
+            <UserCard
+              id={id}
+              surname={surname}
+              name={name}
+              email={email}
+              phone={phone}
+              avatar={undefined}
+            />
+          )
+        }
+
+
         <Form.Item label="Идентификатор гостя">
           <Input disabled defaultValue={booking?.user?.id} />
         </Form.Item>
@@ -59,6 +67,7 @@ const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ boo
 
         <Form.Item label="Номера" name={"rooms"}>
           <Select
+            disabled
             mode="multiple"
             defaultValue={booking?.rooms.map((room) => room.id)}
             options={room_options?.map((room) => ({
@@ -68,11 +77,11 @@ const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ boo
           />
         </Form.Item>
 
-        <Form.Item>
+        {/* <Form.Item>
           <Button htmlType="submit">
             Сохранить
           </Button>
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </Form.Provider>
   )
@@ -107,9 +116,10 @@ const BookingDetailPage: FC = () => {
       header={<Typography.Title level={3}>Бронь №{id}</Typography.Title>}
     >
       <Col span={12}>
-        <BookingUpdateForm booking={booking_details} room_options={rooms} />
+        <BookingUpdateForm
+          booking={booking_details}
+          room_options={rooms} />
       </Col>
-
     </MainLayout >
   )
 }
