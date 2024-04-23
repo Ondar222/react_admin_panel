@@ -1,0 +1,40 @@
+# Этап 1: Сборка приложения
+FROM node:alpine as builder
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем зависимости и файлы с настройками
+COPY package*.json ./
+
+# Устанавливаем зависимости
+RUN npm install
+
+# Копируем исходный код приложения
+COPY . .
+
+ENV VITE_API="https://api.yurta.site"
+ENV VITE_PORT=4000
+
+# Собираем приложение
+RUN npm run build:prod
+
+# Этап 2: Запуск приложения в production
+FROM node:alpine
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем собранные файлы из предыдущего этапа
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+
+# Устанавливаем глобально serve, если он не установлен
+RUN npm install -g serve
+
+# Определяем порт, который будет использоваться приложением
+EXPOSE 4000
+
+# Команда для запуска приложения
+CMD ["serve", "-s", "dist", "-l", "4000"]
+
