@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Form, Col, Row, Typography, Button, Input, notification, Switch, Flex, Checkbox } from "antd";
 import { useOtp } from "@/features/otp";
 import { SignUpDto, } from "./model";
@@ -10,6 +10,8 @@ import { Logo } from "../auth/ui/form";
 
 const SignUpForm: FC = () => {
     const [form] = Form.useForm<SignUpDto>()
+    const [isPhoneVerification, setIsPhoneVerification] = useState<boolean>(false)
+    const [timer, setTimer] = useState<number>(60)
     const email = Form.useWatch<string>("email", form)
     const phone = Form.useWatch<string>("phone", form)
     const password = Form.useWatch<string>("password", form)
@@ -63,16 +65,35 @@ const SignUpForm: FC = () => {
     }
 
     const handleVerifyPhoneNumber = async () => {
+
         const result = await verifyPhoneNumber({
             phone: phone
         })
-            .then((res) => res)
+            .then((res) => {
+                return true
+            })
             .catch((e) => {
                 notification.error({
                     message: "Недопустимый формат номера",
                     placement: "topRight"
                 })
             })
+        if (result) {
+            setIsPhoneVerification(true)
+            const interval = setInterval(() => {
+                setTimer((prev) => prev - 1)
+            }, 1000)
+
+            const timeout = setTimeout(() => {
+                setIsPhoneVerification(false)
+                setTimer(60)
+                return () => {
+                    clearInterval(interval)
+                    clearTimeout(timeout)
+                }
+            }, 1 * 60 * 1000)
+        }
+
     }
 
     const validatePassword = () => {
@@ -164,8 +185,9 @@ const SignUpForm: FC = () => {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item label=" ">
+                        <Form.Item label={isPhoneVerification ? `Повторная отправка возможна через ${timer}` : " "}>
                             <Button
+                                disabled={isPhoneVerification}
                                 style={{
                                     width: "100%"
                                 }}

@@ -2,8 +2,6 @@ import { Layout, Spin } from "antd"
 import { FC } from "react"
 import { SignUpForm } from "@/features/sing_up"
 
-
-
 const SignUpPage: FC = () => {
     return (
         <Layout style={{
