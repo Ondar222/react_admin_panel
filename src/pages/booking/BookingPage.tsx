@@ -2,10 +2,14 @@ import { FC, useState } from "react"
 import { MainLayout } from "../../shared/layouts/layout"
 import { useEffect } from "react"
 import { useBooking } from "@/entities/booking"
-import { Col, Row, Button, Typography, Flex, Divider, Space } from "antd"
+import { Col, Row, Button, Typography, Flex, Divider, Space, Tooltip } from "antd"
 import { Calendar } from "@/widget/calendar/ui"
 import { useBrm } from "@/entities/calendar/api/useBrm"
 import { useRoomlockForm } from "@/features/useRoomlockForm"
+
+const colors = [
+  'blue',
+];
 
 enum BookingPageVM {
   calendar = 'calendar',
@@ -36,7 +40,17 @@ const BookingPageHeader: FC = () => {
   return (
     <Flex justify="space-between" align="center">
       <Typography.Title level={2}>Активные брони</Typography.Title>
-      <Button type="primary" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button>
+
+      {/* <Button type="primary" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button> */}
+
+      <Space wrap>
+      {colors.map((color) => (
+        <Tooltip title="Забронируйте номер" color={color} key={color}>
+          <Button type="default" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button>
+        </Tooltip>
+      ))}
+    </Space>
+
     </Flex>
   )
 }
@@ -87,6 +101,7 @@ const BookingPage: FC = () => {
         mode === BookingPageVM.brick &&
         <BookingBrick data={bookings} />
       } */}
+
       </Col>
 
 
@@ -98,3 +113,10 @@ const BookingPage: FC = () => {
 
 
 export { BookingPage }
+
+
+
+
+
+
+

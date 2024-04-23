@@ -55,7 +55,7 @@ const AuthForm: FC = memo(() => {
     }
 
     const onLoginReject = (e: AxiosError) => {
-        if (e.response.status === 403) {
+        if (e.response?.status === 403) {
             notification.error({
                 message: "Не удалось войти, логин или пароль введены неверно",
                 placement: "topRight"
