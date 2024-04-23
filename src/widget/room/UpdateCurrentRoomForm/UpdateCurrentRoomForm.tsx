@@ -1,13 +1,13 @@
 import { RoomTypes, RoomUpdateDto, useRoom } from "@/entities/room"
-import { Button, Form, Input, Select, message } from "antd"
-import { FC } from "react"
+import { Button, Form, Input, Select, Typography, message } from "antd"
+import { FC, useEffect, useState } from "react"
 import { YurtaEditor } from "@/shared/editor"
 import Upload, { UploadChangeParam } from "antd/es/upload"
 import { validateNumberInputValue } from "@/shared/utils/form/validation"
 import { FormProviderProps } from "antd/es/form/context"
 import { useCredentails } from "@/features/auth"
-import { LoadingPage } from "@/widget/loading_page"
 import { useLoading, withLoading } from "@/processes"
+import { MoneyInput } from "@/shared/base/MoneyInput"
 
 const ROOM_TYPES_OPTIONS = Object.keys(RoomTypes).map((status) => ({
   value: status,
@@ -109,13 +109,17 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
           rules={[{
             required: true,
             validator: validateNumberInputValue,
-            transform: (value: number) => value / 100
+            // transform: (value: number) => value / 100,
           }]}
-          initialValue={props.room.price / 100}
+          initialValue={props.room.price}
         >
-          <Input
-            type="number"
-          />
+          <MoneyInput onChange={(e) => {
+            console.group('price is')
+            console.log(price)
+            form.setFieldValue('price', Number(e.target.value))
+            console.log(price)
+            console.groupEnd()
+          }} />
         </Form.Item>
 
         <Form.Item

@@ -9,10 +9,10 @@ import { useLoading, withLoading } from "@/processes"
 import dayjs from "dayjs"
 import { Room, useRoom } from "@/entities/room"
 import { UserCard } from "@/shared/user/UserCard/UserCard"
+import { MoneyInput } from "@/shared/base/MoneyInput"
 
 const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ booking, room_options }) => {
   const [form] = Form.useForm()
-  const { id, surname, name, phone, email, avatar } = booking.user
 
   return (
     <Form.Provider>
@@ -22,8 +22,8 @@ const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ boo
           <Input disabled defaultValue={booking?.id} />
         </Form.Item>
 
-        <Form.Item label="Сумма" name={"amount"}>
-          <Input disabled defaultValue={booking?.amount / 100} />
+        <Form.Item label="Сумма" name={"amount"} initialValue={booking?.amount}>
+          <MoneyInput disabled />
         </Form.Item>
 
         <Form.Item label="Статус" name={"status"}>
@@ -49,11 +49,11 @@ const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ boo
         {
           booking?.status && (
             <UserCard
-              id={id}
-              surname={surname}
-              name={name}
-              email={email}
-              phone={phone}
+              id={booking?.user?.id}
+              surname={booking?.user?.surname}
+              name={booking?.user?.name}
+              email={booking?.user?.email}
+              phone={booking?.user?.phone}
               avatar={undefined}
             />
           )

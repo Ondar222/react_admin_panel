@@ -95,9 +95,12 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({ hotel_id, successCallback, re
         <Form.Item
           name="price"
           label="Стоимость"
-          rules={[{ required: true, validator: validateNumberInputValue }]}>
+          rules={[{
+            required: true,
+            validator: validateNumberInputValue
+          }]}>
           <Input
-            type="number"
+            type="currency"
           />
         </Form.Item>
 
