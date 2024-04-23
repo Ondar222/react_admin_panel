@@ -140,11 +140,6 @@ const RoomlockCreationForm: FC = () => {
             type="primary"
             steps={steps}
           />
-
-          {/* <Button type="default" onClick={() => setOpen(true)} ref={ref}>
-          <QuestionCircleOutlined />
-          </Button>
-          <Tour open={open} onClose={() => setOpen(false)} steps={steps} /> */}
         </Col>
       </Form>
     </>
