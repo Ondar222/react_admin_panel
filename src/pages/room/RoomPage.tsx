@@ -37,7 +37,7 @@ const RoomPage: FC = () => {
           {
             rooms?.map((room, index) => {
               return (
-                <Col key={index} xs={24} sm={24} md={12} lg={8} xl={6}>
+                <Col key={index} xs={24} sm={24} md={24} lg={12} xl={8}>
                   <RoomCardUI {...room} />
                 </Col>
               )

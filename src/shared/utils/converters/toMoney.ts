@@ -3,7 +3,7 @@ const convertToMoneyString = (money: number) => {
     style: "currency",
     currency: "RUB",
   }).format(money / 100);
-  return result;
+  return `${result}`;
 };
 
 export { convertToMoneyString };

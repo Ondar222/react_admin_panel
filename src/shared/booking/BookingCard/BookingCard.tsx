@@ -6,6 +6,7 @@ import { IconButton } from "@/shared/components/button/action-buttons"
 import { EditIcon } from "@/assets/icons/edit"
 import { DeleteIcon } from "@/assets/icons/delete"
 import moment from "moment"
+import { convertToMoneyString } from "@/shared/utils/converters/toMoney"
 
 const BookingCardUI: FC<Booking> = (booking) => {
   const { Panel } = Collapse
@@ -63,7 +64,7 @@ const BookingCardUI: FC<Booking> = (booking) => {
             children: (
               <div>
                 <Text>Статус: <Tag>{booking.status}</Tag></Text>
-                <Text>Сумма: {booking.amount}</Text>
+                <Text>Сумма: {convertToMoneyString(booking.amount)}</Text>
               </div>
             )
           },
