@@ -10,9 +10,9 @@ import { LockReasonSelect } from "../../../shared/reason-select";
 import { AxiosError } from "axios";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
 import { LoadingPage } from "@/widget/loading_page";
-import { useLoading, withLoading } from "@/processes";
-import { Tour } from "antd";
-import type { TourProps, Row } from "antd";
+import { useLoading } from "@/processes";
+import { Tour, Col } from "antd";
+import type { TourProps } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const RoomlockCreationForm: FC = () => {
@@ -25,7 +25,10 @@ const RoomlockCreationForm: FC = () => {
   const [reason, setReason] = useState<string>("");
   const [room_id, setRoomId] = useState<number>(0);
 
-  const ref = useRef(null);
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -33,26 +36,22 @@ const RoomlockCreationForm: FC = () => {
     {
       title: "Шаг 1",
       description: "Выберите тип заказа",
-      placement: "bottom",
-      target: () => ref.current,
+      target: () => ref1.current,
     },
     {
       title: "Шаг 2",
-      description: "Выберите на какое число хотите забронировать",
-      placement: "bottom",
-      target: () => ref.current,
+      description: "Выберите подходящий срок",
+      target: () => ref2.current,
     },
     {
       title: "Шаг 3",
-      description: "Выберите подходящий вам номер",
-      placement: "bottom",
-      target: () => ref.current,
+      description: "Подберите подходящий вам номер",
+      target: () => ref3.current,
     },
     {
       title: "Шаг 4",
-      description: "Нажмите забронировать",
-      placement: "bottom",
-      target: () => ref.current,
+      description: "Поздравляю!Нажмите 'Забронировать' ",
+      target: () => ref4.current,
     },
   ];
 
@@ -100,26 +99,53 @@ const RoomlockCreationForm: FC = () => {
   return (
     <>
       <Form layout="vertical" size="large">
-        <LockReasonSelect onChange={handleLockReason}  />
-        <YurtaDatePicker value={dates} onChange={handleDatePickerChange} />
+        <Col ref={ref1}>
+          <LockReasonSelect onChange={handleLockReason} />
+        </Col>
 
-        <RoomSelect
-          isMultiple={false}
-          value={{ id: room_id }}
-          rooms={rooms}
-          onChange={(e) => {
-            const room: Pick<Room, "id"> = e as Pick<Room, "id">;
-            handleRoomSelectChange(room);
+        <Col ref={ref2}>
+          <YurtaDatePicker value={dates} onChange={handleDatePickerChange} />
+        </Col>
+
+        <Col ref={ref3}>
+          <RoomSelect
+            isMultiple={false}
+            value={{ id: room_id }}
+            rooms={rooms}
+            onChange={(e) => {
+              const room: Pick<Room, "id"> = e as Pick<Room, "id">;
+              handleRoomSelectChange(room);
+            }}
+          />
+        </Col>
+
+        <Col
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
-        />
+        >
+          <Button ref={ref4} onClick={handleSaveButtonClick}>
+            Забронировать
+          </Button>
 
-        <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-          <Button onClick={handleSaveButtonClick}>Забронировать</Button>
-          <Button type="default" onClick={() => setOpen(true)} ref={ref}>
+          <Button type="default" onClick={() => setOpen(true)}>
+            <QuestionCircleOutlined />
+          </Button>
+          <Tour
+            open={open}
+            onClose={() => setOpen(false)}
+            mask={false}
+            type="primary"
+            steps={steps}
+          />
+
+          {/* <Button type="default" onClick={() => setOpen(true)} ref={ref}>
           <QuestionCircleOutlined />
           </Button>
-          <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
-        </div>
+          <Tour open={open} onClose={() => setOpen(false)} steps={steps} /> */}
+        </Col>
       </Form>
     </>
   );

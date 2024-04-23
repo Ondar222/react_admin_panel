@@ -1,77 +1,82 @@
-import { FC, useState } from "react"
-import { MainLayout } from "../../shared/layouts/layout"
-import { useEffect } from "react"
-import { useBooking } from "@/entities/booking"
-import { Col, Row, Button, Typography, Flex, Divider, Space, Tooltip } from "antd"
-import { Calendar } from "@/widget/calendar/ui"
-import { useBrm } from "@/entities/calendar/api/useBrm"
-import { useRoomlockForm } from "@/features/useRoomlockForm"
+import { FC, useState } from "react";
+import { MainLayout } from "../../shared/layouts/layout";
+import { useEffect } from "react";
+import { useBooking } from "@/entities/booking";
+import {
+  Col,
+  Row,
+  Button,
+  Typography,
+  Flex,
+  Divider,
+  Space,
+  Tooltip,
+} from "antd";
+import { Calendar } from "@/widget/calendar/ui";
+import { useBrm } from "@/entities/calendar/api/useBrm";
+import { useRoomlockForm } from "@/features/useRoomlockForm";
 
-const colors = [
-  'blue',
-];
+const colors = ["blue"];
 
 enum BookingPageVM {
-  calendar = 'calendar',
-  list = 'list',
-  brick = 'brick'
+  calendar = "calendar",
+  list = "list",
+  brick = "brick",
 }
 
 const BookingPageVMDecoder = [
   {
     type: BookingPageVM.calendar,
-    name: 'calendar',
-    label_ru: 'Календарь'
+    name: "calendar",
+    label_ru: "Календарь",
   },
   {
     type: BookingPageVM.list,
-    name: 'list',
-    label_ru: 'Список'
+    name: "list",
+    label_ru: "Список",
   },
   {
     type: BookingPageVM.brick,
-    name: 'brick',
-    label_ru: 'Плитки'
-  }
-]
+    name: "brick",
+    label_ru: "Плитки",
+  },
+];
 
 const BookingPageHeader: FC = () => {
-  const { setIsRoomlockCreationFormOpen } = useRoomlockForm()
+  const { setIsRoomlockCreationFormOpen } = useRoomlockForm();
   return (
     <Flex justify="space-between" align="center">
       <Typography.Title level={2}>Активные брони</Typography.Title>
-
-      {/* <Button type="primary" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button> */}
-
       <Space wrap>
-      {colors.map((color) => (
-        <Tooltip title="Забронируйте номер" color={color} key={color}>
-          <Button type="default" onClick={() => setIsRoomlockCreationFormOpen(true)}>Добавить событие</Button>
-        </Tooltip>
-      ))}
-    </Space>
-
+        {colors.map((color) => (
+          <Tooltip title="Забронируйте номер" color={color} key={color}>
+            <Button
+              type="default"
+              onClick={() => setIsRoomlockCreationFormOpen(true)}
+            >
+              Добавить событие
+            </Button>
+          </Tooltip>
+        ))}
+      </Space>
     </Flex>
-  )
-}
+  );
+};
 
 const BookingPage: FC = () => {
-  const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar)
-  const { setIsRoomlockCreationFormOpen } = useRoomlockForm()
-  const { bookings, getAllBookings } = useBooking()
-  const { brm, getAll } = useBrm()
+  const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar);
+  const { setIsRoomlockCreationFormOpen } = useRoomlockForm();
+  const { bookings, getAllBookings } = useBooking();
+  const { brm, getAll } = useBrm();
 
   useEffect(() => {
-    getAll()
-    getAllBookings()
-  }, [])
+    getAll();
+    getAllBookings();
+  }, []);
 
   return (
-    <MainLayout
-      header={<BookingPageHeader />}
-      footer={<></>}
-    >
-      <Col span={24} style={{height: "100%"}}>
+    <MainLayout header={<BookingPageHeader />} footer={<></>}>
+      <Col span={24} style={{ height: "100%" }}>
         {/* <Flex justify="end" align="end">
           <Select
           style={{ width: '150px' }}
@@ -85,13 +90,7 @@ const BookingPage: FC = () => {
 
         </Flex> */}
 
-        {
-          mode === BookingPageVM.calendar &&
-
-          <Calendar
-            brm={brm}
-          />
-        }
+        {mode === BookingPageVM.calendar && <Calendar brm={brm} />}
 
         {/* {
         mode === BookingPageVM.list &&
@@ -101,22 +100,9 @@ const BookingPage: FC = () => {
         mode === BookingPageVM.brick &&
         <BookingBrick data={bookings} />
       } */}
-
       </Col>
+    </MainLayout>
+  );
+};
 
-
-
-    </MainLayout >
-
-  )
-}
-
-
-export { BookingPage }
-
-
-
-
-
-
-
+export { BookingPage };
