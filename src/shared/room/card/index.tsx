@@ -78,10 +78,3 @@ const RoomCardUI: FC<Room> = (room) => (
 );
 
 export default RoomCardUI;
-
-{
-  /* <IconButton
-                    type="text"
-                    icon={EditIcon}
-                /> */
-}
