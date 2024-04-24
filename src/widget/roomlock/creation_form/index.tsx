@@ -130,7 +130,7 @@ const RoomlockCreationForm: FC = () => {
             Забронировать
           </Button>
 
-          <Button type="default" onClick={() => setOpen(true)}>
+          <Button type="primary" onClick={() => setOpen(true)}>
             <QuestionCircleOutlined />
           </Button>
           <Tour

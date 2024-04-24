@@ -5,8 +5,10 @@ import { FC } from "react";
 import { HotelUpdateFormUIProps } from "../model";
 import { YurtaEditor } from "@/shared/editor";
 
-export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
-  <Form layout="vertical" >
+export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) => (
+  
+  <Form layout="vertical">
+    
     <YurtaInput
       label="Название"
       name="name"
@@ -14,7 +16,10 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       onChange={props.handleChange}
     />
 
-    <YurtaEditor value={props.hotel.description} onChange={props.handleEditorChange} />
+    <YurtaEditor
+      value={props.hotel.description}
+      onChange={props.handleEditorChange}
+    />
 
     <YurtaUpload
       label="Превью"
@@ -26,7 +31,8 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       listType="picture-card"
       fileList={props?.cover || undefined}
       onChange={props.onFileChange}
-      onRemove={props.onFileRemove} />
+      onRemove={props.onFileRemove}
+    />
 
     <YurtaUpload
       label="Изображения"
@@ -39,11 +45,9 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) =>
       defaultFileList={props?.images || []}
       fileList={props?.images || []}
       onChange={props.onFileChange}
-      onRemove={props.onFileRemove} />
+      onRemove={props.onFileRemove}
+    />
 
-
-    <Button
-      onClick={() => props.onSubmit(props.hotel)}>
-      Сохранить
-    </Button>
+    <Button onClick={() => props.onSubmit(props.hotel)}>Сохранить</Button>
   </Form>
+);
