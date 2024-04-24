@@ -8,6 +8,7 @@ import { HotelUpdateFormUI } from "./ui";
 import { YurtaEditor } from "@/shared/editor";
 import { useCredentails } from "@/features/auth";
 
+
 const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
   const [hotel, setHotel] = useState<HotelUpdateDto>(new HotelUpdateDto(props.hotel))
   const [cover, setCover] = useState<Array<UploadFile>>([{
@@ -30,6 +31,7 @@ const HotelUpdateForm: FC<HotelUpdatePageProps> = (props) => {
       }))
     }
   )
+
 
   const { updateHotel, deleteImage } = useHotel()
 
@@ -88,6 +90,7 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
   const cover = Form.useWatch("cover", form)
   const images = Form.useWatch("images", form)
 
+
   return (
     <Form.Provider
       onFormFinish={async (name, info) => {
@@ -105,6 +108,7 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
         }
       }}>
       <Form form={form} layout="vertical" name="hotel_update" >
+        
         <Form.Item name={"id"} initialValue={props.hotel?.id}>
           <Input disabled />
         </Form.Item>
@@ -154,6 +158,7 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
             Загрузить
           </Upload>
         </Form.Item>
+      
         <Button htmlType="submit">Сохранить</Button>
       </Form>
 

@@ -1,43 +1,52 @@
 import { useHotel } from "@/entities/hotel";
 import { MainLayout } from "@/shared/layouts/layout";
-import { Button, Card, Col, Flex, Image, List, Row, Space, Typography, } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Flex,
+  Image,
+  List,
+  Row,
+  Space,
+  Typography,
+} from "antd";
 import { FC, useEffect } from "react";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { useLoading, withLoading } from "@/processes";
 import { DeleteFilled, FundViewOutlined } from "@ant-design/icons";
 
+
+
 const fakeJournal = [
   {
     id: 1,
-    message: "Пользователь изменил данные отеля"
+    message: "Пользователь изменил данные отеля",
   },
   {
     id: 2,
-    message: `Пользователь удалил номер "Купол с видом на реку"`
+    message: `Пользователь удалил номер "Купол с видом на реку"`,
   },
   {
     id: 3,
-    message: `Пользователь заблокировал номер "Юрта с видом на реку"`
-  }
-]
+    message: `Пользователь заблокировал номер "Юрта с видом на реку"`,
+  },
+];
 
 const HotelPage: FC = () => {
-  const { hotel, getHotelDetails } = useHotel()
-  const { setLoading } = useLoading()
+  const { hotel, getHotelDetails } = useHotel();
+  const { setLoading } = useLoading();
 
   const fetchData = async () => {
-    await getHotelDetails()
-  }
+    await getHotelDetails();
+  };
 
   useEffect(() => {
-    withLoading(fetchData, setLoading)
-  }, [])
+    withLoading(fetchData, setLoading);
+  }, []);
 
   return (
-    <MainLayout
-      header={<HotelPageHeader />}
-      footer={<HeaderPageFooter />}
-    >
+    <MainLayout header={<HotelPageHeader />} footer={<HeaderPageFooter />}>
       <Row gutter={[32, 32]}>
         <Col span={16}>
           <Typography.Title level={3}>
@@ -53,40 +62,31 @@ const HotelPage: FC = () => {
           </Row>
           <Row>
             <List>
-              {
-                fakeJournal.map((journal) => {
-                  return (
-                    <List.Item
-                      title={journal.message}
-                      actions={[<Button icon={<FundViewOutlined />} />]} >
-                      <Typography>{journal.message}</Typography>
-                    </List.Item>
-                  )
-                })
-              }
+              {fakeJournal.map((journal) => {
+                return (
+                  <List.Item
+                    title={journal.message}
+                    actions={[<Button icon={<FundViewOutlined />} />]}
+                  >
+                    <Typography>{journal.message}</Typography>
+                  </List.Item>
+                );
+              })}
             </List>
           </Row>
-
         </Col>
-      </Row >
+      </Row>
+      
+    </MainLayout>
+  );
+};
 
-    </MainLayout >
-  )
-}
-
-export { HotelPage }
+export { HotelPage };
 
 const HotelPageHeader: FC = () => {
-  return (
-    <Typography.Title level={2}>
-      Мой отель
-    </Typography.Title>
-  )
-}
+  return <Typography.Title level={2}>Мой отель</Typography.Title>;
+};
 
 const HeaderPageFooter: FC = () => {
-  return (
-    <div></div>
-  )
-}
-
+  return <div></div>;
+};
