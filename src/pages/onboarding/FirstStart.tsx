@@ -7,7 +7,7 @@ import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { AddNewRoomForm } from "@/widget";
 import { Navigate, useNavigate } from "react-router-dom";
-import useCookie from "@/features/cookie/api/useCookie";
+import { useCookie } from "@/features";
 
 const OnboardingPageHeader: FC = () => {
     return <Typography.Title level={2}>Добро пожаловать</Typography.Title>

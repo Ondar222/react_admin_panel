@@ -14,7 +14,6 @@ import {
 import { FC, useEffect } from "react";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { useLoading, withLoading } from "@/processes";
-import { DeleteFilled, FundViewOutlined } from "@ant-design/icons";
 
 
 
@@ -66,7 +65,6 @@ const HotelPage: FC = () => {
                 return (
                   <List.Item
                     title={journal.message}
-                    actions={[<Button icon={<FundViewOutlined />} />]}
                   >
                     <Typography>{journal.message}</Typography>
                   </List.Item>

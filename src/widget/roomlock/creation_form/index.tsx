@@ -13,7 +13,6 @@ import { LoadingPage } from "@/widget/loading_page";
 import { useLoading } from "@/processes";
 import { Tour, Col } from "antd";
 import type { TourProps } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const RoomlockCreationForm: FC = () => {
   const { setLoading } = useLoading();
@@ -131,7 +130,7 @@ const RoomlockCreationForm: FC = () => {
           </Button>
 
           <Button type="primary" onClick={() => setOpen(true)}>
-            <QuestionCircleOutlined />
+            ?
           </Button>
           <Tour
             open={open}

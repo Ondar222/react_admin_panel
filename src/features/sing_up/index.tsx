@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Form, Col, Row, Typography, Button, Input, notification, Switch, Flex, Checkbox } from "antd";
+import { Form, Col, Row, Typography, Button, Input, notification, Switch, Flex } from "antd";
 import { useOtp } from "@/features/otp";
 import { SignUpDto, } from "./model";
 import { FormProviderProps } from "antd/es/form/context";

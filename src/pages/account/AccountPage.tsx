@@ -1,7 +1,6 @@
 import { useAccount } from "@/entities/account";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { MainLayout } from "@/shared/layouts/layout";
-import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Col, Flex, Form, Row, Typography } from "antd";
 import { FC, useEffect } from "react";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
@@ -49,7 +48,7 @@ const AccountPage: FC = () => {
                 wrap="wrap"
                 gap={10}
               >
-                <Avatar icon={<UserOutlined />} size={96} />
+                <Avatar size={96} />
 
                 <Flex vertical gap={10}>
                   <Typography.Text>

@@ -1,8 +1,8 @@
-import { Hotel, useHotel } from "@/entities/hotel";
-import { Room, useRoom } from "@/entities/room";
-import useCookie from "@/features/cookie/api/useCookie";
+import { useHotel } from "@/entities/hotel";
+import { useRoom } from "@/entities/room";
+import { useCookie } from "@/features";
 import { message } from "antd";
-import { FC, ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { FC, ReactNode, createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface OnboardingContextProps {
@@ -67,7 +67,7 @@ const OnboardingProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 setCurrentStepProgress([1, 1]);
                 updateCookie("finish", { expires: 20000000000 })
                 message.success('Онбординг завершен!')
-      
+
                 navigate("/booking")
             }
         }

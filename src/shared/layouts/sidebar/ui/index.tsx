@@ -1,11 +1,14 @@
 import { FC, useState } from 'react';
 import { Menu as AntdMenu } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { CalendarFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import { useOnboarding } from '@/processes/onboarding/api/onboardingProvider';
 import { useAuth } from '@/features/auth';
 import styled from 'styled-components';
+import * as icons from "@ant-design/icons"
+
+const { CalendarFilled, UserOutlined, LogoutOutlined } = icons
+
 
 const Menu = styled(AntdMenu)`
   height: 100%;

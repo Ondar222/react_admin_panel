@@ -17,7 +17,6 @@ import {
 import { Calendar } from "@/widget/calendar/ui";
 import { useBrm } from "@/entities/calendar/api/useBrm";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
-import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const colors = ["blue"];
 
@@ -68,22 +67,22 @@ const BookingPageHeader: FC = () => {
     <Flex justify="space-between" align="center">
       <Typography.Title level={2}>Активные брони</Typography.Title>
       <Col style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-        <Col>    
-        <Space wrap>
-          {colors.map((color) => (
-            <Tooltip title="Забронируйте номер" color={color} key={color}>
-              <Button
-                ref={ref1}
-                type="default"
-                onClick={() => setIsRoomlockCreationFormOpen(true)}
-              >
-                Добавить событие
-              </Button>
-            </Tooltip>
-          ))}
-              <Col>
+        <Col>
+          <Space wrap>
+            {colors.map((color) => (
+              <Tooltip title="Забронируйте номер" color={color} key={color}>
+                <Button
+                  ref={ref1}
+                  type="default"
+                  onClick={() => setIsRoomlockCreationFormOpen(true)}
+                >
+                  Добавить событие
+                </Button>
+              </Tooltip>
+            ))}
+            <Col>
               <Button type="primary" onClick={() => setOpen(true)}>
-                <QuestionCircleOutlined />
+                ?
               </Button>
               <Tour
                 open={open}
@@ -92,8 +91,8 @@ const BookingPageHeader: FC = () => {
                 type="primary"
                 steps={steps}
               />
-              </Col>
-        </Space>
+            </Col>
+          </Space>
         </Col>
       </Col>
     </Flex>
@@ -106,7 +105,7 @@ const BookingPage: FC = () => {
   const { bookings, getAllBookings } = useBooking();
   const { brm, getAll } = useBrm();
 
- 
+
 
   useEffect(() => {
     getAll();
@@ -132,7 +131,7 @@ const BookingPage: FC = () => {
 
         </Flex> */}
 
-        {mode ===  BookingPageVM.calendar && <Calendar brm={brm} />}
+        {mode === BookingPageVM.calendar && <Calendar brm={brm} />}
 
         {/* {
         mode === BookingPageVM.list &&

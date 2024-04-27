@@ -5,11 +5,6 @@ interface IUseUsers {
   users: DirectusUserResponse[];
   getUsers: () => Promise<void>;
   findUserByPhone: (phone: string, callback: Function) => Promise<void>;
-  register: (
-    user: UserCreateDto,
-    code: string,
-    callback: void
-  ) => Promise<unknown>;
 }
 
 type User = {

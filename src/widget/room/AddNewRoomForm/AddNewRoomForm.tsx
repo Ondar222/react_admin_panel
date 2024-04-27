@@ -9,7 +9,6 @@ import { ApiResponse } from "@/app/types";
 import { AxiosError } from "axios";
 import { useLoading, withLoading } from "@/processes";
 import { Tooltip, Space, Row, TourProps, Tour } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
 
 interface AddNewRoomFormProps {
   hotel_id: number;
@@ -294,7 +293,7 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({
       >
         <Col style={{ display: "flex", flexDirection: "column" }}>
           <Button type="primary" onClick={() => setOpen(true)}>
-            <QuestionCircleOutlined />
+            ?
           </Button>
           <Tour
             open={open}

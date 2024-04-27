@@ -2,8 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware"
 import { IAuthResponse, IUseAuth } from "../model/interface";
 import axios from "axios";
-import useCredentails from "./useCredentails";
-import Cookies from "js-cookie";
+import useCredentails from "./useCredentials";
 import { ApiResponse } from "@/app/types";
 import { notification } from "antd";
 
@@ -16,8 +15,8 @@ const useAuth = create(
     setIsAuth: (status: boolean) => set({ isAuth: status }),
 
     checkAuth: async () => {
-      const access = Cookies.get("access_token");
-      const refresh = Cookies.get("refresh_token");
+      const access = localStorage.getItem("access_token");
+      const refresh = localStorage.getItem("refresh_token");
 
       const data = {
         refresh: refresh,
@@ -73,12 +72,9 @@ const useAuth = create(
         const { access_token, refresh_token, expires } = authResponse;
 
         if (access_token && refresh_token) {
-          Cookies.set("refresh_token", refresh_token, {
-            expires: 1000 * 60 * 60 * 24 * 30 * 12, // 1 year refresh token
-          });
-          Cookies.set("access_token", access_token, {
-            expires: expires,
-          });
+          localStorage.setItem("refresh_token", refresh_token)
+          localStorage.setItem("access_token", access_token)
+
           useCredentails.getState().setCredentails(authResponse);
           set({ isAuth: true });
         }
@@ -91,8 +87,8 @@ const useAuth = create(
     },
 
     logout: () => {
-      Cookies.remove("access_token");
-      Cookies.remove("refresh_token");
+      localStorage.removeItem("access_token")
+      localStorage.removeItem("refresh_token")
 
       set({
         isAuth: false,
@@ -100,7 +96,7 @@ const useAuth = create(
     },
   }), {
     name: "auth_store",
-    storage: createJSONStorage(() => sessionStorage)
+    storage: createJSONStorage(() => localStorage)
   }));
 
 export { useAuth };

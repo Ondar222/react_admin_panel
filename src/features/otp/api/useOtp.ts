@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { UseOtp } from "../model";
 import axios from "axios";
 import { isPhoneNumber } from "class-validator";
+import { ApiResponse } from "@/app/types";
 
 const useOtp = create<UseOtp>((set, get) => ({
     statusCode: 200,
@@ -12,6 +13,7 @@ const useOtp = create<UseOtp>((set, get) => ({
         set({ isLoading: true })
         try {
             if (!isPhoneNumber(dto.phone, "RU")) {
+                
                 setTimeout(() => {
                     set({
                         isLoading: false
@@ -27,11 +29,13 @@ const useOtp = create<UseOtp>((set, get) => ({
         }
 
 
-        await axios.post(`${import.meta.env.VITE_API}/otp`, dto)
-            .then((res) => {
-                set({ isLoading: false, statusCode: res.status })
-                return res
-            })
+        const isValid = await axios.post<ApiResponse<number>>(`${import.meta.env.VITE_API}/otp`, dto)
+            .then((res) => res.status)
+
+        set({
+            isLoading: false,
+            statusCode: isValid
+        })
 
     }
 }))

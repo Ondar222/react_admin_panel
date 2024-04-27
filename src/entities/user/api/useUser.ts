@@ -44,12 +44,6 @@ const useUsers = create<IUseUsers>((set) => ({
 
     callback();
   },
-
-  register: async (user, code, callback) => {
-    const createdUser = await axios
-      .post(`${import.meta.env.VITE_API}/user`)
-      .then((res) => res);
-  },
 }));
 
 export default useUsers;

@@ -1,13 +1,12 @@
 import { create } from "zustand";
 import { IAuthResponse, IUseCredentails } from "../model/interface";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { ApiResponse } from "@/app/types";
 
 const useCredentails = create<IUseCredentails>((set, get) => ({
-  access_token: Cookies.get("access_token") || undefined,
+  access_token: localStorage.getItem("access_token") || undefined,
   expires: undefined,
-  refresh_token: Cookies.get("refresh_token") || undefined,
+  refresh_token: localStorage.getItem("refresh_token") || undefined,
 
   setCredentails: (credentails) => {
     set({
@@ -29,8 +28,6 @@ const useCredentails = create<IUseCredentails>((set, get) => ({
         }
       )
       .then((res) => res.data.data);
-
-      
   },
 
   getAccessToken: () => get().access_token,

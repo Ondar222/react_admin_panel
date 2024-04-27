@@ -1,8 +1,9 @@
 import { useState, useCallback } from "react"
 import Cookies from "js-cookie"
 
-export default function useCookie(name: string, defaultValue?: string) {
-    const [value, setValue] = useState<string>(() => {
+function useCookie(name: string, defaultValue?: string) {
+    const [value, setValue] = useState<string | null>(() => {
+
         const cookie = Cookies.get(name)
         if (cookie) return cookie
         Cookies.set(name, defaultValue)
@@ -19,8 +20,10 @@ export default function useCookie(name: string, defaultValue?: string) {
 
     const deleteCookie = useCallback(() => {
         Cookies.remove(name)
-        setValue("")
+        setValue(null)
     }, [name])
 
     return { value, updateCookie, deleteCookie }
 }
+
+export { useCookie }

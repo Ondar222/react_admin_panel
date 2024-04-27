@@ -6,6 +6,7 @@ import { ApiResponse } from "@/app/types";
 import { useCredentails } from "@/features/auth";
 import { UploadFile } from "antd";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { useHotel } from "@/entities/hotel";
 
 const useRoom = create(persist<UseRoom>((set, get) => ({
   rooms: undefined,
@@ -62,8 +63,13 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
   updateRoom: async (dto: Omit<RoomUpdateDto, "hotel_id" | "cover" | "images" | "visibility">) => {
     const { access_token } = useCredentails.getState();
 
+    const data: Omit<RoomUpdateDto, "cover" | "images" | "visibility"> = {
+      ...dto,
+      hotel_id: useHotel.getState().hotel.id
+    }
+
     const updated_room = await axios
-      .patch<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room/${dto.id}`, dto, {
+      .patch<ApiResponse<Room>>(`${import.meta.env.VITE_API}/room/${dto.id}`, data, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -156,11 +162,27 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
 
     if (Array.isArray(file) === true) {
       data[fieldName] = file;
+
+      // set((state) => ({
+      //   room_details: {
+      //     ...state.room_details,
+      //     [fieldName]: state.room_details.images.filter((image) => file.includes(image.id))
+      //   }
+      // }))
     }
 
     if (Array.isArray(file) === false) {
       data[fieldName] = [file];
+
+      // set((state) => ({
+      //   room_details: {
+      //     ...state.room_details,
+      //     [fieldName]: state.room_details.images.filter((image) => file.includes(image.id))
+      //   }
+      // }))
     }
+
+    console.log(data)
 
     await axios
       .delete(
@@ -172,6 +194,7 @@ const useRoom = create(persist<UseRoom>((set, get) => ({
           data,
         }
       )
+    console.log(get().room_details)
   },
 
   // completed

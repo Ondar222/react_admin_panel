@@ -1,7 +1,5 @@
 import { UploadFile } from "antd";
 import type { Room, RoomCreationDto, RoomUpdateDto } from "..";
-import { AxiosResponse } from "axios";
-import { ApiResponse } from "@/app/types";
 
 interface UseRoom {
   rooms: Room[] | undefined;
@@ -10,7 +8,7 @@ interface UseRoom {
   createRoom: (
     room: RoomCreationDto
   ) => Promise<Room>;
-  updateRoom: (room: Omit<RoomUpdateDto, "cover" | "images" | "visibility">) => Promise<void>;
+  updateRoom: (room: Omit<RoomUpdateDto, "hotel_id" | "cover" | "images" | "visibility">) => Promise<void>;
   deleteRoom: (room_id: number) => Promise<void>;
 
   changeVisibility: (room_id: number, visibility: boolean) => Promise<void>;

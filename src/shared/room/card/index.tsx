@@ -2,7 +2,6 @@ import { FC } from "react";
 import { Room, useRoom } from "../../../entities/room";
 import { Card, Col, Flex, Row, Switch, Typography, Image } from "antd";
 import { EditIcon } from "@/assets/icons/edit";
-import { IconButton } from "@/shared/components/button/action-buttons";
 import { Link } from "react-router-dom";
 import { RoomVsbltSwitch } from "../visibility_switch";
 import { convertToMoneyString } from "@/shared/utils/converters/toMoney";
@@ -32,7 +31,7 @@ const RoomCardUI: FC<Room> = (room) => (
           {colors.map((color) => (
             <Tooltip placement="bottom" title="Редактировать">
               <Button type="text">
-                <IconButton icon={EditIcon} />
+                {">"}
               </Button>
             </Tooltip>
           ))}

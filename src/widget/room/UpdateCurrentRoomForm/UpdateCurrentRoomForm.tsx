@@ -1,6 +1,6 @@
 import { RoomTypes, RoomUpdateDto, useRoom } from "@/entities/room"
-import { Button, Form, Input, Select, Typography, message } from "antd"
-import { FC, useEffect, useState } from "react"
+import { Button, Form, Input, Select, message } from "antd"
+import { FC } from "react"
 import { YurtaEditor } from "@/shared/editor"
 import Upload, { UploadChangeParam } from "antd/es/upload"
 import { validateNumberInputValue } from "@/shared/utils/form/validation"
@@ -38,8 +38,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
       price: price * 100,
       description,
       capacity,
-      type,
-      hotel_id: props.room.hotel_id
+      type
     })
       .then((_res) => {
         message.success("Номер обновлен")
@@ -49,26 +48,14 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
       })
   }
 
-  const handleFormFinish: FormProviderProps["onFormFinish"] = async (form_name, info) => {
+  const handleFormFinish: FormProviderProps["onFormFinish"] = async (form_name) => {
     if (form_name === "UpdateCurrentRoomForm") {
       withLoading(updateRoomWithLoading, setLoading)
     }
   }
 
-  const handleImageChange = async (fieldName: string, info) => {
-    const status = info.file.status
-    if (status === "done") {
-      // await uploadRoomImage(fieldName, info.file);
-    }
-
-    if (status === "removed") {
-      await deleteRoomImage(fieldName, info.file.uid);
-    }
-
-  };
-
-  const handleImageRemove = async (fieldName: string, file) => {
-
+  const handleImageRemove = async (fieldName: string, fileUid) => {
+    await deleteRoomImage(fieldName, fileUid)
   }
 
   return (
@@ -166,7 +153,6 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
             listType="picture-card"
             defaultFileList={props.room?.cover}
             maxCount={1}
-            onChange={(info) => handleImageChange("cover", info)}
             onRemove={(file) => handleImageRemove("cover", file)}
           >
             Загрузить
@@ -188,17 +174,15 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
             listType="picture-card"
             defaultFileList={props.room?.images}
             maxCount={10}
-            onChange={(info) => handleImageChange("images", info)}
-            onRemove={(file) => handleImageRemove("images", file)}
+            onRemove={(file) => handleImageRemove("images", file.uid)}
           >
             Загрузить
           </Upload>
         </Form.Item>
-        <Button htmlType="submit" >Сохранить</Button>
+        <Button htmlType="submit">Сохранить</Button>
       </Form>
     </Form.Provider >
   )
 }
-
 
 export { UpdateCurrentRoomForm }
