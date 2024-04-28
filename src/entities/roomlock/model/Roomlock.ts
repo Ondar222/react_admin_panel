@@ -1,13 +1,18 @@
 import { IRangePicker } from "@/shared/range-picker/model";
-import type { Hotel } from "@/entities/hotel";
-import { Room } from "@/entities/room/model";
+import { Hotel, Room } from "@/entities";
+
+enum RoomlockStatus {
+  OFFLINE = "offline",
+  REPAIR = "repair",
+  OTHER = "other"
+}
 
 type Roomlock = {
   id: number;
 
   start: number;
   end: number;
-  status: string;
+  status: RoomlockStatus;
   room: Pick<
     Room,
     "id" | "name" | "type" | "number" | "price" | "description" | "capacity"

@@ -1,6 +1,4 @@
-import { Booking } from "@/entities/booking";
-import { Room } from "@/entities/room/model/Room";
-import { Roomlock } from "@/entities/roomlock";
+import { Booking, Room, Roomlock } from "@/entities";
 
 interface ICalendar {
   id: number;
@@ -13,7 +11,7 @@ interface ICalendar {
   }[];
 }
 
-interface IBrm {
+type IBrm = {
   id: number;
   status: string;
   booking: Booking | null;
@@ -21,4 +19,22 @@ interface IBrm {
   rooms: Room[];
 }
 
+interface IUseCalendar {
+  calendar: ICalendar[];
+  currentDay: ICalendar | undefined;
+  getAll: () => void;
+  findByDate: (date: string) => void;
+}
+
+interface IUseBrm {
+  brm: {
+    type: string;
+    item: Booking | Roomlock;
+  }[];
+  getAll: () => void;
+  addRoomLock: (lock: Roomlock) => void;
+}
+
 export type { ICalendar, IBrm };
+export type { IUseCalendar, IUseBrm };
+

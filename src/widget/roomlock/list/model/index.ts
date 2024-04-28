@@ -1,4 +1,4 @@
-import { Roomlock } from "@/entities/roomlock/model/Roomlock";
+import { Roomlock } from "@/entities";
 
 interface IRoomLockListUI {
   roomlocks: Roomlock[];

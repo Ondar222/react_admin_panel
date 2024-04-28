@@ -1,10 +1,9 @@
-import { useAccount } from "@/entities/account";
+import { useAccount, useHotel } from "@/entities";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { MainLayout } from "@/shared/layouts/layout";
 import { Avatar, Col, Flex, Form, Row, Typography } from "antd";
 import { FC, useEffect } from "react";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
-import { useHotel } from "@/entities/hotel";
 import { useLoading, withLoading } from "@/processes";
 
 const AccountPageHeader: FC = () => {

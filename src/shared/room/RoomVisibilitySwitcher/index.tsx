@@ -1,8 +1,8 @@
-import { Room, useRoom } from "@/entities/room"
+import { Room, useRoom } from "@/entities"
 import { Switch, SwitchProps } from "antd"
 import { FC, useState } from "react"
 
-const RoomVsbltSwitch: FC<{ room: Room }> = (props) => {
+const RoomVisibilitySwitcher: FC<{ room: Room }> = (props) => {
     const [visibility, setVisibility] = useState<boolean>(props?.room?.visibility)
     const { changeVisibility } = useRoom()
 
@@ -19,4 +19,4 @@ const RoomVsbltSwitch: FC<{ room: Room }> = (props) => {
 }
 
 
-export { RoomVsbltSwitch }
+export { RoomVisibilitySwitcher }

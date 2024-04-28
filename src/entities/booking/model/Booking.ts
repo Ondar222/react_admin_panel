@@ -1,5 +1,4 @@
-import { Room } from "@/entities/room";
-import User from "@/entities/user/model/interface";
+import { Room, User } from "@/entities";
 
 enum EBookingStatus {
   draft = "draft",

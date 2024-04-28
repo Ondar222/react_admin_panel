@@ -1,11 +1,11 @@
 import { FC, LegacyRef, useEffect, useRef, useState } from "react";
+import { Booking, Roomlock } from "@/entities";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import momentPlugin from "@fullcalendar/moment"
 import listPlugin from '@fullcalendar/list'
 import dayjs from "dayjs";
 import { CalendarOptions, CustomContentGenerator, EventContentArg } from "@fullcalendar/core/index.js";
-import { Booking } from "@/entities/booking";
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { Button, Col, Flex, Grid, Modal, Row, Typography } from "antd";
@@ -14,7 +14,6 @@ import interactionPlugin from '@fullcalendar/interaction'
 import ruLocale from '@fullcalendar/core/locales/ru';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendar } from "../model";
-import { Roomlock } from "@/entities/roomlock";
 import { Link } from "react-router-dom";
 import { RoomlockCreationForm } from "@/widget/roomlock/creation_form";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
@@ -202,11 +201,11 @@ const Calendar: FC<ICalendar> = (props) => {
 const renderEventContent = (eventInfo: EventContentArg): CustomContentGenerator<EventContentArg> => {
   return (
     // <Link className="brm-event" to={eventInfo.event.url}>
-      <Button style={{overflow: "hidden"}}>
-        <Typography.Text ellipsis={true}>
-          {eventInfo.event.title}
-        </Typography.Text>
-      </Button>
+    <Button style={{ overflow: "hidden" }}>
+      <Typography.Text ellipsis={true}>
+        {eventInfo.event.title}
+      </Typography.Text>
+    </Button>
     // </Link>
   )
 }

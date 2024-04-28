@@ -1,22 +1,15 @@
 import { FC } from "react";
-import { Room, useRoom } from "../../../entities/room";
-import { Card, Col, Flex, Row, Switch, Typography, Image } from "antd";
-import { EditIcon } from "@/assets/icons/edit";
+import { Room } from "../../../entities/room";
+import { Card, Col, Row, Typography, Image } from "antd";
 import { Link } from "react-router-dom";
-import { RoomVsbltSwitch } from "../visibility_switch";
+import { RoomVisibilitySwitcher } from "../RoomVisibilitySwitcher";
 import { convertToMoneyString } from "@/shared/utils/converters/toMoney";
 import { convertToRoomTypesString } from "@/shared/utils/converters/toRoomTypesString";
 import {
   Button,
-  Divider,
-  Space,
   Tooltip,
-  ConfigProvider,
-  Segmented,
 } from "antd";
-
-
-const colors = ["blue"];
+import { EditIcon } from "@/assets"
 
 const RoomCardUI: FC<Room> = (room) => (
   <Card
@@ -27,17 +20,11 @@ const RoomCardUI: FC<Room> = (room) => (
     }
     actions={[
       <Link to={`/room/${room.id}`}>
-        <Space wrap>
-          {colors.map((color) => (
-            <Tooltip placement="bottom" title="Редактировать">
-              <Button type="text">
-                {">"}
-              </Button>
-            </Tooltip>
-          ))}
-        </Space>
+        <Tooltip placement="bottom" title="Редактировать">
+          <Button type="text" icon={<EditIcon />} />
+        </Tooltip>
       </Link>,
-      <RoomVsbltSwitch room={room} />,
+      <RoomVisibilitySwitcher room={room} />,
     ]}
   >
     <Row gutter={[16, 16]}>

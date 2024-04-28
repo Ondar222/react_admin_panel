@@ -2,11 +2,12 @@ import {
   Route,
   Routes
 } from "react-router-dom";
-import { RouterConfig } from "@/shared/config/router";
+import { RouterConfig } from "@/app/config";
+import { FC } from "react";
 
 const routes = Object.values(RouterConfig)
 
-const Router = () =>
+const Router: FC = () =>
   <Routes>
     {
       routes.map(({ path, element }) => (

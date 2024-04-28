@@ -1,4 +1,4 @@
-import { Hotel, HotelUpdateDto } from "@/entities/hotel";
+import { Hotel, HotelUpdateDto } from "@/entities";
 import { UploadFile, InputProps } from "antd";
 import { UploadChangeParam } from "antd/es/upload";
 

@@ -1,4 +1,4 @@
-import { useHotel } from "@/entities/hotel"
+import { useHotel } from "@/entities"
 import { YurtaEditor } from "@/shared/editor"
 import { Button, Form, Input, Upload } from "antd"
 import { FC } from "react"

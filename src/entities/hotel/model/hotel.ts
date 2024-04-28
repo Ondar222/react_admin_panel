@@ -1,6 +1,5 @@
 import { IImage } from "@/app/types";
-import { Room } from "@/entities/room";
-import User from "@/entities/user/model/interface";
+import { Room, User } from "@/entities";
 
 type Hotel = {
   id: number;

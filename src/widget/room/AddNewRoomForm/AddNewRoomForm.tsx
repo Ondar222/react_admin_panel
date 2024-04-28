@@ -2,13 +2,13 @@ import { FC, useRef, useState } from "react";
 import { Button, Col, Form, Input, Select, Upload, message } from "antd";
 import type { FormProviderProps } from "antd/es/form/context";
 import type { UploadChangeParam } from "antd/es/upload";
-import { Room, RoomCreationDto, RoomTypes, useRoom } from "@/entities/room";
+import { Room, RoomCreationDto, RoomTypes, useRoom } from "@/entities";
 import { YurtaEditor } from "@/shared/editor";
 import { validateNumberInputValue } from "@/shared/utils/form/validation";
-import { ApiResponse } from "@/app/types";
 import { AxiosError } from "axios";
 import { useLoading, withLoading } from "@/processes";
 import { Tooltip, Space, Row, TourProps, Tour } from "antd";
+import { MoneyInput } from "@/shared/base/MoneyInput";
 
 interface AddNewRoomFormProps {
   hotel_id: number;
@@ -46,7 +46,7 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({
     await createRoom({
       name,
       number,
-      price: price * 100,
+      price: price,
       type,
       capacity,
       description,
@@ -187,7 +187,11 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({
                   },
                 ]}
               >
-                <Input type="currency" />
+                <MoneyInput
+                  onChange={(e) => {
+                    const price = Number(e.target.value) * 100
+                    form.setFieldValue('price', price)
+                  }} />
               </Form.Item>
             </Col>
             <Col ref={ref4}>

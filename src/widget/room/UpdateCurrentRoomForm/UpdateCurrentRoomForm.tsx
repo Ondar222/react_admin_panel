@@ -1,4 +1,4 @@
-import { RoomTypes, RoomUpdateDto, useRoom } from "@/entities/room"
+import { RoomTypes, RoomUpdateDto, useRoom } from "@/entities"
 import { Button, Form, Input, Select, message } from "antd"
 import { FC } from "react"
 import { YurtaEditor } from "@/shared/editor"
@@ -31,11 +31,12 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
   const images = Form.useWatch<UploadChangeParam>("images", form)
 
   const updateRoomWithLoading = async () => {
+    console.log(form.getFieldsValue())
     await updateRoom({
       id: props.room.id,
       name,
       number,
-      price: price * 100,
+      price,
       description,
       capacity,
       type
@@ -89,7 +90,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
         >
           <Input />
         </Form.Item>
-
+        
         <Form.Item
           name="price"
           label="Стоимость"
@@ -100,13 +101,10 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
           }]}
           initialValue={props.room.price}
         >
-          <MoneyInput onChange={(e) => {
-            console.group('price is')
-            console.log(price)
-            form.setFieldValue('price', Number(e.target.value))
-            console.log(price)
-            console.groupEnd()
-          }} />
+          <MoneyInput
+            onChange={(e) => {
+              form.setFieldValue('price', Number(e.target.value) * 100)
+            }} />
         </Form.Item>
 
         <Form.Item

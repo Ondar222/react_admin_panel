@@ -1,4 +1,4 @@
-import { useRoom } from "@/entities/room"
+import { useRoom } from "@/entities"
 import { Button } from "antd"
 import { FC } from "react"
 import { message } from "antd"

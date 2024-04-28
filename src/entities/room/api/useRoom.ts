@@ -6,7 +6,7 @@ import { ApiResponse } from "@/app/types";
 import { useCredentails } from "@/features/auth";
 import { UploadFile } from "antd";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { useHotel } from "@/entities/hotel";
+import { useHotel } from "@/entities";
 
 const useRoom = create(persist<UseRoom>((set, get) => ({
   rooms: undefined,

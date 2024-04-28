@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from "react"
 import { Space, Table, Divider } from 'antd';
 import type { TableProps } from 'antd';
-import { Booking } from "@/entities/booking";
-import { Roomlock } from "@/entities/roomlock";
+import { Booking, Roomlock } from "@/entities";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 

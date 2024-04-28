@@ -1,9 +1,8 @@
 import { create } from "zustand";
-import { IUseBrm } from "./interface";
+import { IUseBrm, IBrm } from "../model/interface";
 import axios from "axios";
 import { useCredentails } from "@/features/auth";
-import { IBrm } from "../model/interface";
-import { Roomlock } from "@/entities/roomlock/model/Roomlock";
+import { Roomlock } from "@/entities";
 import { ApiResponse } from "@/app/types";
 
 const useBrm = create<IUseBrm>((set, get) => ({

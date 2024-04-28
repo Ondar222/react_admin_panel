@@ -1,6 +1,5 @@
-import { Room } from "@/entities/room"
-import { RoomDeleteButton } from "@/shared/room/delete_buttom"
-import { RoomVsbltSwitch } from "@/shared/room/visibility_switch"
+import { Room } from "@/entities"
+import { RoomDeleteButton, RoomVisibilitySwitcher } from "@/shared"
 import { Flex, Typography, Row, Col } from "antd"
 import { FC } from "react"
 
@@ -14,17 +13,22 @@ const RoomDtlsPgHdrUI: FC<{ room: Room }> = (props) =>
             Номер #{props?.room?.id} {props?.room?.name}
         </Typography.Title>
 
-        <Row gutter={[16, 16]}>
+        <Row
+            gutter={[16, 16]}
+            align={"middle"}
+        >
             <Col>
                 <RoomDeleteButton id={props?.room?.id} />
             </Col>
-
             <Col>
-                <RoomVsbltSwitch room={props?.room} />
-            </Col>
-
-            <Col>
-                <Typography.Text>Показывать в поиске</Typography.Text>
+                <Row gutter={[16, 16]}>
+                    <Col>
+                        <RoomVisibilitySwitcher room={props?.room} />
+                    </Col>
+                    <Col>
+                        <Typography.Text>Показывать в поиске</Typography.Text>
+                    </Col>
+                </Row>
             </Col>
         </Row>
     </Flex>

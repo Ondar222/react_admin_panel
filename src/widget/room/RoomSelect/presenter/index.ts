@@ -1,10 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  IUseRoomSelectProps,
   IYurtaRoomSelectProps,
   IYurtaRoomSelectUI,
 } from "../model/interface";
-import { Room } from "@/entities/room";
+import { Room } from "@/entities";
 
 const useRoomSelect = ({
   rooms,

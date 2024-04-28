@@ -1,21 +1,18 @@
 import { FC, useState } from "react";
 import { MainLayout } from "../../shared/layouts/layout";
 import { useEffect, useRef } from "react";
-import { useBooking } from "@/entities/booking";
+import { useBooking, useBrm } from "@/entities";
 import {
   Col,
-  Row,
   Button,
   Typography,
   Flex,
-  Divider,
   Space,
   Tooltip,
   Tour,
   TourProps,
 } from "antd";
 import { Calendar } from "@/widget/calendar/ui";
-import { useBrm } from "@/entities/calendar/api/useBrm";
 import { useRoomlockForm } from "@/features/useRoomlockForm";
 
 const colors = ["blue"];

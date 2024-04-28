@@ -1,4 +1,4 @@
-import { Room } from "@/entities/room";
+import { Room } from "@/entities";
 import { SelectProps } from "antd";
 import { DefaultOptionType } from "antd/es/select";
 

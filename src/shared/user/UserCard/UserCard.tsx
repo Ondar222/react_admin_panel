@@ -1,5 +1,5 @@
-import User from "@/entities/user/model/interface";
-import { Card, Col, Row, Typography, Image, Avatar } from "antd";
+import { User } from "@/entities";
+import { Card, Col, Row, Typography, Avatar } from "antd";
 import { FC } from "react";
 
 type UserCardProps = Pick<User, "id" | "surname" | "name" | "phone" | "email" | "avatar">

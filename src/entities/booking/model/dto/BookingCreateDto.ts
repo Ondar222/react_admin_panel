@@ -1,4 +1,4 @@
-import { Room } from "@/entities/room";
+import { Room } from "@/entities";
 import { EBookingStatus, Booking } from "..";
 import moment from "moment";
 
@@ -26,7 +26,7 @@ class BookingCreateDto {
   ) {
     this.amount = booking.amount;
     this.status = booking.status;
-    if (typeof booking.user === "object"){
+    if (typeof booking.user === "object") {
       this.user = booking.user.id
     }
     else {

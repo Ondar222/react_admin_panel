@@ -3,7 +3,6 @@ import { FC } from "react";
 import { IRoomLockListUI } from "../model";
 import { RangePickerUI } from "@/shared/range-picker/ui";
 import dayjs from "dayjs";
-import { IconButton } from "@/shared/components/button/action-buttons";
 import { DeleteIcon } from "@/assets/icons/delete";
 
 const RoomlockList: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
@@ -15,11 +14,11 @@ const RoomlockList: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
     renderItem={(item) => (
       <List.Item
         actions={[
-          <IconButton
-            type="text"
-            icon={DeleteIcon}
-            onClick={() => onItemClick(item.id)}
-            key="list-loadmore-edit" />
+          // <IconButton
+          //   type="text"
+          //   icon={DeleteIcon}
+          //   onClick={() => onItemClick(item.id)}
+          //   key="list-loadmore-edit" />
         ]} >
         <Row gutter={[16, 16]}>
           <Col span={3}>

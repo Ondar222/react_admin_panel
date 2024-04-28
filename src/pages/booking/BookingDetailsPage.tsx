@@ -1,13 +1,10 @@
 import { FC, useEffect, useState } from "react"
 import { MainLayout } from "@/shared/layouts/layout"
-import { Booking, EBookingStatus, useBooking } from "@/entities/booking"
+import { Booking, BookingUpdateDto, useBooking, useHotel, Room, useRoom } from "@/entities"
 import { useParams } from "react-router-dom"
-import { BookingUpdateDto } from "@/entities/booking/model/dto/BookingUpdateDto"
-import { Form, Button, Typography, Col, Input, DatePicker, Select, Avatar, Row, Image } from "antd"
-import { useHotel } from "@/entities/hotel"
+import { Form, Typography, Col, Input, DatePicker, Select } from "antd"
 import { useLoading, withLoading } from "@/processes"
 import dayjs from "dayjs"
-import { Room, useRoom } from "@/entities/room"
 import { UserCard } from "@/shared/user/UserCard/UserCard"
 import { MoneyInput } from "@/shared/base/MoneyInput"
 
@@ -46,23 +43,26 @@ const BookingUpdateForm: FC<{ booking: Booking, room_options: Room[] }> = ({ boo
             ]} />
         </Form.Item>
 
-        {
-          booking?.status && (
-            <UserCard
-              id={booking?.user?.id}
-              surname={booking?.user?.surname}
-              name={booking?.user?.name}
-              email={booking?.user?.email}
-              phone={booking?.user?.phone}
-              avatar={undefined}
-            />
-          )
-        }
-
-
-        <Form.Item label="Идентификатор гостя">
-          <Input disabled defaultValue={booking?.user?.id} />
+        <Form.Item label="Гость">
+          {
+            booking?.status && (
+              <UserCard
+                id={booking?.user?.id}
+                surname={booking?.user?.surname}
+                name={booking?.user?.name}
+                email={booking?.user?.email}
+                phone={booking?.user?.phone}
+                avatar={undefined}
+              />
+            )
+          }
         </Form.Item>
+
+
+
+        {/* <Form.Item label="Идентификатор гостя">
+          <Input disabled defaultValue={booking?.user?.id} />
+        </Form.Item> */}
 
 
         <Form.Item label="Номера" name={"rooms"}>

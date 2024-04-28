@@ -1,5 +1,6 @@
 import { useAuth } from "@/features/auth";
 import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
+import { OnboardingStatus } from "@/processes/onboarding/model";
 import { WithChildren } from "@/types/WithChildren";
 import { FC } from "react";
 import { Navigate } from "react-router-dom";
@@ -17,7 +18,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children, onboardCheck = true
         return <Navigate to="/auth" replace />;
     }
 
-    if (onboardCheck === true && onboardingStatus != "finish") {
+    if (onboardCheck === true && onboardingStatus != OnboardingStatus.FINISH) {
         return <Navigate to="/onboarding" replace />;
     }
 

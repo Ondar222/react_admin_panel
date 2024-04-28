@@ -1,4 +1,4 @@
-import type { Hotel } from "@/entities/hotel";
+import { Hotel } from "@/entities";
 
 class HotelUpdateDto {
   constructor(dto: Hotel) {

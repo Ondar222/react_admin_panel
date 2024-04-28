@@ -1,4 +1,4 @@
-import { HotelUpdateDto, useHotel } from "@/entities/hotel";
+import { HotelUpdateDto, useHotel } from "@/entities";
 import { LoadingPage } from "@/widget/loading_page";
 import { Button, Form, Input, InputProps, UploadFile, message } from "antd";
 import Upload, { UploadChangeParam } from "antd/es/upload";

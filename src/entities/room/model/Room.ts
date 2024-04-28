@@ -1,5 +1,5 @@
 import { IImage } from "@/app/types";
-import { Hotel } from "@/entities/hotel";
+import { Hotel } from "@/entities";
 
 enum RoomTypes {
   economy = "Эконом",

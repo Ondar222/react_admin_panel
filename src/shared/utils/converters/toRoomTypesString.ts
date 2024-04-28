@@ -1,4 +1,4 @@
-import { RoomTypes } from "@/entities/room";
+import { RoomTypes } from "@/entities";
 
 const convertToRoomTypesString = (type: RoomTypes) => {
   switch (type) {

@@ -1,12 +1,11 @@
 import { FC } from "react"
-import { Booking } from "@/entities/booking"
-import { Link } from "react-router-dom"
-import { Card, Collapse, Flex, Image, Tag, Typography } from "antd"
-import { IconButton } from "@/shared/components/button/action-buttons"
+import { Booking } from "@/entities"
+import { Button, Card, Collapse, Flex, Image, Tag, Typography } from "antd"
 import { EditIcon } from "@/assets/icons/edit"
 import { DeleteIcon } from "@/assets/icons/delete"
 import moment from "moment"
 import { convertToMoneyString } from "@/shared/utils/converters/toMoney"
+import { Link } from "react-router-dom"
 
 const BookingCardUI: FC<Booking> = (booking) => {
   const { Panel } = Collapse
@@ -26,22 +25,12 @@ const BookingCardUI: FC<Booking> = (booking) => {
           </Flex>
         </Flex>
       }
-      actions={
-        [
-          <IconButton
-            type="text"
-            icon={DeleteIcon}
-          />,
-          <Link to={`/booking/${booking.id}`}>
-            <IconButton
-              type="text"
-              icon={EditIcon}
-            />
-          </Link>
-        ]}
-      bodyStyle={{
-        padding: 0
-      }}
+      actions={[
+        <Button icon={<DeleteIcon />}></Button>,
+        <Link to={`/booking/${booking.id}`}>
+          <Button icon={<EditIcon />}></Button>
+        </Link>
+      ]}
     >
       {
         typeof booking.user === "object" &&

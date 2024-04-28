@@ -2,8 +2,7 @@ import axios from "axios";
 import { create } from "zustand";
 import { useCredentails } from "@/features/auth";
 import { ApiResponse } from "@/app/types";
-import type { Hotel } from "@/entities/hotel";
-import type { UseHotel } from "@/entities/hotel";
+import type { Hotel, UseHotel } from "@/entities";
 import { UploadFile } from "antd";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -96,7 +95,7 @@ const useHotel = create(persist<UseHotel>((set, get) => ({
     });
 
     set({
-      hotel: {...get().hotel, images: get().hotel.images.filter((image) => image.id != file)}
+      hotel: { ...get().hotel, images: get().hotel.images.filter((image) => image.id != file) }
     })
   },
 }), {

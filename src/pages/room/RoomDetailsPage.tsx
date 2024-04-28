@@ -1,21 +1,21 @@
-import { useRoom } from "@/entities/room"
+import { FC, useEffect } from "react"
+import { useRoom, useRoomLock } from "@/entities"
 import { MainLayout } from "@/shared/layouts/layout"
 import { Col, Row } from "antd"
-import { FC, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { RoomlockList } from "@/widget/roomlock/list"
-import { useRoomLock } from "@/entities/roomlock/api/useRoomlock"
-import { RoomDtlsPgHdr } from "@/widget/room/details_page_header/ui"
+import { RoomDtlsPgHdr } from "@/widget/room/RoomDetailsPageHeader/ui"
 import { UpdateCurrentRoomForm } from "@/widget"
 import { useLoading, withLoading } from "@/processes"
-import { LoadingPage } from "@/widget/loading_page"
 
 const RoomDetailsPage: FC = () => {
   const { id } = useParams()
 
   const { room_details, getRoomDetailsByID } = useRoom()
   const { roomlocks, getRoomlocksByRoomID, deleteRoomlock } = useRoomLock()
+
   const { setLoading } = useLoading()
+
   const fetchData = async () => {
     await getRoomDetailsByID(Number(id))
     await getRoomlocksByRoomID(Number(id))
@@ -24,10 +24,6 @@ const RoomDetailsPage: FC = () => {
   useEffect(() => {
     withLoading(fetchData, setLoading)
   }, [])
-
-  // if (!room_details) {
-  //   return <LoadingPage layout={"main"} />
-  // }
 
   return (
     <MainLayout
@@ -59,7 +55,6 @@ const RoomDetailsPage: FC = () => {
           <RoomlockList roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
         </Col>
       </Row>
-
     </MainLayout >
   )
 }

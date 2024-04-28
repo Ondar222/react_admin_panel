@@ -1,6 +1,6 @@
-import User from "@/entities/user/model/interface";
+import { User } from "@/entities";
 
-interface Account extends User {}
+interface Account extends User { }
 
 interface UseAccount {
   account: Account | undefined;

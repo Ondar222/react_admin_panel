@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
 import { Button, Col, Row, Card, DatePicker, Image } from 'antd';
 
-import { Booking } from "@/entities/booking";
+import { Booking } from "@/entities";
 import dayjs, { Dayjs } from "dayjs";
 import { IImage } from "@/app/types";
 

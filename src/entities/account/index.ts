@@ -1,2 +1,2 @@
-export { useAccount } from "@/entities/account/api/useAccount";
-export type { Account, UseAccount } from "@/entities/account/model/useAccount";
+export { useAccount } from "./api/useAccount";
+export type { Account, UseAccount } from "./model/useAccount";

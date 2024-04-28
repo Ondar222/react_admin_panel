@@ -1,22 +1,27 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { MainLayout } from "@/shared/layouts/layout";
 import { Button, Col, Row, Steps, Typography, message } from "antd";
-import { useHotel } from "@/entities/hotel";
+import { useHotel } from "@/entities";
 import { useLoading, withLoading } from "@/processes";
 import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { AddNewRoomForm } from "@/widget";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useCookie } from "@/features";
+import { Navigate } from "react-router-dom";
+import { OnboardingStatus } from "@/processes/onboarding/model";
 
 const OnboardingPageHeader: FC = () => {
-    return <Typography.Title level={2}>Добро пожаловать</Typography.Title>
-}
+    const { skipOnboarding } = useOnboarding()
 
+    return (
+        <Row justify={"space-between"}>
+            <Typography.Title level={2}>Добро пожаловать</Typography.Title>
+            <Button type="primary" onClick={() => skipOnboarding()}>Пропустить</Button>
+        </Row>
+    )
+}
 
 const FirstStart: FC = () => {
     const [isOnboardingFinishable, setIsOnboardingFinishable] = useState(false)
-    const { value, updateCookie } = useCookie("onboarding", "process")
     const [step, setStep] = useState<number>(0)
 
     const next = () => {
@@ -34,7 +39,6 @@ const FirstStart: FC = () => {
 
     const { hotel, getHotelDetails } = useHotel()
     const { setLoading } = useLoading()
-    const navigate = useNavigate()
 
     useEffect(() => {
         withLoading(getHotelDetails, setLoading)
@@ -77,14 +81,13 @@ const FirstStart: FC = () => {
         }
     ]
 
-    if (onboardingStatus === "finish") {
+    if (onboardingStatus === OnboardingStatus.FINISH) {
         return <Navigate to={"/hotel"} />
     }
 
-    if (onboardingStatus === "process")
+    if (onboardingStatus === OnboardingStatus.PROCESS)
         return (
             <MainLayout header={<OnboardingPageHeader />}>
-                {/* {JSON.stringify(hotel)} */}
                 <Row gutter={[16, 16]}>
                     <Col span={12}>
                         {items[step].content}
@@ -119,7 +122,8 @@ const FirstStart: FC = () => {
                             {step === items.length - 1 && (
                                 <Button
                                     type="primary"
-                                    disabled={!isOnboardingFinishable} onClick={() => {
+                                    disabled={!isOnboardingFinishable}
+                                    onClick={() => {
                                         checkOnboardingStatus()
                                     }}
                                 >
@@ -138,8 +142,6 @@ const FirstStart: FC = () => {
                         </div>
                     </Col>
                 </Row>
-
-
             </MainLayout >
         )
 }

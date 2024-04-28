@@ -1,5 +1,4 @@
-import { Booking } from "@/entities/booking";
-import { Roomlock } from "@/entities/roomlock";
+import { Booking, Roomlock } from "@/entities";
 import { CalendarOptions, EventClickArg } from "@fullcalendar/core/index.js";
 
 interface ICalendar extends CalendarOptions {

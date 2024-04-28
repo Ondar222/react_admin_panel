@@ -3,7 +3,7 @@ import { UseAccount } from "../model/useAccount";
 import { useCredentails } from "@/features/auth";
 import axios from "axios";
 import { ApiResponse } from "@/app/types";
-import User from "@/entities/user/model/interface";
+import { User } from "@/entities";
 
 const useAccount = create<UseAccount>((set) => ({
   account: undefined,
@@ -24,7 +24,7 @@ const useAccount = create<UseAccount>((set) => ({
     });
   },
 
-  logout: () => {},
+  logout: () => { },
 }));
 
 export { useAccount };

@@ -1,4 +1,4 @@
-import { Room } from "@/entities/room";
+import { Room } from "@/entities";
 import { EBookingStatus, Booking } from "..";
 import moment from "moment";
 import { IImage } from "@/app/types";

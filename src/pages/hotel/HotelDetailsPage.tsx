@@ -1,4 +1,4 @@
-import { useHotel } from "@/entities/hotel";
+import { useHotel } from "@/entities";
 import { MainLayout } from "@/shared/layouts/layout";
 import {
   Button,

@@ -1,5 +1,4 @@
-import { useHotel } from "@/entities/hotel";
-import { useRoomLock } from "@/entities/roomlock";
+import { useHotel, useRoomLock } from "@/entities";
 import { useLoading, withLoading } from "@/processes";
 import { MainLayout } from "@/shared/layouts/layout";
 import { LoadingPage } from "@/widget/loading_page";

@@ -1,6 +1,6 @@
 import { MainLayout } from "@/shared/layouts/layout"
 import { FC, useEffect } from "react"
-import { useHotel } from "@/entities/hotel"
+import { useHotel } from "@/entities"
 import { LoadingPage } from "@/widget/loading_page"
 import { AddNewRoomForm } from "@/widget"
 import { useNavigate } from "react-router-dom"

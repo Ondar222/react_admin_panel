@@ -1,8 +1,7 @@
 import { IImage } from "@/app/types";
-import { DirectusUserResponse } from "./decoder";
 
 interface IUseUsers {
-  users: DirectusUserResponse[];
+  users: User[];
   getUsers: () => Promise<void>;
   findUserByPhone: (phone: string, callback: Function) => Promise<void>;
 }
@@ -24,5 +23,5 @@ type UserCreateDto = {
   email: string | undefined;
 };
 
-export type { User as default };
+export type { User };
 export type { IUseUsers };
