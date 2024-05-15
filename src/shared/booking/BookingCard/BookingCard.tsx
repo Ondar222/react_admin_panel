@@ -18,32 +18,32 @@ const BookingCardUI: FC<Booking> = (booking) => {
           justify="space-between"
           align="center"
         >
-          Бронь №{booking.id}
+          Бронь №{booking?.id}
           <Flex justify={"space-between"}>
-            <Tag>{moment(booking.check_in).date()}</Tag>
-            <Tag>{booking.status}</Tag>
+            <Tag>{moment(booking?.check_in).date()}</Tag>
+            <Tag>{booking?.status}</Tag>
           </Flex>
         </Flex>
       }
       actions={[
         <Button icon={<DeleteIcon />}></Button>,
-        <Link to={`/booking/${booking.id}`}>
+        <Link to={`/booking/${booking?.id}`}>
           <Button icon={<EditIcon />}></Button>
         </Link>
       ]}
     >
       {
-        typeof booking.user === "object" &&
+        typeof booking?.user === "object" &&
         <Collapse style={{ borderRadius: 0 }} items={[
           {
             key: 1,
             label: "Информация о госте",
             children: (
               <div>
-                <Text>Имя: {booking.user.name}</Text>
-                <Text>Фамилия: {booking.user.surname}</Text>
-                <Text>Номер телефона: {booking.user.phone}</Text>
-                <Text>Электронная почта: {booking.user.email}</Text>
+                <Text>Имя: {booking?.user?.name}</Text>
+                <Text>Фамилия: {booking?.user?.surname}</Text>
+                <Text>Номер телефона: {booking?.user?.phone}</Text>
+                <Text>Электронная почта: {booking?.user?.email}</Text>
               </div>
             )
           },
@@ -52,8 +52,8 @@ const BookingCardUI: FC<Booking> = (booking) => {
             label: "Информация об оплате",
             children: (
               <div>
-                <Text>Статус: <Tag>{booking.status}</Tag></Text>
-                <Text>Сумма: {convertToMoneyString(booking.amount)}</Text>
+                <Text>Статус: <Tag>{booking?.status}</Tag></Text>
+                <Text>Сумма: {convertToMoneyString(booking?.amount)}</Text>
               </div>
             )
           },
@@ -63,10 +63,10 @@ const BookingCardUI: FC<Booking> = (booking) => {
             children: (
               <div>
                 <Text>
-                  Заезд: {moment(booking.check_in).toDate().toDateString()}
+                  Заезд: {moment(booking?.check_in).toDate().toDateString()}
                 </Text>
                 <Text>
-                  Отъезд: {moment(booking.check_out).toDate().toDateString()}
+                  Отъезд: {moment(booking?.check_out).toDate().toDateString()}
                 </Text>
               </div>
             )
@@ -76,16 +76,16 @@ const BookingCardUI: FC<Booking> = (booking) => {
             label: "Информация о номере",
             children: (
               <Flex>
-                <Image src={booking.rooms[0].cover.link} width={50} height={50} />
+                <Image src={booking?.rooms[0]?.cover?.link} width={50} height={50} />
                 <Flex vertical>
                   <Text>
                     {
-                      booking.rooms[0].type
+                      booking?.rooms[0]?.type
                     }
                   </Text>
                   <Text>
                     {
-                      booking.rooms[0].number
+                      booking?.rooms[0]?.number
                     }
                   </Text>
                 </Flex>

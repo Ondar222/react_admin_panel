@@ -1,5 +1,5 @@
 import { useBooking, useBrm } from "@/entities";
-import { useCredentails } from "@/features/auth";
+import { useAuth, useCredentails } from "@/features/auth";
 import { WithChildren } from "@/types/WithChildren";
 import { Button, message, notification } from "antd";
 import { FC, useEffect } from "react"
@@ -9,12 +9,17 @@ import { io } from 'socket.io-client'
 const socket = io(`${import.meta.env.VITE_WSS}/booking`);
 
 const WSSProvider: FC<WithChildren> = ({ children }) => {
+    const { isAuth } = useAuth()
     const navigate = useNavigate()
     const { access_token } = useCredentails()
     const { addNewBooking } = useBooking()
     const { addBooking } = useBrm()
+
     useEffect(() => {
-        socket.connect()
+        if (isAuth === true) {
+            socket.connect()
+        }
+
         socket.emit("auth", { access_token })
 
         socket.on('connect', () => {
@@ -39,7 +44,7 @@ const WSSProvider: FC<WithChildren> = ({ children }) => {
         return () => {
             socket.disconnect();
         };
-    }, [])
+    }, [isAuth])
 
     return children
 }
