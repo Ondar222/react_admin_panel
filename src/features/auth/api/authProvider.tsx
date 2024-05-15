@@ -19,7 +19,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     useEffect(() => {
         checkAuth()
-        redirectToLogin()
+        // redirectToLogin()
     }, [])
 
     return (

@@ -6,7 +6,9 @@ import { FC, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { io } from 'socket.io-client'
 
-const socket = io(`${import.meta.env.VITE_WSS}/booking`);
+const socket = io(`${import.meta.env.VITE_WSS}/booking`, {
+    secure: true
+});
 
 const WSSProvider: FC<WithChildren> = ({ children }) => {
     const { isAuth } = useAuth()
