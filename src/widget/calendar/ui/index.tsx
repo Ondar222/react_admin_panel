@@ -122,14 +122,14 @@ const Calendar: FC<ICalendar> = (props) => {
             if (brm.type === 'booking') {
               const booking = brm.item as Booking
               return {
-                item_id: booking.id,
-                title: `Бронь №${booking.id}`,
-                capacity: booking.capacity,
+                item_id: booking?.id,
+                title: `Бронь №${booking?.id}`,
+                capacity: booking?.capacity,
                 rooms: rooms,
-                status: booking.status,
-                start: moment(booking.check_in * 1000).tz(tz).toISOString(),
-                end: moment(booking.check_out * 1000).tz(tz).toISOString(),
-                url: `/booking/${booking.id}`
+                status: booking?.status,
+                start: moment(booking?.check_in * 1000).tz(tz).toISOString(),
+                end: moment(booking?.check_out * 1000).tz(tz).toISOString(),
+                url: `/booking/${booking?.id}`
               }
             }
 
