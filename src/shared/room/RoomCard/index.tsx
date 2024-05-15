@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { EditIcon } from "@/assets"
 
-const RoomCardUI: FC<Room> = (room) => (
+const RoomCard: FC<Room> = (room) => (
   <Card
     title={
       <Typography.Title level={4} ellipsis>
@@ -63,4 +63,4 @@ const RoomCardUI: FC<Room> = (room) => (
   </Card>
 );
 
-export default RoomCardUI;
+export { RoomCard };

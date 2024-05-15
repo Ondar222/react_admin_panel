@@ -40,7 +40,7 @@ export const HotelUpdateFormUI: FC<HotelUpdateFormUIProps> = (props) => (
       method="POST"
       action={`${import.meta.env.VITE_API}/hotel/my/images`}
       multiple={true}
-      maxCount={10}
+      maxCount={20}
       listType="picture-card"
       defaultFileList={props?.images || []}
       fileList={props?.images || []}

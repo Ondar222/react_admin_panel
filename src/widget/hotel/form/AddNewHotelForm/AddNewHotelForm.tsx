@@ -36,7 +36,7 @@ const AddNewHotelForm: FC = () => {
           <Upload maxCount={1} listType="picture-card">Upload</Upload>
         </Form.Item>
         <Form.Item name={"images"}>
-          <Upload maxCount={10} listType="picture-card">Upload</Upload>
+          <Upload maxCount={20} listType="picture-card">Upload</Upload>
         </Form.Item>
         <Button htmlType="submit">Создать</Button>
       </Form>

@@ -5,9 +5,6 @@ import { Booking, Roomlock } from "@/entities";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
-
-
-
 const columns: TableProps<{
   type: string;
   item: Booking | Roomlock;
@@ -69,7 +66,6 @@ const BookingList: FC<any> = (props) => {
   return <BookingListUI data={props.data} />
 }
 
-
 const useBookingList = (props) => {
   const [data, setData] = useState<{
     type: string;
@@ -88,14 +84,9 @@ const useBookingList = (props) => {
 }
 
 const BookingListUI: FC<any> = (props) =>
-
   <>
     <Divider />
     <Table columns={columns} dataSource={props.data} />
   </>
-
-
-
-
 
 export { BookingList };

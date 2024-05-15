@@ -13,9 +13,10 @@ const MoneyInput: FC<InputProps> = ({ value, onChange, ...otherProps }) => {
 
     const handleFocus: InputProps["onFocus"] = (e) => {
         setType('number')
+
         const numericValue = parseFloat(e.target.value
-            .replace(/[^\d.,]/g, '') // Удаляем все символы, кроме цифр, запятых и точек
-            .replace(/,/, '.') // Заменяем запятую на точку (если используется в качестве десятичного разделителя)
+            .replace(/[^\d.,]/g, '')
+            .replace(/,/, '.')
         );
         setMoney(numericValue)
     }

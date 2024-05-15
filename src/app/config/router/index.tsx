@@ -11,7 +11,8 @@ import {
     RoomCreationPage,
     RoomlockDetailsPage,
     FirstStart,
-    NotFoundPage
+    NotFoundPage,
+    TermsPage
 } from "@/pages";
 import { ProtectedRoute } from "@/app/providers/router/ui/ProtectedRoute";
 
@@ -34,7 +35,9 @@ enum AppRoutes {
 
     ROOMLOCK_DETAILS = "roomlock_details",
     ONBOARDING = "onboarding",
-    NOT_FOUND = "not_found"
+    NOT_FOUND = "not_found",
+
+    TERMS = "terms"
 }
 
 const RoutePath: Record<AppRoutes, string> = {
@@ -50,6 +53,7 @@ const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.ACCOUNT]: "/account",
     [AppRoutes.ROOMLOCK_DETAILS]: "/roomlock/:id",
     [AppRoutes.ONBOARDING]: "/onboarding",
+    [AppRoutes.TERMS]: "/terms",
     [AppRoutes.NOT_FOUND]: "*"
 }
 
@@ -136,6 +140,12 @@ const RouterConfig: Record<AppRoutes, RouteProps> = {
             <ProtectedRoute onboardCheck={false}>
                 <FirstStart />
             </ProtectedRoute>
+        )
+    },
+    [AppRoutes.TERMS]: {
+        path: RoutePath.terms,
+        element: (
+            <TermsPage />
         )
     },
     [AppRoutes.NOT_FOUND]: {

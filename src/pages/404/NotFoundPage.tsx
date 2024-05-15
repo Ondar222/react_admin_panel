@@ -61,7 +61,6 @@ const NotFoundPage: FC = () => {
         )
     }
 
-
     return (
         <Layout style={{
             position: "relative",

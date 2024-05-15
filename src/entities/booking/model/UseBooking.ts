@@ -8,6 +8,7 @@ interface UseBooking {
 
   getAllBookings: () => void;
   getBookingDetailsByID: (id: number) => Promise<void>;
+  addNewBooking: (dto: Booking) => void
 }
 
 interface UseBookingHotel extends UseBooking {}

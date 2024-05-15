@@ -4,6 +4,7 @@ interface IUseUsers {
   users: User[];
   getUsers: () => Promise<void>;
   findUserByPhone: (phone: string, callback: Function) => Promise<void>;
+  deleteAccount: () => Promise<void>
 }
 
 type User = {

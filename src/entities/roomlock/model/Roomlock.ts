@@ -1,7 +1,7 @@
-import { IRangePicker } from "@/shared/range-picker/model";
+import { IRangePicker } from "@/shared/base/RangePicker/model";
 import { Hotel, Room } from "@/entities";
 
-enum RoomlockStatus {
+export enum RoomlockStatus {
   OFFLINE = "offline",
   REPAIR = "repair",
   OTHER = "other"
@@ -12,6 +12,7 @@ type Roomlock = {
 
   start: number;
   end: number;
+  reason: RoomlockStatus;
   status: RoomlockStatus;
   room: Pick<
     Room,

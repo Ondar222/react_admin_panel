@@ -1,11 +1,11 @@
 import { FC, LegacyRef, useEffect, useRef, useState } from "react";
-import { Booking, Roomlock } from "@/entities";
+import { Booking, Room, Roomlock } from "@/entities";
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import momentPlugin from "@fullcalendar/moment"
 import listPlugin from '@fullcalendar/list'
 import dayjs from "dayjs";
-import { CalendarOptions, CustomContentGenerator, EventContentArg } from "@fullcalendar/core/index.js";
+import { CalendarOptions, CustomContentGenerator, EventContentArg, EventSourceInput } from "@fullcalendar/core/index.js";
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { Button, Col, Flex, Grid, Modal, Row, Typography } from "antd";
@@ -14,9 +14,12 @@ import interactionPlugin from '@fullcalendar/interaction'
 import ruLocale from '@fullcalendar/core/locales/ru';
 import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendar } from "../model";
-import { Link } from "react-router-dom";
 import { RoomlockCreationForm } from "@/widget/roomlock/creation_form";
-import { useRoomlockForm } from "@/features/useRoomlockForm";
+import { useRoomlockForm } from "@/features";
+import { Link } from "react-router-dom";
+import { ListViewEvent } from "./ListViewEvent";
+import { DayGridViewEvent } from "./DayGridViewEvent";
+import moment from "moment-timezone";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -24,25 +27,30 @@ const tz = "Asia/Krasnoyarsk"
 
 const Calendar: FC<ICalendar> = (props) => {
   const calendarRef: LegacyRef<FullCalendar> = useRef(null)
+  const [currentView, setCurrentView] = useState<"dayGridMonth" | "list">("dayGridMonth")
   const [isDayContextMenuOpen, setIsDayContextMenuOpen] = useState<boolean>(false)
   const { isRoomlockCreationFormOpen, setIsRoomlockCreationFormOpen, dates, setDates } = useRoomlockForm()
 
   useEffect(() => {
+    console.log(props.brm)
     const calendarApi = calendarRef.current?.getApi();
     if (calendarApi) {
       calendarApi.on('dateClick', handleDateClick);
       calendarApi.on('eventClick', handleEventClick);
 
       const monthButton = document.querySelector('.fc-dayGridMonth-button');
+      const dayButton = document.querySelector('.fc-list-button')
 
       if (monthButton) {
         monthButton.addEventListener('click', handleMonthViewClick);
       }
+
+      if (dayButton) {
+        dayButton.addEventListener('click', handleEventClick)
+      }
     }
     return () => {
       const monthButton = document.querySelector('.fc-dayGridMonth-button');
-
-
       calendarApi.off('dateClick', handleDateClick);
       calendarApi.off('eventClick', handleEventClick);
 
@@ -61,16 +69,21 @@ const Calendar: FC<ICalendar> = (props) => {
     const calendarApi = calendarRef.current.getApi()
     calendarApi.gotoDate(props.date)
     setIsDayContextMenuOpen(true)
-    setDates([dayjs(props.dateStr).unix(), dayjs(props.dateStr).unix()])
+    setDates([moment(props.dateStr).unix(), moment(props.dateStr).unix()])
   }
 
   const handleMonthViewClick = (element) => {
     const calendarApi = calendarRef.current.getApi()
     calendarApi.changeView('dayGridMonth')
+    setCurrentView('dayGridMonth')
   }
 
   const handleEventClick = (arg) => {
+    console.group('args')
     console.log(arg)
+    console.groupEnd()
+
+    setCurrentView('list')
   }
 
 
@@ -88,6 +101,7 @@ const Calendar: FC<ICalendar> = (props) => {
             listPlugin
           ]}
 
+          timeZone="Asia/Krasnoyarsk"
           initialView="dayGridMonth"
           dayCellClassNames='brm-cell'
           weekends={true}
@@ -101,40 +115,41 @@ const Calendar: FC<ICalendar> = (props) => {
           locales={[ruLocale]}
           progressiveEventRendering={true}
           dayMaxEvents={1}
+          allDayText="Весь день"
           events={props.brm.map((brm) => {
+
+            const rooms = brm.room as Array<Room>
             if (brm.type === 'booking') {
               const booking = brm.item as Booking
-              console.group("бронь №", booking.id)
-              console.log(dayjs(booking.check_in * 1000).tz(tz).format())
-              console.log(dayjs(booking.check_out * 1000).tz(tz).format())
-              console.groupEnd()
               return {
                 item_id: booking.id,
-                title: `Бронь №${booking.id} Статус: ${booking.status}`,
-                start: dayjs(booking.check_in * 1000).tz(tz).format(),
-                end: dayjs(booking.check_out * 1000).tz(tz).format(),
+                title: `Бронь №${booking.id}`,
+                capacity: booking.capacity,
+                rooms: rooms,
+                status: booking.status,
+                start: moment(booking.check_in * 1000).tz(tz).toISOString(),
+                end: moment(booking.check_out * 1000).tz(tz).toISOString(),
                 url: `/booking/${booking.id}`
               }
             }
-            console.log(brm.type === 'room_lock')
-            if (brm.type === 'room_lock') {
 
+            if (brm.type === 'room_lock') {
               const roomlock = brm.item as Roomlock
-              console.group("румлок №", roomlock.id)
-              console.log(dayjs(roomlock.start * 1000).tz(tz).format())
-              console.log(dayjs(roomlock.end * 1000).tz(tz).format())
-              console.groupEnd()
               return {
                 item_id: roomlock.id,
-                title: `Блокировка номера №${roomlock.id} Статус: ${roomlock.status}`,
+                title: `Блокировка номера №${roomlock.id}`,
 
-                start: dayjs(roomlock.start * 1000).tz(tz).format(),
-                end: dayjs(roomlock.end * 1000).tz(tz).format(),
+                rooms: rooms?.map((room) => {
+                  return room.id
+                }),
+                status: roomlock.status,
+                start: moment(roomlock.start * 1000).tz(tz).toISOString(),
+                end: moment(roomlock.end * 1000).tz(tz).toISOString(),
                 url: `/roomlock/${roomlock.id}`
               }
             }
           })}
-          eventContent={renderEventContent}
+          eventContent={(e) => renderEventContent(e, currentView)}
         />
       }
 
@@ -158,6 +173,7 @@ const Calendar: FC<ICalendar> = (props) => {
                 onClick={() => {
                   changeView("list")
                   setIsDayContextMenuOpen(false)
+                  setCurrentView('list')
                 }}>
                 Посмотреть повестку
               </Button>
@@ -198,17 +214,24 @@ const Calendar: FC<ICalendar> = (props) => {
   )
 }
 
-const renderEventContent = (eventInfo: EventContentArg): CustomContentGenerator<EventContentArg> => {
-  return (
-    // <Link className="brm-event" to={eventInfo.event.url}>
-    <Button style={{ overflow: "hidden" }}>
-      <Typography.Text ellipsis={true}>
-        {eventInfo.event.title}
-      </Typography.Text>
-    </Button>
-    // </Link>
-  )
+const renderEventContent = (eventInfo: EventContentArg, view: "list" | "dayGridMonth"): CustomContentGenerator<EventContentArg> => {
+
+  if (view === "list") {
+    return (
+      <ListViewEvent
+        title={eventInfo.event.title}
+        capacity={eventInfo.event.extendedProps?.capacity}
+        status={eventInfo.event.extendedProps.status}
+        rooms={eventInfo.event.extendedProps?.rooms}
+        url={eventInfo.event.url} />
+    )
+  }
+
+  if (view === "dayGridMonth") {
+    return (
+      <DayGridViewEvent title={eventInfo.event.title} />
+    )
+  }
 }
 
 export { Calendar }
-

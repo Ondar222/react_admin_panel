@@ -4,7 +4,7 @@ import { useOtp } from "@/features/otp";
 import { SignUpDto, } from "./model";
 import { FormProviderProps } from "antd/es/form/context";
 import { useSignUp } from "./api/useSignUp";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { Logo } from "../auth/ui/form";
 
@@ -225,7 +225,7 @@ const SignUpForm: FC = () => {
                                 <Switch size="small" />
                             </Form.Item>
                             <Typography.Text>
-                                Я согласен с условиями <a href="#">Пользовательского соглашения</a>
+                                Я согласен с условиями <Link to="/terms">Пользовательского соглашения</Link>
                             </Typography.Text>
                         </Flex>
                     </Col>

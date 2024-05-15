@@ -7,6 +7,9 @@ import ru_RU from "antd/lib/locale/ru_RU"
 import { LoadingProvider, LoadingWrapper } from './processes/loading/LoadingProvider'
 import { OnboardingProvider } from './processes/onboarding/api/onboardingProvider'
 import { GlobalStyles } from './app/styles/global'
+import { CareButton } from './widget/care-service/CareButton';
+import { WSSProvider } from './app/providers/wss';
+import { AuthProvider } from './features/auth/api/authProvider';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 
@@ -18,7 +21,12 @@ root.render(
           <LoadingWrapper>
             <OnboardingProvider>
               <GlobalStyles />
-              <Router />
+              <AuthProvider>
+                <WSSProvider>
+                  <Router />
+                </WSSProvider>
+              </AuthProvider>
+              <CareButton />
             </OnboardingProvider>
           </LoadingWrapper>
         </LoadingProvider>

@@ -1,3 +1,2 @@
-export { BookingCardUI } from "../../shared/booking/BookingCard";
-export { BookingList } from "./list-view";
-export { BookingBrick } from "./brick-view";
+export { BookingList } from "./ListView";
+export { BookingBrick } from "./BrickView";

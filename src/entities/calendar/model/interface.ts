@@ -1,5 +1,7 @@
 import { Booking, Room, Roomlock } from "@/entities";
 
+
+
 interface ICalendar {
   id: number;
   date: string;
@@ -30,9 +32,11 @@ interface IUseBrm {
   brm: {
     type: string;
     item: Booking | Roomlock;
+    room: Array<Room>
   }[];
   getAll: () => void;
   addRoomLock: (lock: Roomlock) => void;
+  addBooking: (booking: Booking) => void
 }
 
 export type { ICalendar, IBrm };

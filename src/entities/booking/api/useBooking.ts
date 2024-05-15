@@ -6,7 +6,7 @@ import { BookingCreateDto } from "../model/dto/BookingCreateDto";
 import { BookingUpdateDto } from "../model/dto/BookingUpdateDto";
 import { ApiResponse } from "@/app/types";
 
-const useBooking = create<UseBooking>((set) => ({
+const useBooking = create<UseBooking>((set, get) => ({
   bookings: undefined,
 
   booking_details: undefined,
@@ -64,6 +64,12 @@ const useBooking = create<UseBooking>((set) => ({
   },
 
   deleteBookingByID: () => {},
+
+  addNewBooking: (dto: Booking) => {
+    set({
+      bookings: [...get().bookings, dto]
+    })
+  }
 }));
 
 export { useBooking };

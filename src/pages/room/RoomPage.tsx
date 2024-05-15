@@ -1,6 +1,6 @@
 import { useRoom } from "@/entities";
 import { MainLayout } from "@/shared/layouts/layout";
-import RoomCardUI from "@/shared/room/card";
+import { RoomCard } from "@/shared/room/RoomCard";
 import { Button, Col, Row, Typography } from "antd";
 import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ const RoomPage: FC = () => {
             rooms?.map((room, index) => {
               return (
                 <Col key={index} xs={24} sm={24} md={24} lg={12} xl={8}>
-                  <RoomCardUI {...room} />
+                  <RoomCard {...room} />
                 </Col>
               )
             })

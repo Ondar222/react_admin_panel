@@ -1,6 +1,5 @@
 import { FC, useState } from "react"
 import { Button, Col, Row, Card, DatePicker, Image } from 'antd';
-
 import { Booking } from "@/entities";
 import dayjs, { Dayjs } from "dayjs";
 import { IImage } from "@/app/types";
@@ -30,7 +29,6 @@ const BookingBrick: FC<IBookingBrick> = ({ data }) => {
 
   return <BookingBrickUI booking={booking} />
 }
-
 
 const useBookingBrick = ({ data }: IUseBookingBrick): IBookingBrickItem[] => {
   const [formattedBooking, setFormattedBooking] = useState<IBookingBrickItem[]>(
@@ -70,12 +68,7 @@ const BookingBrickUI: FC<IBookingBrickUI> = ({ booking }) =>
               title={`Бронь №${item.id}`}
               bordered={false}
             >
-
-
-
               <DatePicker.RangePicker disabled value={item.dates} />
-
-
               <Row>
                 {
                   item.rooms.map((room) => {
@@ -94,9 +87,6 @@ const BookingBrickUI: FC<IBookingBrickUI> = ({ booking }) =>
                   })
                 }
               </Row>
-
-
-
             </Card>
           </Col>
         )

@@ -152,7 +152,7 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
                 url: item.link,
                 name: item.id,
               }))}
-            maxCount={10}
+            maxCount={20}
             listType="picture-card"
           >
             Загрузить

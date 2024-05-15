@@ -2,10 +2,12 @@ import { create } from "zustand";
 import { IUseBrm, IBrm } from "../model/interface";
 import axios from "axios";
 import { useCredentails } from "@/features/auth";
-import { Roomlock } from "@/entities";
+import { Booking, Roomlock } from "@/entities";
 import { ApiResponse } from "@/app/types";
+import zukeeper from "zukeeper"
 
-const useBrm = create<IUseBrm>((set, get) => ({
+
+const useBrm = create<IUseBrm>(zukeeper((set, get) => ({
   brm: [],
   getAll: async () => {
     const brm = [];
@@ -19,11 +21,11 @@ const useBrm = create<IUseBrm>((set, get) => ({
       .then((res) => {
         res.data.data.forEach((item) => {
           if (item.booking) {
-            brm.push({ type: "booking", item: item.booking, room: item.rooms });
+            brm.push({ type: "booking", item: item.booking, rooms: item.rooms });
           }
 
           if (item.lock) {
-            brm.push({ type: "room_lock", item: item.lock, room: item.rooms });
+            brm.push({ type: "room_lock", item: item.lock, rooms: item.rooms });
           }
         });
 
@@ -44,6 +46,21 @@ const useBrm = create<IUseBrm>((set, get) => ({
       ],
     });
   },
-}));
+
+  addBooking: (booking: Booking) => {
+    set({
+      brm: [
+        ...get().brm,
+        {
+          type: "booking",
+          item: booking
+        }
+      ]
+    })
+  }
+})));
+
+// @ts-ignore
+window.store = useBrm;
 
 export { useBrm };

@@ -7,15 +7,15 @@ import { Room } from "@/entities";
 
 const useRoomSelect = ({
   rooms,
-  isMultiple,
   value: initialValue,
   onChange,
+  ...props
 }: IYurtaRoomSelectProps): IYurtaRoomSelectUI => {
   const [value, setValue] = useState<IYurtaRoomSelectUI["value"]>([]);
 
   useEffect(() => {
     if (initialValue != null)
-      if (isMultiple) {
+      if (props.mode === "multiple") {
         const val = initialValue as Room[];
         setValue(val?.map((room) => room?.id));
       } else {

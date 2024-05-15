@@ -1,9 +1,11 @@
-import { Col, List, Row, Tag } from "antd";
+import { Button, Col, List, Row, Tag } from "antd";
 import { FC } from "react";
 import { IRoomLockListUI } from "../model";
-import { RangePickerUI } from "@/shared/range-picker/ui";
+import { RangePicker } from "@/shared/base/RangePicker";
 import dayjs from "dayjs";
 import { DeleteIcon } from "@/assets/icons/delete";
+import { DeleteFilled } from "@ant-design/icons";
+import { RoomlockReasonDecode } from "@/entities/roomlock/utils";
 
 const RoomlockList: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
   <List
@@ -12,28 +14,32 @@ const RoomlockList: FC<IRoomLockListUI> = ({ roomlocks, onItemClick }) =>
     itemLayout="horizontal"
     dataSource={roomlocks}
     renderItem={(item) => (
-      <List.Item
-        actions={[
-          // <IconButton
-          //   type="text"
-          //   icon={DeleteIcon}
-          //   onClick={() => onItemClick(item.id)}
-          //   key="list-loadmore-edit" />
-        ]} >
-        <Row gutter={[16, 16]}>
+      <List.Item style={{ width: "100%" }}>
+        <Row
+          gutter={[16, 16]}
+          justify={"space-between"}
+          align={"middle"}
+          style={{ width: "100%" }}
+        >
           <Col span={3}>
             <Tag>{item.id}</Tag>
           </Col>
-          <Col span={15}>
-            <RangePickerUI
+          <Col span={12}>
+            <RangePicker
               disabled
-              defaultValue={[dayjs(item.start * 1000), dayjs(item.end * 1000)]}
-
-              value={[dayjs(item.start * 1000), dayjs(item.end * 1000)]}
+              value={[item.start, item.end]}
+              defaultValue={[item.start, item.end]}
               locale={undefined} />
           </Col>
           <Col span={6}>
-            <Tag>{item.status}</Tag>
+            <Tag>{RoomlockReasonDecode(item.status)}</Tag>
+          </Col>
+          <Col span={3}>
+            <Button
+              type="text"
+              icon={<DeleteFilled />}
+              onClick={() => onItemClick(item.id)}
+              key="list-loadmore-edit" />
           </Col>
         </Row>
 

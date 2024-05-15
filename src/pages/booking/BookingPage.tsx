@@ -13,11 +13,12 @@ import {
   TourProps,
 } from "antd";
 import { Calendar } from "@/widget/calendar/ui";
-import { useRoomlockForm } from "@/features/useRoomlockForm";
+import { useRoomlockForm } from "@/features/roomlock/useRoomlockForm";
+import { LoadingPage } from "@/widget/loading_page";
 
 const colors = ["blue"];
 
-enum BookingPageVM {
+enum BookingPageViewMode {
   calendar = "calendar",
   list = "list",
   brick = "brick",
@@ -25,17 +26,17 @@ enum BookingPageVM {
 
 const BookingPageVMDecoder = [
   {
-    type: BookingPageVM.calendar,
+    type: BookingPageViewMode.calendar,
     name: "calendar",
     label_ru: "Календарь",
   },
   {
-    type: BookingPageVM.list,
+    type: BookingPageViewMode.list,
     name: "list",
     label_ru: "Список",
   },
   {
-    type: BookingPageVM.brick,
+    type: BookingPageViewMode.brick,
     name: "brick",
     label_ru: "Плитки",
   },
@@ -97,17 +98,18 @@ const BookingPageHeader: FC = () => {
 };
 
 const BookingPage: FC = () => {
-  const [mode, setMode] = useState<BookingPageVM>(BookingPageVM.calendar);
-  const { setIsRoomlockCreationFormOpen } = useRoomlockForm();
-  const { bookings, getAllBookings } = useBooking();
+  const [mode, setMode] = useState<BookingPageViewMode>(BookingPageViewMode.calendar);
+  const { getAllBookings } = useBooking();
   const { brm, getAll } = useBrm();
-
-
 
   useEffect(() => {
     getAll();
     getAllBookings();
   }, []);
+
+  if (!brm) {
+    return <LoadingPage layout="main" />
+  }
 
   return (
     <MainLayout
@@ -128,7 +130,7 @@ const BookingPage: FC = () => {
 
         </Flex> */}
 
-        {mode === BookingPageVM.calendar && <Calendar brm={brm} />}
+        {mode === BookingPageViewMode.calendar && <Calendar brm={brm} />}
 
         {/* {
         mode === BookingPageVM.list &&

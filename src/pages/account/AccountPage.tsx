@@ -1,17 +1,21 @@
-import { useAccount, useHotel } from "@/entities";
+import { useAccount, useHotel, useUsers } from "@/entities";
 import { YurtaInput } from "@/shared/components/form/ui/input/text";
 import { MainLayout } from "@/shared/layouts/layout";
-import { Avatar, Col, Flex, Form, Row, Typography } from "antd";
+import { Avatar, Button, Col, Flex, Form, Row, Typography } from "antd";
 import { FC, useEffect } from "react";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { useLoading, withLoading } from "@/processes";
 
 const AccountPageHeader: FC = () => {
+  const { deleteAccount } = useUsers()
+
   return (
     <Row justify={"space-between"} align={"middle"}>
       <Typography.Title level={2}>
         Аккаунт
       </Typography.Title>
+
+      <Button onClick={deleteAccount} type="dashed" >Удалить аккаунт</Button>
     </Row>
   )
 }

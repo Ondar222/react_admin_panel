@@ -1,30 +1,57 @@
-import { useHotel, useRoomLock } from "@/entities";
+import { FC, useEffect } from "react";
+import { Roomlock, useRoom, useRoomLock } from "@/entities";
 import { useLoading, withLoading } from "@/processes";
 import { MainLayout } from "@/shared/layouts/layout";
 import { LoadingPage } from "@/widget/loading_page";
-import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
+import { Button, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import { FormProviderProps } from "antd/es/form/context";
 import dayjs from "dayjs";
-import { FC, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { RangePicker } from "@/shared/base/RangePicker";
+
+const RoomlockDetailsPageHeader: FC<{ roomlock: Roomlock }> = ({ roomlock }) => {
+    const { deleteRoomlock } = useRoomLock()
+    const navigate = useNavigate()
+
+    const handleRoomlockDelete = async () => {
+        await deleteRoomlock(roomlock.id)
+        navigate('/booking')
+    }
+
+    return (
+        <Row
+            justify={"space-between"}
+            align={"middle"}
+        >
+            <Col>
+                <Typography.Title level={2}>Блокировка номера №{roomlock.id}</Typography.Title>
+            </Col>
+            <Col>
+                <Button danger onClick={() => handleRoomlockDelete()}>
+                    Удалить
+                </Button>
+            </Col>
+        </Row>
+    )
+}
 
 const RoomlockDetailsPage: FC = () => {
     const { id } = useParams()
-    const { roomlock_details, getRoomLockDetailsByID, deleteRoomlock } = useRoomLock()
-    const { hotel, getHotelDetails } = useHotel()
-    const navigate = useNavigate()
+    const { roomlock_details, getRoomlockDetailsByID } = useRoomLock()
+    const { rooms, getHotelRelatedRooms } = useRoom()
+
     const { setLoading } = useLoading()
 
     const fetchData = async () => {
-        await getHotelDetails()
-        await getRoomLockDetailsByID(Number(id))
+        await getRoomlockDetailsByID(Number(id))
+        await getHotelRelatedRooms()
     }
 
     useEffect(() => {
         withLoading(fetchData, setLoading)
     }, [])
 
-    const selectableRooms = hotel?.rooms.map((room) => ({
+    const selectableRooms = rooms.map((room) => ({
         value: room.id,
         label: room.name
     }))
@@ -36,13 +63,9 @@ const RoomlockDetailsPage: FC = () => {
     const dates = Form.useWatch("dates", form)
     const room = Form.useWatch("room", form)
 
-    const handleRoomlockDelete = async () => {
-        await deleteRoomlock(roomlock_details.id)
-        navigate('/booking')
-    }
-
     const handleSubmit: FormProviderProps["onFormFinish"] = async (name, info) => {
         if (name === "roomlock_update") {
+            // TODO: ...roomlock update implementaion
         }
     }
 
@@ -50,41 +73,54 @@ const RoomlockDetailsPage: FC = () => {
         return <LoadingPage layout="empty" />
 
     return (
-        <MainLayout header={""}>
-            <Form.Provider
-                onFormFinish={handleSubmit}
-            >
-                <Form form={form} layout="vertical" name="roomlock_update">
-                    <Form.Item label="id" name="id" initialValue={roomlock_details.id}>
-                        <Input disabled />
-                    </Form.Item>
+        <MainLayout header={<RoomlockDetailsPageHeader roomlock={roomlock_details} />}>
+            <Col span={12}>
+                <Form.Provider
+                    onFormFinish={handleSubmit}
+                >
+                    <Form form={form} layout="vertical" name="roomlock_update">
+                        <Form.Item
+                            label="Идентификатор блокировки"
+                            name="id"
+                            initialValue={roomlock_details.id}
+                        >
+                            <Input disabled />
+                        </Form.Item>
 
-                    <Form.Item label="status" name="status" initialValue={roomlock_details.status}>
-                        <Input />
-                    </Form.Item>
+                        <Form.Item
+                            label="Статус"
+                            name="status"
+                            initialValue={roomlock_details.status}
+                        >
+                            <Input />
+                        </Form.Item>
 
-                    <Form.Item label="dates" name="dates" initialValue={[dayjs(roomlock_details.start * 1000), dayjs(roomlock_details.end * 1000)]}>
-                        <DatePicker.RangePicker />
-                    </Form.Item>
+                        <Form.Item
+                            label="Даты"
+                            name="dates"
 
-                    <Form.Item label="room" name="room" initialValue={roomlock_details.room.id}>
-                        <Select options={selectableRooms} />
-                    </Form.Item>
+                            initialValue={[
+                                dayjs(roomlock_details.start),
+                                dayjs(roomlock_details.end)
+                            ]}
+                        >
+                            <RangePicker />
+                        </Form.Item>
 
-                    <Row>
-                        <Col>
-                            <Button danger onClick={() => handleRoomlockDelete()}>
-                                Удалить
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button htmlType="submit">
-                                Сохранить
-                            </Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Form.Provider>
+                        <Form.Item
+                            label="Номер"
+                            name="room"
+                            initialValue={roomlock_details.room.id}
+                        >
+                            <Select options={selectableRooms} />
+                        </Form.Item>
+
+                        <Button htmlType="submit">
+                            Сохранить
+                        </Button>
+                    </Form>
+                </Form.Provider>
+            </Col>
         </MainLayout>)
 }
 

@@ -1,5 +1,4 @@
-import { MainLayout } from "@/shared/layouts/layout"
-import { Layout, Spin } from "antd"
+import { Spin } from "antd"
 import { FC } from "react"
 
 type LoadingPageProps = {

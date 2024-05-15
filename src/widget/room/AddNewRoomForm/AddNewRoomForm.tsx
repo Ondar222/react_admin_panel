@@ -259,7 +259,7 @@ const AddNewRoomForm: FC<AddNewRoomFormProps> = ({
                 ]}
               >
                 <Upload
-                  maxCount={10}
+                  maxCount={20}
                   multiple={true}
                   listType="picture-card"
                   beforeUpload={() => false}

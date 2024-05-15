@@ -171,7 +171,7 @@ const UpdateCurrentRoomForm: FC<{ room: RoomUpdateDto }> = (props) => {
             multiple={true}
             listType="picture-card"
             defaultFileList={props.room?.images}
-            maxCount={10}
+            maxCount={20}
             onRemove={(file) => handleImageRemove("images", file.uid)}
           >
             Загрузить

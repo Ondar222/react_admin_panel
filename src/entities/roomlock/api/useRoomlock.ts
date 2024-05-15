@@ -10,10 +10,7 @@ import { RoomlockCreationDto } from "../model/dto/RoomlockCreateDto";
 const useRoomLock = create<UseRoomLock>((set, get) => ({
   roomlocks: undefined,
   roomlock_details: undefined,
-
-  async getRoomLocks() {
-
-  },
+  room_logs: undefined,
 
   async getRoomlocksByRoomID(room_id) {
     const roomlocks = await axios
@@ -27,7 +24,7 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
     set({ roomlocks });
   },
 
-  async getRoomLockDetailsByID(id: number) {
+  async getRoomlockDetailsByID(id: number) {
     const { access_token } = useCredentails.getState();
 
     const roomlock_details = await axios
@@ -91,6 +88,20 @@ const useRoomLock = create<UseRoomLock>((set, get) => ({
       roomlocks: get().roomlocks.filter((item) => item.id != id),
     });
   },
+
+  async getRoomlockLogsByRoomId(room_id: number) {
+    const { access_token } = useCredentails.getState();
+    const logs = await axios.get<ApiResponse<any>>(`${import.meta.env.VITE_API}/roomlock/logs/${room_id}?${room_id}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    })
+      .then((res) => res.data.data)
+
+    set({
+      room_logs: logs
+    })
+  }
 }));
 
 export { useRoomLock };

@@ -1,12 +1,12 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { RoomSelect } from "@/widget/room/RoomSelect";
-import { YurtaDatePicker } from "@/shared/range-picker";
+import { RangePicker } from "@/shared/base/RangePicker";
 import { Form, Button, message, notification } from "antd";
-import { IRangePicker } from "@/shared/range-picker/model";
+import { IRangePicker } from "@/shared/base/RangePicker/model";
 import { Room, useRoom, useHotel, useRoomLock } from "@/entities";
 import { LockReasonSelect } from "../../../shared/reason-select";
 import { AxiosError } from "axios";
-import { useRoomlockForm } from "@/features/useRoomlockForm";
+import { useRoomlockForm } from "@/features";
 import { LoadingPage } from "@/widget/loading_page";
 import { useLoading } from "@/processes";
 import { Tour, Col } from "antd";
@@ -101,12 +101,14 @@ const RoomlockCreationForm: FC = () => {
         </Col>
 
         <Col ref={ref2}>
-          <YurtaDatePicker value={dates} onChange={handleDatePickerChange} />
+          <RangePicker
+            value={dates}
+            onChange={handleDatePickerChange}
+          />
         </Col>
 
         <Col ref={ref3}>
           <RoomSelect
-            isMultiple={false}
             value={{ id: room_id }}
             rooms={rooms}
             onChange={(e) => {
