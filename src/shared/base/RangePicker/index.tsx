@@ -27,8 +27,6 @@ const RangePicker: FC<IRangePicker> = (props) => {
     const start_date = e[0].unix()
     const end_date = e[1].unix()
 
-    console.log(props)
-
     setValue([e[0], e[1]])
     props.onChange([start_date, end_date])
   }

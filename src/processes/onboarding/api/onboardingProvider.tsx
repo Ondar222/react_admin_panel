@@ -57,7 +57,6 @@ const OnboardingProvider: FC<{ children: ReactNode }> = ({ children }) => {
         setCurrentStep(OnboardingSteps.CompleteOnboarding);
         setCurrentStepProgress([3, 3]);
         updateCookie("finish", { expires: 20000000000 })
-        message.success('Онбординг завершен!')
         navigate("/booking")
     }
 

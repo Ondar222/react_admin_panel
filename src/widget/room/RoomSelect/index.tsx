@@ -12,6 +12,11 @@ const RoomSelect: FC<IYurtaRoomSelectProps> = (props) => {
             options={options}
             value={value}
             onChange={(e) => onChange(e)}
+            style={{
+                width: "100%",
+                ...props.style,
+                
+            }}
         />
     )
 }

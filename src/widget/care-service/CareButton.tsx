@@ -1,10 +1,13 @@
+import { withLoading } from "@/processes";
 import { HeartFilled, QuestionCircleFilled } from "@ant-design/icons";
 import { Button, FloatButton, Form, Input, Modal, Select } from "antd";
+import { FormProviderProps } from "antd/es/form/context";
 import axios from "axios";
 import { FC, useState } from "react";
 
 const CareButton: FC = () => {
     const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false)
+    const [form] = Form.useForm()
 
     const handleClick = () => {
         setIsHelpModalOpen(true)
@@ -12,7 +15,7 @@ const CareButton: FC = () => {
 
     const handleSubmit = async () => {
         const data = await axios.post(`${import.meta.env.VITE_API}/care/help`, {
-            
+
         })
 
 
@@ -25,6 +28,15 @@ const CareButton: FC = () => {
 
     const handleOk = () => {
 
+    }
+
+    const handleFormFinish: FormProviderProps["onFormFinish"] = async (name, info): Promise<void> => {
+        console.log(info)
+        if (name == "care_form") {
+            await axios.post(`${import.meta.env.VITE_API}/auth/help`, {
+                ...info.values
+            })
+        }
     }
 
     return (
@@ -44,20 +56,20 @@ const CareButton: FC = () => {
                 onOk={() => { }}
                 footer={null}
             >
-                <Form.Provider onFormFinish={() => {
-
-                }}>
+                <Form.Provider onFormFinish={handleFormFinish}>
                     <Form
-                        method="POST"
-                        layout="vertical">
-                        <Form.Item label="Фамилия Имя Отчество">
+                        form={form}
+                        layout="vertical"
+                        name="care_form"
+                        >
+                        <Form.Item label="Фамилия Имя Отчество" name={"fio"}>
                             <Input placeholder="Фамилия Имя Отчество" />
                         </Form.Item>
 
-                        <Form.Item label="Номер телефона">
+                        <Form.Item label="Номер телефона" name={"phone"}>
                             <Input placeholder="79ХХХХХХХХХ" />
                         </Form.Item>
-                        <Form.Item label="Причина обращения">
+                        <Form.Item label="Причина обращения" name={"reason"}>
                             <Select defaultValue={"sign_up"}>
                                 <Select.Option value={"sign_up"}>
                                     Регистрация

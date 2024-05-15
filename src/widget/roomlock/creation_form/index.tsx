@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { RoomSelect } from "@/widget/room/RoomSelect";
 import { RangePicker } from "@/shared/base/RangePicker";
-import { Form, Button, message, notification } from "antd";
+import { Form, Button, message, notification, Row, Typography } from "antd";
 import { IRangePicker } from "@/shared/base/RangePicker/model";
 import { Room, useRoom, useHotel, useRoomLock } from "@/entities";
 import { LockReasonSelect } from "../../../shared/reason-select";
@@ -94,31 +94,57 @@ const RoomlockCreationForm: FC = () => {
   }
 
   return (
-    <>
-      <Form layout="vertical" size="large">
-        <Col ref={ref1}>
-          <LockReasonSelect onChange={handleLockReason} />
-        </Col>
+    <Form.Provider>
+      <Form
+        layout="vertical"
+        size="large"
+        title="Добавить событие"
+        style={{
+          width: "100%"
+        }}>
 
-        <Col ref={ref2}>
-          <RangePicker
-            value={dates}
-            onChange={handleDatePickerChange}
-          />
-        </Col>
+        <Form.Item >
+          <Typography.Title level={3}>Добавить событие</Typography.Title>
+        </Form.Item>
 
-        <Col ref={ref3}>
-          <RoomSelect
-            value={{ id: room_id }}
-            rooms={rooms}
-            onChange={(e) => {
-              const room: Pick<Room, "id"> = e as Pick<Room, "id">;
-              handleRoomSelectChange(room);
-            }}
-          />
-        </Col>
+        <Form.Item label="Причина блокировки">
+          <LockReasonSelect onChange={handleLockReason} ref={ref1} />
+        </Form.Item>
 
-        <Col
+        <Row justify={"space-between"} ref={ref2} style={{
+          width: "100%"
+        }}>
+          <Form.Item label="Даты" style={{
+            width: "100%"
+          }}>
+            <RangePicker
+              value={dates}
+              onChange={handleDatePickerChange}
+              style={{
+                width: "100%"
+              }}
+            />
+          </Form.Item>
+        </Row>
+        <Row ref={ref3}>
+          <Form.Item label="Номера" style={{
+            width: "100%"
+          }}>
+            <RoomSelect
+              value={{ id: room_id }}
+              rooms={rooms}
+              onChange={(e) => {
+                const room: Pick<Room, "id"> = e as Pick<Room, "id">;
+                handleRoomSelectChange(room);
+              }}
+              style={{
+                width: "100%"
+              }}
+            />
+          </Form.Item>
+        </Row>
+
+        <Row
           style={{
             display: "flex",
             flexDirection: "row",
@@ -139,9 +165,9 @@ const RoomlockCreationForm: FC = () => {
             type="primary"
             steps={steps}
           />
-        </Col>
+        </Row>
       </Form>
-    </>
+    </Form.Provider >
   );
 };
 

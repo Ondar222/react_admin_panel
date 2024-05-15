@@ -125,6 +125,7 @@ const FirstStart: FC = () => {
                                     disabled={!isOnboardingFinishable}
                                     onClick={() => {
                                         checkOnboardingStatus()
+                                        message.success('Онбординг завершен!')
                                     }}
                                 >
                                     Завершить

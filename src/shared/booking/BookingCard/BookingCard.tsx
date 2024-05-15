@@ -6,6 +6,7 @@ import { DeleteIcon } from "@/assets/icons/delete"
 import moment from "moment"
 import { convertToMoneyString } from "@/shared/utils/converters/toMoney"
 import { Link } from "react-router-dom"
+import { BookingStatusDecode } from "@/entities/booking/utils"
 
 const BookingCardUI: FC<Booking> = (booking) => {
   const { Panel } = Collapse
@@ -21,7 +22,7 @@ const BookingCardUI: FC<Booking> = (booking) => {
           Бронь №{booking?.id}
           <Flex justify={"space-between"}>
             <Tag>{moment(booking?.check_in).date()}</Tag>
-            <Tag>{booking?.status}</Tag>
+            <Tag>{BookingStatusDecode(booking?.status)}</Tag>
           </Flex>
         </Flex>
       }
@@ -52,7 +53,7 @@ const BookingCardUI: FC<Booking> = (booking) => {
             label: "Информация об оплате",
             children: (
               <div>
-                <Text>Статус: <Tag>{booking?.status}</Tag></Text>
+                <Text>Статус: <Tag>{BookingStatusDecode(booking?.status)}</Tag></Text>
                 <Text>Сумма: {convertToMoneyString(booking?.amount)}</Text>
               </div>
             )

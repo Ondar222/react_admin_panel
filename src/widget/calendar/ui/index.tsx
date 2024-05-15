@@ -20,6 +20,8 @@ import { Link } from "react-router-dom";
 import { ListViewEvent } from "./ListViewEvent";
 import { DayGridViewEvent } from "./DayGridViewEvent";
 import moment from "moment-timezone";
+import { RoomlockReasonDecode } from "@/entities/roomlock/utils";
+import { BookingStatusDecode } from "@/entities/booking/utils";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -32,7 +34,6 @@ const Calendar: FC<ICalendar> = (props) => {
   const { isRoomlockCreationFormOpen, setIsRoomlockCreationFormOpen, dates, setDates } = useRoomlockForm()
 
   useEffect(() => {
-    console.log(props.brm)
     const calendarApi = calendarRef.current?.getApi();
     if (calendarApi) {
       calendarApi.on('dateClick', handleDateClick);
@@ -126,7 +127,7 @@ const Calendar: FC<ICalendar> = (props) => {
                 title: `Бронь №${booking?.id}`,
                 capacity: booking?.capacity,
                 rooms: rooms,
-                status: booking?.status,
+                status: BookingStatusDecode(booking?.status),
                 start: moment(booking?.check_in * 1000).tz(tz).toISOString(),
                 end: moment(booking?.check_out * 1000).tz(tz).toISOString(),
                 url: `/booking/${booking?.id}`
