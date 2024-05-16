@@ -24,7 +24,9 @@ const PasswordResetLinkPage: FC = () => {
                 notification.success({
                     message: "Пароль был успешно изменен",
                     placement: "topRight",
-                    btn: <Button onClick={() => navigate('auth')}>Перейти на страницу авторизации</Button>
+                    btn: <Button onClick={() => navigate('/auth', {
+                        replace: true
+                    })}>Перейти на страницу авторизации</Button>
                 })
             })
             .catch((e: AxiosError) => {
