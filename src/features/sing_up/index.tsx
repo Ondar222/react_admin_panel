@@ -4,7 +4,7 @@ import { useOtp } from "@/features/otp";
 import { SignUpDto, } from "./model";
 import { FormProviderProps } from "antd/es/form/context";
 import { useSignUp } from "./api/useSignUp";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { Logo } from "../auth/ui/form";
 

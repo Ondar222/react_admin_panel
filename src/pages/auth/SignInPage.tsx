@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Layout as AntLayout, Button, Flex, Space, Typography } from "antd"
+import { Layout as AntLayout, Button, Col, Flex, Row, Space, Typography } from "antd"
 import { AuthForm } from "@/features/auth/ui"
 import styled from "styled-components"
 import { useAuth } from "@/app/providers/auth/authProvider"
@@ -13,6 +13,7 @@ const Layout = styled(AntLayout)`
 `
 
 const AlreadySignedIn: FC = () => {
+  const { logout } = useAuth()
   const navigate = useNavigate()
   return (
     <Flex vertical gap={5} style={{
@@ -21,7 +22,18 @@ const AlreadySignedIn: FC = () => {
       padding: "20px"
     }}>
       <Typography.Title level={2}>Уже выполнен вход</Typography.Title>
-      <Button onClick={() => navigate("/booking")}>Войти</Button>
+
+      <Row justify={"space-between"}>
+        <Col>
+          <Button onClick={() => {
+            logout()
+            navigate('/auth')
+          }}>Войти в другой аккаунт</Button>
+        </Col>
+        <Col>
+          <Button onClick={() => navigate("/booking")}>Войти</Button>
+        </Col>
+      </Row>
     </Flex>
   )
 }

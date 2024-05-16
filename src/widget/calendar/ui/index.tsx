@@ -16,18 +16,20 @@ import momentTimezonePlugin from '@fullcalendar/moment-timezone';
 import { ICalendar } from "../model";
 import { RoomlockCreationForm } from "@/widget/roomlock/creation_form";
 import { useRoomlockForm } from "@/features";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ListViewEvent } from "./ListViewEvent";
 import { DayGridViewEvent } from "./DayGridViewEvent";
 import moment from "moment-timezone";
 import { RoomlockReasonDecode } from "@/entities/roomlock/utils";
 import { BookingStatusDecode } from "@/entities/booking/utils";
+import { preventDefault } from "@fullcalendar/core/internal";
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 const tz = "Asia/Krasnoyarsk"
 
 const Calendar: FC<ICalendar> = (props) => {
+  const navigate = useNavigate()
   const calendarRef: LegacyRef<FullCalendar> = useRef(null)
   const [currentView, setCurrentView] = useState<"dayGridMonth" | "list">("dayGridMonth")
   const [isDayContextMenuOpen, setIsDayContextMenuOpen] = useState<boolean>(false)
@@ -80,10 +82,6 @@ const Calendar: FC<ICalendar> = (props) => {
   }
 
   const handleEventClick = (arg) => {
-    console.group('args')
-    console.log(arg)
-    console.groupEnd()
-
     setCurrentView('list')
   }
 
@@ -150,6 +148,10 @@ const Calendar: FC<ICalendar> = (props) => {
               }
             }
           })}
+          eventClick={(clickInfo) => {
+            clickInfo.jsEvent.preventDefault()
+            navigate(clickInfo.event.url)
+          } }
           eventContent={(e) => renderEventContent(e, currentView)}
         />
       }

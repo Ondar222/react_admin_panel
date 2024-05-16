@@ -77,11 +77,9 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         } else if (refreshTokenRecord && !isAuthRecord) {
             refreshTokens(refreshTokenRecord)
             navigate('/auth')
-            console.log('refreshToken is here')
         }
         else {
             setIsAuth(false)
-            navigate('/auth')
         }
     }
 

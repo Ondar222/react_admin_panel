@@ -127,7 +127,7 @@ const AuthForm: FC = memo(() => {
                             </Col>
                             <Col>
                                 <Button disabled={loading}>
-                                    <NavLink to="/sign_up">Зарегистрироваться</NavLink>
+                                    <NavLink to="/">Зарегистрироваться</NavLink>
                                 </Button>
                             </Col>
                         </Row>

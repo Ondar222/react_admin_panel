@@ -39,11 +39,11 @@ const WSSProvider: FC<WithChildren> = ({ children }) => {
         });
 
         socket.on('booking/create', (data) => {
-            addBooking(data.success)
+            addBooking(data?.success)
             notification.success({
                 placement: "topRight",
-                message: data.message,
-                btn: <Button onClick={() => navigate(`/booking/${data.booking.id}`)}>Посмотреть</Button>
+                message: data?.message,
+                btn: <Button onClick={() => navigate(`/booking/${data?.success?.id}`)}>Посмотреть</Button>
             })
         })
     }, [access_token])
@@ -55,7 +55,7 @@ const WSSProvider: FC<WithChildren> = ({ children }) => {
             console.log('disconnected from ws server')
         }
         
-        if (isAuth === true) {
+        if (isAuth === true && !isWssConnected) {
             connectToWsServer()
         }
 
