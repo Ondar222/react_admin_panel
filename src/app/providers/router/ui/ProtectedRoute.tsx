@@ -1,9 +1,9 @@
-import { useAuth } from "@/features/auth";
 import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider";
 import { OnboardingStatus } from "@/processes/onboarding/model";
 import { WithChildren } from "@/types/WithChildren";
 import { FC } from "react";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../../auth/authProvider";
 
 interface ProtectedRouteProps extends WithChildren {
     authCheck?: boolean

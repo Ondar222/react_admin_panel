@@ -45,22 +45,24 @@ const SignUpForm: FC = () => {
                     navigate("/auth")
                 })
                 .catch((e: AxiosError) => {
-
                     if (e.response.status === 401) {
                         notification.error({
                             message: "Одноразовый пароль был использован или просрочен",
                             placement: "topRight",
                         })
                     }
-
                     if (e.response.status === 409) {
                         notification.error({
                             message: "Пользователь с такими данными уже существует",
                             placement: "topRight"
                         })
+                    } else {
+                        notification.error({
+                            message: "Не удалось зарегистрироваться",
+                            placement: "topRight"
+                        })
                     }
                 })
-
         }
     }
 

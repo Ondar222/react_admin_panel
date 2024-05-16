@@ -1,38 +1,42 @@
-import { useBooking, useBrm } from "@/entities";
-import { useAuth, useCredentails } from "@/features/auth";
+import { useBrm } from "@/entities";
+import { useCredentails } from "@/features/auth";
 import { WithChildren } from "@/types/WithChildren";
-import { Button, message, notification } from "antd";
-import { FC, useEffect } from "react"
+import { Button, Typography, message, notification } from "antd";
+import { FC, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { io } from 'socket.io-client'
+import { useAuth } from "../auth/authProvider";
 
 const socket = io(`${import.meta.env.VITE_WSS}/booking`);
 
 const WSSProvider: FC<WithChildren> = ({ children }) => {
     const { isAuth } = useAuth()
-    const navigate = useNavigate()
+    const [isWssConnected, setIsWssConntected] = useState<boolean>(false)
     const { access_token } = useCredentails()
-    const { addNewBooking } = useBooking()
+    const navigate = useNavigate()
     const { addBooking } = useBrm()
 
-    useEffect(() => {
-        if (isAuth === true) {
-            socket.connect()
-        }
-
+    const connectToWsServer = useCallback(() => {
+        socket.connect()
         socket.emit("auth", { access_token })
 
         socket.on('connect', () => {
-            message.info('Создано соединение с сервером по WSS')
+            setIsWssConntected(true)
+        })
+
+        socket.on('message', (data) => {
+            console.log(data)
+            notification.success({
+                message: data.content.message,
+                placement: "topRight"
+            })
         })
 
         socket.on('disconnect', () => {
-            console.log('Disconnected from server');
+            setIsWssConntected(false)
         });
 
         socket.on('booking/create', (data) => {
-            console.log(data)
-            // addNewBooking(data)
             addBooking(data.success)
             notification.success({
                 placement: "topRight",
@@ -40,13 +44,28 @@ const WSSProvider: FC<WithChildren> = ({ children }) => {
                 btn: <Button onClick={() => navigate(`/booking/${data.booking.id}`)}>Посмотреть</Button>
             })
         })
+    }, [access_token])
+
+    useEffect(() => {
+        console.log(isAuth)
+        if (isAuth === false) {
+            socket.disconnect();
+            console.log('disconnected from ws server')
+        }
+        
+        if (isAuth === true) {
+            connectToWsServer()
+        }
 
         return () => {
             socket.disconnect();
         };
     }, [isAuth])
 
-    return children
+    return <>
+        <Typography>{isAuth}</Typography>
+        {children}
+    </>
 }
 
 export { WSSProvider }

@@ -23,8 +23,6 @@ const useAccount = create<UseAccount>((set) => ({
       account: account.data.data,
     });
   },
-
-  logout: () => { },
 }));
 
 export { useAccount };

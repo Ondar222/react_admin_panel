@@ -1,14 +1,19 @@
 import { create } from "zustand";
-import { IAuthResponse, IUseCredentails } from "../model/interface";
-import axios from "axios";
-import { ApiResponse } from "@/app/types";
+import { IUseCredentials } from "../model/interface";
 
-const useCredentails = create<IUseCredentails>((set, get) => ({
+const useCredentails = create<IUseCredentials>((set, get) => ({
   access_token: localStorage.getItem("access_token") || undefined,
   expires: undefined,
   refresh_token: localStorage.getItem("refresh_token") || undefined,
 
-  setCredentails: (credentails) => {
+  setCredentials: (credentails) => {
+    const { access_token, refresh_token, expires } = credentails
+
+    localStorage.setItem("refresh_token", refresh_token)
+    localStorage.setItem("access_token", access_token)
+    localStorage.setItem("expires", String(expires))
+    localStorage.setItem("isAuth", "true")
+
     set({
       access_token: credentails.access_token,
       expires: credentails.expires,
@@ -16,18 +21,11 @@ const useCredentails = create<IUseCredentails>((set, get) => ({
     });
   },
 
-  refresh: async () => {
-    await axios
-      .post<ApiResponse<IAuthResponse>>(
-        `${import.meta.env.VITE_API}/refresh`,
-        null,
-        {
-          headers: {
-            Authorization: `Bearer ${get().getRefreshToken()}`,
-          },
-        }
-      )
-      .then((res) => res.data.data);
+  removeCredentials: () => {
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    localStorage.removeItem('expires')
+    localStorage.removeItem('isAuth')
   },
 
   getAccessToken: () => get().access_token,

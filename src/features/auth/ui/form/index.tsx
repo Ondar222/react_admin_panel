@@ -1,5 +1,4 @@
 import { FC, memo } from "react"
-import { useAuth } from "../.."
 import { NavLink } from "react-router-dom"
 import { Button, Col, Flex, Input, Row, Typography, Form as AntForm, notification, Image } from "antd"
 import { useAccount, useHotel, useRoom } from "@/entities"
@@ -9,6 +8,7 @@ import { useOnboarding } from "@/processes/onboarding/api/onboardingProvider"
 import { useLoading, withLoading } from "@/processes"
 import { AxiosError } from "axios"
 import styled from "styled-components"
+import { useAuth } from "@/app/providers/auth/authProvider"
 
 const Form = styled(AntForm)`
     @media(max-width: 800px) {
@@ -75,7 +75,6 @@ const AuthForm: FC = memo(() => {
 
     return (
         <Form.Provider onFormFinish={handleFormFinish}>
-            {error}
             <Form
                 form={form}
                 layout="vertical"
@@ -137,7 +136,6 @@ const AuthForm: FC = memo(() => {
             </Form>
         </Form.Provider>
     )
-
 })
 
 export default AuthForm

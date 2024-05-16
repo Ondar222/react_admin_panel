@@ -1,22 +1,12 @@
-interface IUseAuth {
-  isAuth: boolean;
-  error: undefined,
-  isLoading: boolean,
-
-  checkAuth: () => void;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
-}
-
 interface IAuthResponse {
   access_token: string | undefined;
   expires: number | undefined;
   refresh_token: string | undefined;
 }
 
-interface IUseCredentails extends IAuthResponse {
-  setCredentails: (credentails: IAuthResponse) => void;
-  refresh: () => void;
+interface IUseCredentials extends IAuthResponse {
+  setCredentials: (credentails: IAuthResponse) => void;
+  removeCredentials: () => void
   getAccessToken: () => string | undefined;
   getRefreshToken: () => string | undefined;
 }
@@ -26,4 +16,4 @@ type AuthFormDto = {
   password: string
 }
 
-export type { IUseAuth, IAuthResponse, IUseCredentails, AuthFormDto };
+export type { IAuthResponse, IUseCredentials, AuthFormDto };

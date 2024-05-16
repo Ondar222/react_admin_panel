@@ -1,9 +1,9 @@
-import { withLoading } from "@/processes";
-import { HeartFilled, QuestionCircleFilled } from "@ant-design/icons";
+import { FC, useState } from "react";
+import { QuestionCircleFilled } from "@ant-design/icons";
 import { Button, FloatButton, Form, Input, Modal, Select } from "antd";
 import { FormProviderProps } from "antd/es/form/context";
 import axios from "axios";
-import { FC, useState } from "react";
+
 
 const CareButton: FC = () => {
     const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false)
@@ -11,15 +11,6 @@ const CareButton: FC = () => {
 
     const handleClick = () => {
         setIsHelpModalOpen(true)
-    }
-
-    const handleSubmit = async () => {
-        const data = await axios.post(`${import.meta.env.VITE_API}/care/help`, {
-
-        })
-
-
-        setIsHelpModalOpen(false)
     }
 
     const handleCancel = () => {
@@ -61,7 +52,7 @@ const CareButton: FC = () => {
                         form={form}
                         layout="vertical"
                         name="care_form"
-                        >
+                    >
                         <Form.Item label="Фамилия Имя Отчество" name={"fio"}>
                             <Input placeholder="Фамилия Имя Отчество" />
                         </Form.Item>
@@ -90,11 +81,8 @@ const CareButton: FC = () => {
                         </Form.Item>
                     </Form>
                 </Form.Provider>
-
             </Modal>
         </>
-
-
     )
 }
 

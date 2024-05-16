@@ -9,7 +9,7 @@ import { OnboardingProvider } from './processes/onboarding/api/onboardingProvide
 import { GlobalStyles } from './app/styles/global'
 import { CareButton } from './widget/care-service/CareButton';
 import { WSSProvider } from './app/providers/wss';
-import { AuthProvider } from './features/auth/api/authProvider';
+import { AuthProvider } from './app/providers/auth/authProvider';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 

@@ -47,7 +47,6 @@ const useUsers = create<IUseUsers>((set) => ({
 
   deleteAccount: async () => {
     const { access_token } = useCredentails.getState();
-    const { logout } = useAccount.getState()
     const user = await axios.delete(`${import.meta.env.VITE_API}/user/me`,
       {
         headers: {
@@ -56,7 +55,6 @@ const useUsers = create<IUseUsers>((set) => ({
       }
     )
       .then((res) => {
-        logout()
         localStorage.clear()
         return res.data.data
       });

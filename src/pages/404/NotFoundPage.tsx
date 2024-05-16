@@ -1,4 +1,4 @@
-import { useAuth } from "@/features/auth";
+import { useAuth } from "@/app/providers/auth/authProvider";
 import { MainLayout } from "@/shared/layouts/layout";
 import { Col, Divider, Layout, Row, Space, Typography } from "antd";
 import { FC, useEffect, useState } from "react";

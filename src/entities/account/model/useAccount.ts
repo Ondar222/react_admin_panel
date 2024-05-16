@@ -6,7 +6,6 @@ interface UseAccount {
   account: Account | undefined;
 
   me: () => Promise<void>;
-  logout: () => void;
 }
 
 export type { Account, UseAccount };
