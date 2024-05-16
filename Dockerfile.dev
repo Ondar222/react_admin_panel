@@ -14,6 +14,7 @@ RUN npm install
 COPY . .
 
 ENV VITE_API="https://test.api.yurta.site"
+ENV VITE_WSS="wss://test.wss.yurta.site"
 ENV VITE_PORT=4000
 
 # Собираем приложение
