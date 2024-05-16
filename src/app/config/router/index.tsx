@@ -15,6 +15,8 @@ import {
     TermsPage
 } from "@/pages";
 import { ProtectedRoute } from "@/app/providers/router/ui/ProtectedRoute";
+import { PasswordResetLinkPage } from "@/pages/password_reset";
+import { PasswordResetRequestPage } from "@/pages/password_reset/PasswordResetRequest";
 
 enum AppRoutes {
     MAIN = "main",
@@ -35,6 +37,8 @@ enum AppRoutes {
 
     ROOMLOCK_DETAILS = "roomlock_details",
     ONBOARDING = "onboarding",
+    PASSWORD_RESET = "password_reset",
+    PASSWORD_RESET_LINK = "password_reset_link",
     NOT_FOUND = "not_found",
 
     TERMS = "terms"
@@ -54,6 +58,8 @@ const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.ROOMLOCK_DETAILS]: "/roomlock/:id",
     [AppRoutes.ONBOARDING]: "/onboarding",
     [AppRoutes.TERMS]: "/terms",
+    [AppRoutes.PASSWORD_RESET]: "/password/reset",
+    [AppRoutes.PASSWORD_RESET_LINK]: '/password/reset/:id',
     [AppRoutes.NOT_FOUND]: "*"
 }
 
@@ -146,6 +152,18 @@ const RouterConfig: Record<AppRoutes, RouteProps> = {
         path: RoutePath.terms,
         element: (
             <TermsPage />
+        )
+    },
+    [AppRoutes.PASSWORD_RESET]: {
+        path: RoutePath.password_reset,
+        element: (
+            <PasswordResetRequestPage />
+        )
+    },
+    [AppRoutes.PASSWORD_RESET_LINK]: {
+        path: RoutePath.password_reset_link,
+        element: (
+            <PasswordResetLinkPage />
         )
     },
     [AppRoutes.NOT_FOUND]: {

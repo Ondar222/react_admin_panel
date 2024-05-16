@@ -5,7 +5,8 @@ import styled from "styled-components"
 import { useAuth } from "@/app/providers/auth/authProvider"
 import { useNavigate } from "react-router-dom"
 
-const Layout = styled(AntLayout)`
+// TODO: перенести куда-нибудь в shared
+export const Layout = styled(AntLayout)`
   background: #001529;
   display: flex;
   justify-content: center;

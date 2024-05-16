@@ -24,7 +24,7 @@ const CareButton: FC = () => {
     const handleFormFinish: FormProviderProps["onFormFinish"] = async (name, info): Promise<void> => {
         console.log(info)
         if (name == "care_form") {
-            await axios.post(`${import.meta.env.VITE_API}/auth/help`, {
+            await axios.post(`${import.meta.env.VITE_API}/care/help`, {
                 ...info.values
             })
         }

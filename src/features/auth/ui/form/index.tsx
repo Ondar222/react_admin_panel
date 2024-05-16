@@ -116,22 +116,30 @@ const AuthForm: FC = memo(() => {
                             placeholder="пароль"
                         />
                     </Form.Item>
-                    <Form.Item>
-                        <Row
-                            gutter={[16, 16]}
-                            justify={"space-between"}>
-                            <Col>
-                                <Button disabled={loading} htmlType="submit" >
-                                    Войти
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button disabled={loading}>
-                                    <NavLink to="/">Зарегистрироваться</NavLink>
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Form.Item>
+
+                    <Row
+                        gutter={[16, 16]}
+                        justify={"space-between"}>
+                        <Col>
+                            <Button disabled={loading} htmlType="submit" >
+                                Войти
+                            </Button>
+                        </Col>
+
+                        <Col>
+                            <Button disabled={loading}>
+                                <NavLink to="/">Зарегистрироваться</NavLink>
+                            </Button>
+                        </Col>
+                    </Row>
+                    <Row justify={"space-between"}>
+                        <Col></Col>
+                        <Col>
+                            <NavLink to={"/password/reset"}>
+                                Забыли пароль?
+                            </NavLink>
+                        </Col>
+                    </Row>
                 </Flex>
             </Form>
         </Form.Provider>
