@@ -1,15 +1,13 @@
 import { FC, useEffect } from "react"
 import { useRoom, useRoomLock } from "@/entities"
 import { MainLayout } from "@/shared/layouts/layout"
-import { Button, Card, Col, Collapse, DatePicker, Flex, Form, Input, Row, Tag, Typography } from "antd"
+import {Card, Col, Flex, Row, Tag, Typography } from "antd"
 import { useParams } from "react-router-dom"
 import { RoomlockList } from "@/widget/roomlock/list"
 import { RoomDtlsPgHdr } from "@/widget/room/RoomDetailsPageHeader/ui"
-import { RoomSelect, UpdateCurrentRoomForm } from "@/widget"
 import { useLoading, withLoading } from "@/processes"
-import { RangePicker } from "@/shared/base/RangePicker"
-import { RoomlockReasonDecode } from "@/entities/roomlock/utils"
 import { RoomUpdateForm } from "./RoomUpdateForm"
+import { LogDetails } from "./LogDetails"
 
 const RoomDetailsPage: FC = () => {
   const { id } = useParams()
@@ -18,6 +16,7 @@ const RoomDetailsPage: FC = () => {
   const { roomlocks, room_logs, getRoomlocksByRoomID, deleteRoomlock, getRoomlockLogsByRoomId } = useRoomLock()
 
   const { setLoading } = useLoading()
+  
 
   const fetchData = async () => {
     await getRoomDetailsByID(Number(id))
@@ -33,11 +32,8 @@ const RoomDetailsPage: FC = () => {
     <MainLayout
       header={<RoomDtlsPgHdr room={room_details} />}
     >
-
-
-
       <Row justify={"space-between"} gutter={[16, 16]}>
-      <RoomUpdateForm roomDetails={room_details}/>
+        <RoomUpdateForm roomDetails={room_details} />
         <Col span={12} >
           <Flex vertical gap={30}>
             <RoomlockList roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
@@ -68,46 +64,10 @@ const RoomDetailsPage: FC = () => {
                             </Row>}
                           style={{ width: "100%" }}
                         >
-
                           <Col>
-                            <Flex vertical gap={10}>
-                              <Typography>
-                                Сообщение: Администратор {log.message}
-                              </Typography>
-
-                              <Collapse
-                                size="small"
-                                bordered={false}
-                                items={
-                                  [{
-                                    key: '1',
-                                    label: "Тело запроса",
-                                    children: <pre>{JSON.stringify(log?.meta?.body, null, 2)}</pre>
-                                  },
-                                  {
-                                    key: '2',
-                                    label: "Информация о запросе",
-                                    children:
-                                      <Form layout="vertical" disabled>
-                                        <Form.Item>
-                                          <Input value={log.meta.success ? log.meta.success.id : "Не присвоен"} />
-                                        </Form.Item>
-                                        <Form.Item label="Даты">
-                                          <RangePicker value={[log.meta.body.start, log.meta.body.end]} />
-                                        </Form.Item>
-
-                                        <Form.Item label="Номера">
-                                          <RoomSelect rooms={rooms} value={{ id: log.meta.body.id }} />
-                                        </Form.Item>
-
-                                        <Form.Item label="Причина">
-                                          <Input value={RoomlockReasonDecode(log.meta.body.reason)} />
-                                        </Form.Item>
-                                      </Form>
-                                  }
-                                  ]} />
-                            </Flex>
+                            <LogDetails log={log} rooms={rooms} />
                           </Col>
+
                         </Card>
                       )
                     })
