@@ -9,7 +9,7 @@ import { RoomSelect, UpdateCurrentRoomForm } from "@/widget"
 import { useLoading, withLoading } from "@/processes"
 import { RangePicker } from "@/shared/base/RangePicker"
 import { RoomlockReasonDecode } from "@/entities/roomlock/utils"
-import {UpdateRoomDetails} from "./UpdateRoomDetails"
+import { RoomUpdateForm } from "./RoomUpdateForm"
 
 const RoomDetailsPage: FC = () => {
   const { id } = useParams()
@@ -34,11 +34,10 @@ const RoomDetailsPage: FC = () => {
       header={<RoomDtlsPgHdr room={room_details} />}
     >
 
-      <Row justify={"space-between"} gutter={[16, 16]}>
-        <Col span={10}>
-        <UpdateRoomDetails room_details={room_details} />
 
-        </Col>
+
+      <Row justify={"space-between"} gutter={[16, 16]}>
+      <RoomUpdateForm roomDetails={room_details}/>
         <Col span={12} >
           <Flex vertical gap={30}>
             <RoomlockList roomlocks={roomlocks} onItemClick={(id) => deleteRoomlock(id)} />
