@@ -9,6 +9,7 @@ import { RoomSelect, UpdateCurrentRoomForm } from "@/widget"
 import { useLoading, withLoading } from "@/processes"
 import { RangePicker } from "@/shared/base/RangePicker"
 import { RoomlockReasonDecode } from "@/entities/roomlock/utils"
+import UpdateRoomDetails from "./UpdateRoomDetails"
 
 const RoomDetailsPage: FC = () => {
   const { id } = useParams()
@@ -33,28 +34,9 @@ const RoomDetailsPage: FC = () => {
       header={<RoomDtlsPgHdr room={room_details} />}
     >
 
-
-
       <Row justify={"space-between"} gutter={[16, 16]}>
         <Col span={10}>
-          <UpdateCurrentRoomForm room={{
-            ...room_details,
-
-            hotel_id: room_details?.hotel?.id,
-
-            cover: room_details?.cover != null ? [{
-              uid: room_details.cover.id,
-              name: room_details.cover.id,
-              thumbUrl: room_details.cover.link,
-              url: room_details.cover.link
-            }] : undefined,
-            images: room_details?.images?.map((image) => ({
-              uid: image.id,
-              name: image.id,
-              thumbUrl: image.link,
-              url: image.link
-            })),
-          }} />
+        <UpdateRoomDetails room_details={room_details} />
 
         </Col>
         <Col span={12} >
