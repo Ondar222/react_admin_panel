@@ -32,4 +32,4 @@ const UpdateRoomDetails: FC<RoomDetailsProps> = ({ room_details }) => {
   return <UpdateCurrentRoomForm room={room} />;
 };
 
-export default UpdateRoomDetails;
+export {UpdateRoomDetails};

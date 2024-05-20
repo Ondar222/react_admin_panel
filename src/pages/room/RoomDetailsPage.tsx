@@ -9,7 +9,7 @@ import { RoomSelect, UpdateCurrentRoomForm } from "@/widget"
 import { useLoading, withLoading } from "@/processes"
 import { RangePicker } from "@/shared/base/RangePicker"
 import { RoomlockReasonDecode } from "@/entities/roomlock/utils"
-import UpdateRoomDetails from "./UpdateRoomDetails"
+import {UpdateRoomDetails} from "./UpdateRoomDetails"
 
 const RoomDetailsPage: FC = () => {
   const { id } = useParams()
