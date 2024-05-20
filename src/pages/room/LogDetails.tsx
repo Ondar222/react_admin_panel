@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Col, Typography, Collapse, Form, Input, DatePicker,Flex } from "antd";
 import { RoomlockReasonDecode } from "@/entities/roomlock/utils"
 import { RoomSelect } from "@/widget";
+import { RangePicker } from "@/shared/base/RangePicker";
 
 interface LogDetailsProps {
   log: any; // тип данных лога
@@ -34,7 +35,7 @@ const LogDetails: FC<LogDetailsProps> = ({ log, rooms }) => {
                     <Input value={log.meta.success ? log.meta.success.id : "Не присвоен"} />
                   </Form.Item>
                   <Form.Item label="Даты">
-                    <DatePicker.RangePicker value={[log.meta.body.start, log.meta.body.end]} />
+                    <RangePicker value={[log.meta.body.start, log.meta.body.end]} />
                   </Form.Item>
                   <Form.Item label="Номера">
                     <RoomSelect rooms={rooms} value={{ id: log.meta.body.id }} />

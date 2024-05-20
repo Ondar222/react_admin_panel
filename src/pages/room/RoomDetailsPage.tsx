@@ -16,7 +16,6 @@ const RoomDetailsPage: FC = () => {
   const { roomlocks, room_logs, getRoomlocksByRoomID, deleteRoomlock, getRoomlockLogsByRoomId } = useRoomLock()
 
   const { setLoading } = useLoading()
-  
 
   const fetchData = async () => {
     await getRoomDetailsByID(Number(id))
@@ -65,9 +64,8 @@ const RoomDetailsPage: FC = () => {
                           style={{ width: "100%" }}
                         >
                           <Col>
-                            <LogDetails log={log} rooms={rooms} />
+                           <LogDetails log={log} rooms={rooms}/>
                           </Col>
-
                         </Card>
                       )
                     })
