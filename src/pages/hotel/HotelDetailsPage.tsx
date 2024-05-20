@@ -10,8 +10,8 @@ import { FC, useEffect } from "react";
 import { HotelUpdateForm } from "@/widget/hotel/form/UpdateHotelForm";
 import { useLoading, withLoading } from "@/processes";
 import { useLogs } from "@/entities/logger/api/useLogs";
-import { HotelPageHeader } from "./HotelPageHeader";
-import { HeaderPageFooter } from "./HotelPageFooter";
+import { HotelPageHeader } from "@/shared/hotel/HotelPageHeader";
+import { HotelPageFooter } from "@/shared/hotel/HotelPageFooter";
 import { HotelJournal } from "@/widget/hotelJournal/HotelJournal";
 
 const HotelPage: FC = () => {
@@ -31,7 +31,7 @@ const HotelPage: FC = () => {
   }, []);
 
   return (
-    <MainLayout header={<HotelPageHeader />} footer={<HeaderPageFooter />}>
+    <MainLayout header={<HotelPageHeader />} footer={<HotelPageFooter />}>
       <Row gutter={[32, 32]}>
         <Col span={12}>
           <Typography.Title level={3}>
@@ -63,4 +63,6 @@ export { HotelPage };
 
 <HotelPageHeader />;
 
-<HeaderPageFooter />;
+<HotelPageFooter/>
+
+
