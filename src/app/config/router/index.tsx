@@ -13,11 +13,12 @@ import {
   FirstStart,
   NotFoundPage,
   TermsPage,
+  
 } from "@/pages";
 import { ProtectedRoute } from "@/app/providers/router/ui/ProtectedRoute";
 import { PasswordResetLinkPage } from "@/pages/password_reset";
 import { PasswordResetRequestPage } from "@/pages/password_reset/PasswordResetRequest";
-import { MarketplaceRegistrationPage } from "@/pages/marketplace";
+import {MarketplaceRegistrationPage} from "@/pages/marketplace/MarketplaceRegistrationPage";
 
 enum AppRoutes {
   MAIN = "main",

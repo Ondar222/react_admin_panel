@@ -14,6 +14,7 @@ import {
 } from './index'; // Импорт типов из вашего TS файла
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import {
+  Layout as AntLayout,
   Form,
   Input,
   Select,
@@ -26,6 +27,17 @@ import {
   Steps,
   // Step,
 } from 'antd';
+import styled from "styled-components"
+
+
+export const Layout = styled(AntLayout)`
+  background: #001529;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+
 
 const { Title } = Typography;
 
@@ -78,11 +90,21 @@ const MarketplaceRegistrationPage: React.FC = () => {
     });
   };
 
+  const removeFounder = (index: number) => {
+    setFounders({
+      individuals: founders.individuals.filter((_, i) => i !== index),
+    });
+  };
+
   const steps = [
     {
       title: 'Адрес',
       content: (
-        <Form.Item label="Адрес" name="address">
+        <Form.Item style={{
+          background: "white",
+          borderRadius: "0px 0px 5px 5px",
+          padding: "20px"
+        }}>
           <Row gutter={[16, 16]}>
             <Col span={6}>
               <Form.Item
@@ -122,26 +144,26 @@ const MarketplaceRegistrationPage: React.FC = () => {
             </Col>
           </Row>
           <Row gutter={[16, 16]}>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Улица" name={['address', 'street']}>
                 <Input id="street" />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Дом" name={['address', 'house']}>
                 <Input id="house" />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={[16, 16]}>
-            <Col span={12}>
-              <Form.Item label="Корпус" name={['address', 'building']}>
-                <Input id="building" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Квартира" name={['address', 'apartment']}>
                 <Input id="apartment" />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item label="Корпус" name={['address', 'building']}>
+                <Input id="building" />
               </Form.Item>
             </Col>
           </Row>
@@ -151,9 +173,13 @@ const MarketplaceRegistrationPage: React.FC = () => {
     {
       title: 'Телефон',
       content: (
-        <Form.Item label="Телефон" name="phone">
+        <Form.Item style={{
+          background: "white",
+          borderRadius: "0px 0px 5px 5px",
+          padding: "20px"
+        }} >
           <Row gutter={[16, 16]}>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item
                 label="Тип телефона"
                 name={['phone', 'type']}
@@ -166,13 +192,13 @@ const MarketplaceRegistrationPage: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={10}>
               <Form.Item
                 label="Номер телефона"
-                name={['phone', 'phone']}
+                name={['phone', 'number']}
                 rules={[{ required: true, message: 'Пожалуйста, введите номер телефона' }]}
               >
-                <Input id="phone" />
+                <Input id="phoneNumber" />
               </Form.Item>
             </Col>
           </Row>
@@ -182,7 +208,11 @@ const MarketplaceRegistrationPage: React.FC = () => {
     {
       title: 'Генеральный директор',
       content: (
-        <Form.Item label="Генеральный директор" name="ceo">
+        <Form.Item  style={{
+          background: "white",
+          borderRadius: "0px 0px 5px 5px",
+          padding: "20px"
+        }} name="ceo">
           <Row gutter={[16, 16]}>
             <Col span={6}>
               <Form.Item
@@ -194,7 +224,7 @@ const MarketplaceRegistrationPage: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item
+              <Form.Item 
                 label="Фамилия"
                 name={['ceo', 'lastName']}
                 rules={[{ required: true, message: 'Пожалуйста, введите фамилию' }]}
@@ -208,52 +238,8 @@ const MarketplaceRegistrationPage: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="Дата рождения" name={['ceo', 'birthDate']}>
-                <DatePicker id="ceoBirthDate" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={[16, 16]}>
-            <Col span={6}>
-              <Form.Item label="Место рождения" name={['ceo', 'birthPlace']}>
-                <Input id="ceoBirthPlace" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Гражданство" name={['ceo', 'citizenship']}>
-                <Input id="ceoCitizenship" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Тип документа" name={['ceo', 'docType']}>
-                <Input id="ceoDocType" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Номер документа" name={['ceo', 'docNumber']}>
-                <Input id="ceoDocNumber" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={[16, 16]}>
-            <Col span={6}>
-              <Form.Item label="Дата выдачи" name={['ceo', 'issueDate']}>
-                <DatePicker id="ceoIssueDate" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Кем выдан" name={['ceo', 'issuedBy']}>
-                <Input id="ceoIssuedBy" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Адрес" name={['ceo', 'address']}>
-                <Input id="ceoAddress" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Телефон" name={['ceo', 'phone']}>
-                <Input id="ceoPhone" />
+              <Form.Item label="Должность" name={['ceo', 'position']}>
+                <Input id="ceoPosition" />
               </Form.Item>
             </Col>
           </Row>
@@ -263,18 +249,13 @@ const MarketplaceRegistrationPage: React.FC = () => {
     {
       title: 'Лицензия',
       content: (
-        <Form.Item label="Лицензия" name="license">
+        <Form.Item  style={{
+          background: "white",
+          borderRadius: "0px 0px 5px 5px",
+          padding: "20px"
+        }} name="license">
           <Row gutter={[16, 16]}>
-            <Col span={6}>
-              <Form.Item
-                label="Тип лицензии"
-                name={['license', 'type']}
-                rules={[{ required: true, message: 'Пожалуйста, введите тип лицензии' }]}
-              >
-                <Input id="licenseType" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
+            <Col span={8}>
               <Form.Item
                 label="Номер лицензии"
                 name={['license', 'number']}
@@ -283,26 +264,19 @@ const MarketplaceRegistrationPage: React.FC = () => {
                 <Input id="licenseNumber" />
               </Form.Item>
             </Col>
-            <Col span={6}>
+            <Col span={8}>
               <Form.Item label="Дата выдачи" name={['license', 'issueDate']}>
                 <DatePicker id="licenseIssueDate" />
               </Form.Item>
             </Col>
-            <Col span={6}>
-              <Form.Item label="Кем выдан" name={['license', 'issuedBy']}>
+            <Col span={8}>
+              <Form.Item label="Выдан" name={['license', 'issuedBy']}>
                 <Input id="licenseIssuedBy" />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[16, 16]}>
-            <Col span={6}>
-              <Form.Item label="Дата окончания" name={['license', 'expiryDate']}>
-                <DatePicker id="licenseExpiryDate" />
-              </Form.Item>
-            </Col>
-            <Col span={18}>
-              <Form.Item label="Описание" name={['license', 'description']}>
-                <Input.TextArea id="licenseDescription" />
+            <Col span={8}>
+              <Form.Item label="Срок действия" name={['license', 'expirationDate']}>
+                <DatePicker id="licenseExpirationDate" />
               </Form.Item>
             </Col>
           </Row>
@@ -312,52 +286,34 @@ const MarketplaceRegistrationPage: React.FC = () => {
     {
       title: 'Банковский счет',
       content: (
-        <Form.Item label="Банковский счет" name="bankAccount">
+        <Form.Item style={{
+          background: "white",
+          borderRadius: "0px 0px 5px 5px",
+          padding: "20px"
+        }} name="bankAccount">
           <Row gutter={[16, 16]}>
-            <Col span={6}>
+            <Col span={8}>
               <Form.Item
-                label="Счет"
-                name={['bankAccount', 'account']}
+                label="Номер счета"
+                name={['bankAccount', 'number']}
                 rules={[{ required: true, message: 'Пожалуйста, введите номер счета' }]}
               >
-                <Input id="account" />
+                <Input id="bankAccountNumber" />
               </Form.Item>
             </Col>
-            <Col span={6}>
-              <Form.Item label="Кор. счет" name={['bankAccount', 'korAccount']}>
-                <Input id="korAccount" />
+            <Col span={8}>
+              <Form.Item label="Банк" name={['bankAccount', 'bank']}>
+                <Input id="bankAccountBank" />
               </Form.Item>
             </Col>
-            <Col span={6}>
-              <Form.Item label="Название банка" name={['bankAccount', 'bankName']}>
-                <Input id="bankName" />
+            <Col span={8}>
+              <Form.Item label="БИК" name={['bankAccount', 'bic']}>
+                <Input id="bankAccountBic" />
               </Form.Item>
             </Col>
-            <Col span={6}>
-              <Form.Item label="БИК" name={['bankAccount', 'bik']}>
-                <Input id="bik" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={[16, 16]}>
-            <Col span={6}>
-              <Form.Item label="КБК" name={['bankAccount', 'kbk']}>
-                <Input id="kbk" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="ОКТМО" name={['bankAccount', 'oktmo']}>
-                <Input id="oktmo" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Детали" name={['bankAccount', 'details']}>
-                <Input id="details" />
-              </Form.Item>
-            </Col>
-            <Col span={6}>
-              <Form.Item label="Налог" name={['bankAccount', 'tax']}>
-                <Input id="tax" type="number" />
+            <Col span={8}>
+              <Form.Item label="Кор. счет" name={['bankAccount', 'correspondentAccount']}>
+                <Input id="bankAccountCorrespondentAccount" />
               </Form.Item>
             </Col>
           </Row>
@@ -367,24 +323,40 @@ const MarketplaceRegistrationPage: React.FC = () => {
     {
       title: 'Фискализация',
       content: (
-        <Form.Item label="Фискализация" name="fiscalization">
+        <Form.Item style={{
+          background: "white",
+          borderRadius: "0px 0px 5px 5px",
+          padding: "20px"
+        }} name="fiscalization">
           <Row gutter={[16, 16]}>
-            <Col span={12}>
+            <Col span={10}>
               <Form.Item
-                label="Название компании"
-                name={['fiscalization', 'company']}
-                rules={[{ required: true, message: 'Пожалуйста, введите название компании' }]}
+                label="Тип фискализации"
+                name={['fiscalization', 'type']}
+                rules={[{ required: true, message: 'Пожалуйста, выберите тип фискализации' }]}
               >
-                <Input id="company" />
+                <Select id="fiscalizationType">
+                  {/* Добавьте опции типа фискализации */}
+                </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={10}>
               <Form.Item
-                label="URL уведомлений"
-                name={['fiscalization', 'notifyUrl']}
-                rules={[{ required: true, message: 'Пожалуйста, введите URL уведомлений' }]}
+                label="Номер фискального документа"
+                name={['fiscalization', 'fiscalDocumentNumber']}
+                rules={[{ required: true, message: 'Пожалуйста, введите номер фискального документа' }]}
               >
-                <Input id="notifyUrl" />
+                <Input id="fiscalDocumentNumber" />
+              </Form.Item>
+            </Col>
+            <Col span={10}>
+              <Form.Item label="Дата выдачи" name={['fiscalization', 'issueDate']}>
+                <DatePicker id="fiscalizationIssueDate" />
+              </Form.Item>
+            </Col>
+            <Col span={10}>
+              <Form.Item label="Выдан" name={['fiscalization', 'issuedBy']}>
+                <Input id="fiscalizationIssuedBy" />
               </Form.Item>
             </Col>
           </Row>
@@ -394,17 +366,25 @@ const MarketplaceRegistrationPage: React.FC = () => {
     {
       title: 'Учредители',
       content: (
-        <Form.Item label="Учредители" name="founders">
+        <Form.Item  style={{
+          background: "white",
+          borderRadius: "0px 0px 5px 5px",
+          padding: "20px"
+        }} name="founders">
           <Row gutter={[16, 16]}>
             {founders.individuals.map((founder, index) => (
               <Col key={index} span={24}>
-                <Form.Item label={`Учредитель ${index + 1}`}>
+                <Form.Item
+                  label={`Учредитель ${index + 1}`}
+                  key={index}
+                  required
+                  rules={[{ required: true, message: 'Пожалуйста, заполните информацию об учредителе' }]}
+                >
                   <Row gutter={[16, 16]}>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Имя"
                         name={['founders', 'individuals', index, 'firstName']}
-                        rules={[{ required: true, message: 'Пожалуйста, введите имя' }]}
                       >
                         <Input
                           id={`firstName-${index}`}
@@ -415,11 +395,10 @@ const MarketplaceRegistrationPage: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Фамилия"
                         name={['founders', 'individuals', index, 'lastName']}
-                        rules={[{ required: true, message: 'Пожалуйста, введите фамилию' }]}
                       >
                         <Input
                           id={`lastName-${index}`}
@@ -430,7 +409,7 @@ const MarketplaceRegistrationPage: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Отчество"
                         name={['founders', 'individuals', index, 'middleName']}
@@ -444,9 +423,7 @@ const MarketplaceRegistrationPage: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                  </Row>
-                  <Row gutter={[16, 16]}>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Дата рождения"
                         name={['founders', 'individuals', index, 'birthDate']}
@@ -458,13 +435,19 @@ const MarketplaceRegistrationPage: React.FC = () => {
                               ? new Date(founder.birthDate)
                               : undefined
                           }
-                          onChange={(e) =>
-                            handleFounderChange(index, 'birthDate', e.format('YYYY-MM-DD'))
+                          onChange={(date) =>
+                            handleFounderChange(
+                              index,
+                              'birthDate',
+                              date ? date.toISOString().slice(0, 10) : ''
+                            )
                           }
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                  </Row>
+                  <Row gutter={[16, 16]}>
+                    <Col span={6}>
                       <Form.Item
                         label="Место рождения"
                         name={['founders', 'individuals', index, 'birthPlace']}
@@ -478,7 +461,7 @@ const MarketplaceRegistrationPage: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Гражданство"
                         name={['founders', 'individuals', index, 'citizenship']}
@@ -492,23 +475,24 @@ const MarketplaceRegistrationPage: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                  </Row>
-                  <Row gutter={[16, 16]}>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Тип документа"
                         name={['founders', 'individuals', index, 'docType']}
                       >
-                        <Input
+                        <Select
                           id={`docType-${index}`}
                           value={founder.docType}
-                          onChange={(e) =>
-                            handleFounderChange(index, 'docType', e.target.value)
+                          onChange={(value) =>
+                            handleFounderChange(index, 'docType', value)
                           }
-                        />
+                        >
+                          <Select.Option value="PASSPORT">Паспорт</Select.Option>
+                          {/* Добавьте другие типы документов */}
+                        </Select>
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Номер документа"
                         name={['founders', 'individuals', index, 'docNumber']}
@@ -522,7 +506,9 @@ const MarketplaceRegistrationPage: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                  </Row>
+                  <Row gutter={[16, 16]}>
+                    <Col span={6}>
                       <Form.Item
                         label="Дата выдачи"
                         name={['founders', 'individuals', index, 'issueDate']}
@@ -534,15 +520,17 @@ const MarketplaceRegistrationPage: React.FC = () => {
                               ? new Date(founder.issueDate)
                               : undefined
                           }
-                          onChange={(e) =>
-                            handleFounderChange(index, 'issueDate', e.format('YYYY-MM-DD'))
+                          onChange={(date) =>
+                            handleFounderChange(
+                              index,
+                              'issueDate',
+                              date ? date.toISOString().slice(0, 10) : ''
+                            )
                           }
                         />
                       </Form.Item>
                     </Col>
-                  </Row>
-                  <Row gutter={[16, 16]}>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Кем выдан"
                         name={['founders', 'individuals', index, 'issuedBy']}
@@ -556,7 +544,7 @@ const MarketplaceRegistrationPage: React.FC = () => {
                         />
                       </Form.Item>
                     </Col>
-                    <Col span={8}>
+                    <Col span={6}>
                       <Form.Item
                         label="Адрес"
                         name={['founders', 'individuals', index, 'address']}
@@ -573,11 +561,7 @@ const MarketplaceRegistrationPage: React.FC = () => {
                     <Col span={10}>
                       <Button
                         danger
-                        onClick={() =>
-                          setFounders({
-                            individuals: founders.individuals.filter((_, i) => i !== index),
-                          })
-                        }
+                        onClick={() => removeFounder(index)}
                       >
                         Удалить
                       </Button>
@@ -614,49 +598,41 @@ const MarketplaceRegistrationPage: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-      {/* <Steps current={current}>
-        {steps.map((item) => (
-          <Step key={item.title} title={item.title} />
-        ))}
-      </Steps> */}
-      <div style={{ marginTop: 24 }}>
-        {current === steps.length - 1 ? (
-          <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
-            {steps[current].content}
-            <Form.Item>
-                     {current > 0 && (
-                <Button onClick={prev}>Предыдущий шаг</Button>
-              ) 
-              } 
-              <Button type="primary" htmlType="submit">
-                Зарегистрировать
-              </Button>
-            </Form.Item>
-          </Form>
-        ) : (
-          <Form layout="vertical">
-            {steps[current].content}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginTop: 24,
-              }}
-            >
-              {current > 0 && (
-                <Button onClick={prev}>Предыдущий шаг</Button>
-              ) 
-              } 
-              <Button onClick={next} type="primary">
-                Следующий шаг
-              </Button>
-            </div>
-          </Form>
-           
-        )}
-      </div>
-    </div>
+    <Layout>
+      <AntLayout.Content style={{ padding: '50px' }}>
+        <Title level={2} style={{
+          color: "white",
+        }}>Регистрация на маркетплейсе</Title>
+        <Steps  style={{
+              background: "white",
+              padding: "20px",
+              borderRadius: "5px 5px 0px 0px",
+          
+            }} current={current}>
+          {steps.map((item) => (
+            <Steps.Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div className="steps-content">{steps[current].content}</div>
+        <div className="steps-action">
+          {current < steps.length - 1 && (
+            <Button type="primary" onClick={next}>
+              Далее
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button type="primary" onClick={handleSubmit(onSubmit)}>
+              Завершить
+            </Button>
+          )}
+          {current > 0 && (
+            <Button style={{ margin: '0 8px' }} onClick={prev}>
+              Назад
+            </Button>
+          )}
+        </div>
+      </AntLayout.Content>
+    </Layout>
   );
 };
 
