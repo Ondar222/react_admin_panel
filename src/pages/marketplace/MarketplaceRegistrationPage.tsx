@@ -109,7 +109,6 @@ const MarketplaceRegistrationPage: React.FC = () => {
             <Form.Item label="Страна" name={['address', 'country']}>
               <Select id="country">
                 <Select.Option value={CountryCode.RUS}>Россия</Select.Option>
-                {/* Добавьте другие страны */}
               </Select>
             </Form.Item>
           </Col>
@@ -197,7 +196,7 @@ const MarketplaceRegistrationPage: React.FC = () => {
             <Form.Item label="Страна" name={['ceo', 'country']}>
               <Select id="ceoCountry">
                 <Select.Option value={CountryCode.RUS}>Россия</Select.Option>
-                {/* Добавьте другие страны */}
+         
               </Select>
             </Form.Item>
           </Col>
