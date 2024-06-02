@@ -625,6 +625,10 @@ const MarketplaceRegistrationPage: React.FC = () => {
           <Form layout="vertical" onSubmit={handleSubmit(onSubmit)}>
             {steps[current].content}
             <Form.Item>
+                     {current > 0 && (
+                <Button onClick={prev}>Предыдущий шаг</Button>
+              ) 
+              } 
               <Button type="primary" htmlType="submit">
                 Зарегистрировать
               </Button>
@@ -642,12 +646,14 @@ const MarketplaceRegistrationPage: React.FC = () => {
             >
               {current > 0 && (
                 <Button onClick={prev}>Предыдущий шаг</Button>
-              )}
+              ) 
+              } 
               <Button onClick={next} type="primary">
                 Следующий шаг
               </Button>
             </div>
           </Form>
+           
         )}
       </div>
     </div>
