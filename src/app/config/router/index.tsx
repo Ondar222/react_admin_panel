@@ -19,7 +19,7 @@ import { ProtectedRoute } from "@/app/providers/router/ui/ProtectedRoute";
 import { PasswordResetLinkPage } from "@/pages/password_reset";
 import { PasswordResetRequestPage } from "@/pages/password_reset/PasswordResetRequest";
 import {MarketplaceRegistrationPage} from "@/pages/marketplace/MarketplaceRegistrationPage";
-import ChatPage from "@/pages/admin/chat/ChatPage";
+import {ChatPage} from "@/pages/admin/chat/ChatPage";
 
 enum AppRoutes {
   MAIN = "main",

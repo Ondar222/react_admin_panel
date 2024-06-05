@@ -20,7 +20,7 @@ interface ChatMessage {
   role: string;
 }
 
-const ChatPage: React.FC = () => {
+export const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputText, setInputText] = useState("");
   const [selectedRole, setSelectedRole] = useState("user");
@@ -167,4 +167,4 @@ const ChatPage: React.FC = () => {
   );
 };
 
-export default ChatPage;
+
