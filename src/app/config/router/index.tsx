@@ -19,6 +19,7 @@ import { ProtectedRoute } from "@/app/providers/router/ui/ProtectedRoute";
 import { PasswordResetLinkPage } from "@/pages/password_reset";
 import { PasswordResetRequestPage } from "@/pages/password_reset/PasswordResetRequest";
 import {MarketplaceRegistrationPage} from "@/pages/marketplace/MarketplaceRegistrationPage";
+import ChatPage from "@/pages/admin/chat/ChatPage";
 
 enum AppRoutes {
   MAIN = "main",
@@ -46,6 +47,8 @@ enum AppRoutes {
   TERMS = "terms",
 
   MARKETPLACE = "marketplace",
+
+  CHAT = "chat"
 }
 
 const RoutePath: Record<AppRoutes, string> = {
@@ -66,6 +69,8 @@ const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.PASSWORD_RESET]: "/password/reset",
   [AppRoutes.PASSWORD_RESET_LINK]: "/password/reset/:id",
   [AppRoutes.NOT_FOUND]: "*",
+
+  [AppRoutes.CHAT]: "/chat",
 };
 
 const RouterConfig: Record<AppRoutes, RouteProps> = {
@@ -179,6 +184,11 @@ const RouterConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.NOT_FOUND]: {
     path: RoutePath.not_found,
     element: <NotFoundPage />,
+  },
+
+  [AppRoutes.CHAT]: {
+    path: RoutePath.chat,
+    element: <ChatPage />,
   },
 };
 
