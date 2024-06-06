@@ -1,9 +1,8 @@
-import React from 'react';
-import { Row, Col, Typography, Card, Avatar, Space, Button,Carousel } from 'antd';
-import { FC } from 'react';
+import React, { useState, FC } from 'react';
+import { Row, Col, Typography, Card, Space, Button,Carousel } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/shared/layouts/layout';
-import { useState } from 'react';
+
 
 const HotelsPageHeader: FC = () => {
   const navigate = useNavigate();
@@ -69,19 +68,19 @@ const Block: React.FC<BlockProps> = ({
             <Col style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
               <Typography.Text>
                 <span>Номеров:</span>
-                <span>{numbers}</span>
+                <span style={{marginLeft: "5px"}}>{numbers}</span>
               </Typography.Text>
               <Typography.Text>
                 <span>Броней:</span>
-                <span>{bookings}</span>
+                <span style={{marginLeft: "5px"}}>{bookings}</span>
               </Typography.Text>
               <Typography.Text>
                 <span>Активность:</span>
-                <span>{activity}</span>
+                <span style={{marginLeft: "5px"}}>{activity}</span>
               </Typography.Text>
               <Typography.Text>
                 <span>Деньги:</span>
-                <span>
+                <span style={{marginLeft: "5px"}}>
                   {money}<span>&#8381;</span>
                 </span>
               </Typography.Text>
@@ -106,7 +105,7 @@ const blockData: BlockProps[] = [
     numbers: 10,
     bookings: 5,
     activity: 70,
-    money: 100000,
+    money: 10000,
     images: [
       'https://picsum.photos/id/1018/20/20',
       'https://picsum.photos/id/1019/20/20',
@@ -121,7 +120,7 @@ const blockData: BlockProps[] = [
     numbers: 15,
     bookings: 8,
     activity: 80,
-    money: 150000,
+    money: 15000,
     images: [
       'https://picsum.photos/id/1022/20/20',
       'https://picsum.photos/id/1023/20/20',
@@ -136,7 +135,7 @@ const blockData: BlockProps[] = [
     numbers: 20,
     bookings: 12,
     activity: 90,
-    money: 200000,
+    money: 20000,
     images: [
       'https://picsum.photos/id/1026/20/20',
       'https://picsum.photos/id/1027/20/20',
@@ -151,7 +150,7 @@ const blockData: BlockProps[] = [
     numbers: 25,
     bookings: 15,
     activity: 100,
-    money: 250000,
+    money: 25000,
     images: [
       'https://picsum.photos/id/1031/20/20',
       'https://picsum.photos/id/1032/20/20',
@@ -166,7 +165,7 @@ const blockData: BlockProps[] = [
     numbers: 30,
     bookings: 20,
     activity: 110,
-    money: 300000,
+    money: 30000,
     images: [
       'https://picsum.photos/id/1036/20/20',
       'https://picsum.photos/id/1037/20/20',
@@ -181,7 +180,7 @@ const blockData: BlockProps[] = [
     numbers: 35,
     bookings: 25,
     activity: 120,
-    money: 350000,
+    money: 35000,
     images: [
       'https://picsum.photos/id/1041/20/20',
       'https://picsum.photos/id/1042/20/20',
@@ -196,7 +195,7 @@ const blockData: BlockProps[] = [
     numbers: 40,
     bookings: 30,
     activity: 130,
-    money: 400000,
+    money: 40000,
     images: [
       'https://picsum.photos/id/1046/20/20',
       'https://picsum.photos/id/1047/20/20',
@@ -211,7 +210,7 @@ const blockData: BlockProps[] = [
     numbers: 45,
     bookings: 35,
     activity: 140,
-    money: 450000,
+    money: 45000,
     images: [
       'https://picsum.photos/id/1051/20/20',
       'https://picsum.photos/id/1052/20/20',
@@ -226,7 +225,7 @@ const blockData: BlockProps[] = [
     numbers: 50,
     bookings: 40,
     activity: 150,
-    money: 500000,
+    money: 50000,
     images: [
       'https://picsum.photos/id/1056/20/20',
       'https://picsum.photos/id/1057/20/20',
@@ -241,7 +240,7 @@ const blockData: BlockProps[] = [
     numbers: 55,
     bookings: 45,
     activity: 160,
-    money: 550000,
+    money: 55000,
     images: [
       'https://picsum.photos/id/1061/20/20',
       'https://picsum.photos/id/1062/20/20',
@@ -256,7 +255,7 @@ const blockData: BlockProps[] = [
     numbers: 60,
     bookings: 50,
     activity: 170,
-    money: 600000,
+    money: 60000,
     images: [
       'https://picsum.photos/id/1066/20/20',
       'https://picsum.photos/id/1067/20/20',
@@ -271,7 +270,7 @@ const blockData: BlockProps[] = [
     numbers: 65,
     bookings: 55,
     activity: 180,
-    money: 650000,
+    money: 65000,
     images: [
       'https://picsum.photos/id/1071/20/20',
       'https://picsum.photos/id/1072/20/20',
