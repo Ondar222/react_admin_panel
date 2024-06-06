@@ -8,7 +8,6 @@ import { useLoading, withLoading } from "@/processes";
 
 const AccountPageHeader: FC = () => {
   const { deleteAccount } = useUsers()
-
   return (
     <Row justify={"space-between"} align={"middle"}>
       <Typography.Title level={2}>

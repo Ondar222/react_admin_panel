@@ -20,6 +20,7 @@ import { PasswordResetLinkPage } from "@/pages/password_reset";
 import { PasswordResetRequestPage } from "@/pages/password_reset/PasswordResetRequest";
 import {MarketplaceRegistrationPage} from "@/pages/marketplace/MarketplaceRegistrationPage";
 import {ChatPage} from "@/pages/admin/chat/ChatPage";
+import { HotelsPage } from "@/pages/admin/hotels/HotelsPage";
 
 enum AppRoutes {
   MAIN = "main",
@@ -48,7 +49,9 @@ enum AppRoutes {
 
   MARKETPLACE = "marketplace",
 
-  CHAT = "chat"
+  CHAT = "chat",
+
+  HOTELS = "hotels"
 }
 
 const RoutePath: Record<AppRoutes, string> = {
@@ -71,6 +74,8 @@ const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.NOT_FOUND]: "*",
 
   [AppRoutes.CHAT]: "/chat",
+
+  [AppRoutes.HOTELS]: "/hotels",
 };
 
 const RouterConfig: Record<AppRoutes, RouteProps> = {
@@ -189,6 +194,11 @@ const RouterConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.CHAT]: {
     path: RoutePath.chat,
     element: <ChatPage />,
+  },
+
+  [AppRoutes.HOTELS]: {
+    path: RoutePath.hotels,
+    element: <HotelsPage />,
   },
 };
 
