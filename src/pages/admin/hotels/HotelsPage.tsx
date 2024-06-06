@@ -46,10 +46,10 @@ const Block: React.FC<BlockProps> = ({
     };
     
   return (
-    <Col span={8}>
+    <Col span={6}>
       <Card bordered={true}>
-        <Typography.Title level={3} style={{borderBottom: "1px solid #D4D4D4"}}>{title}</Typography.Title>
-        <Space direction="vertical" style={{width: "100%", height: '100%', display: "flex", flexDirection: "row" }}>
+        <Typography.Title level={4} style={{borderBottom: "1px solid #D4D4D4"}}>{title}</Typography.Title>
+        <Space direction="vertical" style={{width: "300px", height: '100%', display: "flex", flexDirection: "row" }}>
           <Carousel
             style={{ width: '140px', height: "100px" }}
             autoplay={true}
@@ -284,8 +284,8 @@ const blockData: BlockProps[] = [
 export const HotelsPage: React.FC = () => {
   return (
     <MainLayout header={<HotelsPageHeader />}>
-      <div style={{ padding: 20 }}>
-        <Row gutter={[20, 20]}>
+      <div>
+        <Row gutter={[10, 10]}>
           {blockData.map((block) => (
             <Block key={block.id} {...block} />
           ))}
