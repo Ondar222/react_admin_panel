@@ -1,14 +1,14 @@
 import { YurtaSelect } from "@/shared/components/form/ui/select/default";
-import { Drawer, DrawerProps, Form, Input, Select } from "antd";
+import { Drawer, DrawerProps, Form, Input, Select, Button } from "antd";
 import { FC } from "react";
 
 interface IAddressBuilderUI extends DrawerProps {
   address: {
-    [fieldName: string]: string
-  }
-  onInputClick: () => void
+    [fieldName: string]: string;
+  };
+  onInputClick: () => void;
+  onSave: () => void; // Добавлен onSave
 }
-
 
 const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
   return (
@@ -18,7 +18,7 @@ const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
         onClick={props.onInputClick}
         contentEditable={false}
         style={{
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       />
       <Drawer
@@ -27,7 +27,7 @@ const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
         width={"30%"}
       >
         <Form layout="vertical">
-          <Form.Item label="Индекс" >
+          <Form.Item label="Индекс">
             <Input value={props.address.postal_code} />
           </Form.Item>
           <Form.Item label="Страна">
@@ -38,11 +38,15 @@ const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
             <Input value={props.address.region} />
           </Form.Item>
 
-
-          <YurtaSelect label="Тип населенного пункта" value={props.address.settlement_type} >
-          <Select.Option value="city">Город</Select.Option>
-          <Select.Option value="urban-type-settlement">Поселок городского типа</Select.Option>
-          <Select.Option value="village">Село</Select.Option>
+          <YurtaSelect
+            label="Тип населенного пункта"
+            value={props.address.settlement_type}
+          >
+            <Select.Option value="city">Город</Select.Option>
+            <Select.Option value="urban-type-settlement">
+              Поселок городского типа
+            </Select.Option>
+            <Select.Option value="village">Село</Select.Option>
           </YurtaSelect>
 
           <Form.Item label="Название населенного пункта">
@@ -71,11 +75,16 @@ const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
           <Form.Item label="Широта">
             <Input value={props.address.latitude} />
           </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" onClick={props.onSave}>
+              Сохранить
+            </Button>
+          </Form.Item>
         </Form>
-      </Drawer >
+      </Drawer>
     </>
+  );
+};
 
-  )
-}
-
-export { AddressBuilderUI }
+export { AddressBuilderUI };
