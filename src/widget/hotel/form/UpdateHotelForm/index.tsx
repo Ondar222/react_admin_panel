@@ -1,6 +1,6 @@
 import { HotelUpdateDto, useHotel } from "@/entities";
 import { LoadingPage } from "@/widget/loading_page";
-import { Button, Form, Input, InputProps, UploadFile, message } from "antd";
+import { Button, Form, Input, InputProps, UploadFile, message, Col } from "antd";
 import Upload, { UploadChangeParam } from "antd/es/upload";
 import { FC, useState } from "react";
 import { HotelUpdatePageProps, UpdateHotelFormT } from "./model";
@@ -158,8 +158,9 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
             Загрузить
           </Upload>
         </Form.Item>
-      
+      <Col>
         <Button htmlType="submit">Сохранить</Button>
+      </Col>
       </Form>
 
     </Form.Provider >

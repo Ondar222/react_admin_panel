@@ -1,5 +1,5 @@
 import { YurtaSelect } from "@/shared/components/form/ui/select/default";
-import { Drawer, DrawerProps, Form, Input } from "antd";
+import { Drawer, DrawerProps, Form, Input, Select } from "antd";
 import { FC } from "react";
 
 interface IAddressBuilderUI extends DrawerProps {
@@ -39,7 +39,11 @@ const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
           </Form.Item>
 
 
-          <YurtaSelect label="Тип населенного пункта" value={props.address.settlement_type} />
+          <YurtaSelect label="Тип населенного пункта" value={props.address.settlement_type} >
+          <Select.Option value="city">Город</Select.Option>
+          <Select.Option value="urban-type-settlement">Поселок городского типа</Select.Option>
+          <Select.Option value="village">Село</Select.Option>
+          </YurtaSelect>
 
           <Form.Item label="Название населенного пункта">
             <Input value={props.address.settlement} />

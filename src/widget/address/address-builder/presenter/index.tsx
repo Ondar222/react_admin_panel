@@ -1,6 +1,17 @@
 import { FC, useState } from "react";
 import { AddressBuilderUI } from "../ui";
 
+function OtherPage() {
+  const initialAddress = {
+    street: 'ул. Пушкина',
+    house: '10',
+    flat: '123',
+    city: 'Кызыл',
+    region: 'Республика Тыва',
+    country: 'Россия'
+  };
+}
+
 interface IAddressBuilderPresenter {
   address: {
     [fieldName: string]: string
