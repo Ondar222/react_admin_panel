@@ -22,6 +22,7 @@ const AddressBuilderPresenter: FC<IAddressBuilderPresenter> = (props) => {
   const [open, setOpen] = useState<boolean>(false)
   const [address, setAddress] = useState<{ [fieldName: string]: string }>(props.address)
 
+
   const handleSaveAddress = () => {
     // Логика сохранения адреса
     console.log("Сохраненный адрес:", address);

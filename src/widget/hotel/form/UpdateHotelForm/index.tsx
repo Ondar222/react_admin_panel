@@ -160,6 +160,8 @@ const UpdateHotelForm: FC<HotelUpdatePageProps> = (props) => {
         </Form.Item>
       <Col>
         <Button htmlType="submit">Сохранить</Button>
+
+        
       </Col>
       </Form>
 

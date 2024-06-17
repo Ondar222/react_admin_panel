@@ -57,8 +57,10 @@ const HotelPage: FC = () => {
         <Col span={12}>
           <Typography.Title level={3}>Редактировать данные отеля</Typography.Title>
           <HotelUpdateForm hotel={hotel} />
-        </Col>
+        </Col>        
         <Col span={12}>
+        <Row>
+        </Row>
           <Row>
             <Typography.Title level={3}>Журнал изменений</Typography.Title>
             <List
@@ -71,6 +73,7 @@ const HotelPage: FC = () => {
             </List>
           </Row>
         </Col>
+        <Row>
         <Col span={12}>
           <Button type="primary" onClick={() => setVisible(true)}>
             Построить адрес
@@ -85,6 +88,7 @@ const HotelPage: FC = () => {
             <AddressBuilderPresenter address={initialAddress} />
           </Modal>
         </Col>
+        </Row>
       </Row>
     </MainLayout>
   );
