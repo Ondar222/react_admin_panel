@@ -83,7 +83,13 @@ const AddressBuilderUI: FC<IAddressBuilderUI> = (props) => {
             </Tooltip>
           </Form.Item>
 
-          <YurtaSelect label="Тип улицы" value={props.address.street_type} />
+          <YurtaSelect label="Тип улицы" value={props.address.street_type}>
+          <Select.Option value="street">Улица</Select.Option>
+            <Select.Option value="prospect">
+              Проспект
+            </Select.Option>
+            <Select.Option value="lane">Переулок</Select.Option>
+          </YurtaSelect>
           <Form.Item label="Название улицы">
           <Tooltip placement="bottomLeft" title={nameStreetText} arrow={mergedArrow} color="gray">  
             <Input value={props.address.street} />
