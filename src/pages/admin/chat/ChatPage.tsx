@@ -1,170 +1,150 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
-  Input,
-  Button,
   Row,
   Col,
-  Space,
+  Card,
+  Typography,
+  Input,
+  Button,
   message,
+  Space,
   List,
   Avatar,
-  Typography,
-  Select,
+  Divider,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import io from "socket.io-client";
 import { MainLayout } from "@/shared/layouts/layout";
 
-interface ChatMessage {
-  text: string;
-  sender: "user" | "admin" | "manager" | "client";
-  role: string;
+interface Message {
+  sender: string;
+  content: string;
 }
 
 export const ChatPage: React.FC = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [inputText, setInputText] = useState("");
-  const [selectedRole, setSelectedRole] = useState("user");
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [userName, setUserName] = useState("");
+  const messageEndRef = useRef(null);
+  const socket = useRef<SocketIO.Socket | null>(null);
 
+  // Загрузка сообщений с localStorage при загрузке страницы
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+    const storedMessages = localStorage.getItem("chatMessages");
+    if (storedMessages) {
+      setMessages(JSON.parse(storedMessages));
     }
+  }, []);
+
+  // Сохранение сообщений в localStorage при каждом изменении
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
   }, [messages]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
-  };
+  useEffect(() => {
+    // Подключение к серверу Socket.IO
+    socket.current = io("http://localhost:3000"); // Замените на адрес вашего сервера
 
-  const handleSendMessage = () => {
-    if (inputText.trim() !== "") {
+    // Обработчик получения нового сообщения
+    socket.current?.on("message", (message: Message) => {
       setMessages([
         ...messages,
-        {
-          text: inputText.trim(),
-          sender: selectedRole,
-          role: selectedRole, // Присвоить роли имя отправителя
-        },
+        message,
       ]);
-      setInputText("");
-    }
-  };
+    });
 
-  const renderMessage = (message: ChatMessage) => {
-    const avatarStyle = {
-      backgroundColor:
-        message.sender === "user"
-          ? "#87d068"
-          : message.sender === "admin"
-          ? "#ff4d4d"
-          : message.sender === "manager"
-          ? "#1890ff"
-          : message.sender === "client"
-          ? "#faad14"
-          : "#87d068", // Color for admin, manager, and client
-      verticalAlign: "middle",
+    // Очистка подключения при размонтировании компонента
+    return () => {
+      socket.current?.disconnect();
     };
+  }, []);
 
-    let roleName = message.role;
-    if (message.sender === "user") {
-      roleName = "Вы";
+  useEffect(() => {
+    // Автоматически скроллим к последнему сообщению
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const sendMessage = () => {
+    if (newMessage.trim() !== "" && userName !== "") {
+      // Отправка сообщения на сервер
+      socket.current?.emit("message", {
+        sender: userName,
+        content: newMessage.trim(),
+      });
+
+      // Добавление сообщения в список сообщений
+      setMessages([
+        ...messages,
+        { sender: userName, content: newMessage.trim() },
+      ]);
+      setNewMessage("");
+    } else {
+      message.warning("Введите имя пользователя и сообщение!");
     }
-
-    return (
-      <List.Item
-        key={message.text}
-        style={{
-          textAlign: message.sender === "user" ? "right" : "left",
-          marginBottom: "10px",
-        }}
-      >
-        <List.Item.Meta
-          avatar={
-            <Avatar style={avatarStyle} size="small" icon={<UserOutlined />} />
-          }
-          title={
-            <Typography.Text
-              style={{
-                color:
-                  message.sender === "user"
-                    ? "#1890ff"
-                    : message.sender === "admin"
-                    ? "#fff"
-                    : message.sender === "manager"
-                    ? "#fff"
-                    : message.sender === "client"
-                    ? "#fff"
-                    : "#fff", // Color for admin, manager, and client
-                fontWeight: "bold",
-                verticalAlign: "middle",
-              }}
-            >
-              {roleName}
-            </Typography.Text>
-          }
-          description={message.text}
-        />
-      </List.Item>
-    );
   };
 
-  return (
-    <MainLayout header={<Typography.Title level={3}>ЧАТ</Typography.Title>}>
-      <Col
-        span={24}
-        style={{
-          display: "flex",
-          height: "100%",
-          flexDirection: "column",
-          border: "1px solid #ccc",
-          borderRadius: "5px",
-          padding: "10px",
-        }}
-      >
-        <Row gutter={[16, 16]}>
-          <Col span={12}>
-            <Select
-              defaultValue="user"
-              onChange={(value) => setSelectedRole(value)}
-            >
-              <Select.Option value="user">Пользователь</Select.Option>
-              <Select.Option value="admin">Администратор</Select.Option>
-              <Select.Option value="manager">Менеджер</Select.Option>
-              <Select.Option value="client">Клиент</Select.Option>
-            </Select>
-          </Col>
-        </Row>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMessage(e.target.value);
+  };
 
-        <List
-          ref={chatContainerRef}
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            marginBottom: "10px",
-          }}
-          itemLayout="horizontal"
-          dataSource={messages}
-          renderItem={renderMessage}
-        />
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
 
-        <Row gutter={[16, 16]}>
-          <Col span={20}>
-            <Input
-              placeholder="Введите сообщение..."
-              value={inputText}
-              onChange={handleInputChange}
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserName(e.target.value);
+  };
+
+  return (<MainLayout header={<Typography.Title level={2}>Чат</Typography.Title>}>
+    <div className="chat-app">
+      <Row justify="center" align="middle" style={{ height: "100%" }}>
+        <Col span={24}>
+          <Card title="Чат" bordered={true}>
+            <Space direction="vertical">
+              <Input
+                placeholder="Введите имя пользователя"
+                value={userName}
+                onChange={handleUserNameChange}
+              />
+            </Space>
+            <List
+              itemLayout="horizontal"
+              dataSource={messages}
+              renderItem={(item) => (
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar
+                        icon={<UserOutlined />}
+                        style={{ backgroundColor: "#87d068" }}
+                      />
+                    }
+                    title={item.sender}
+                    description={item.content}
+                  />
+                </List.Item>
+              )}
             />
-          </Col>
-          <Col span={4}>
-            <Button type="primary" onClick={handleSendMessage}>
+            <div ref={messageEndRef} />
+          </Card>
+          <Space style={{ marginTop: 16 }}>
+            <Input style={{width: "70vw"}}
+              placeholder="Введите сообщение..."
+              value={newMessage}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+            <Button type="primary" onClick={sendMessage}>
               Отправить
             </Button>
-          </Col>
-        </Row>
-      </Col>
+          </Space>
+        </Col>
+      </Row>
+    </div>
     </MainLayout>
   );
 };
 
-
+export default ChatPage;

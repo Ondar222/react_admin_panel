@@ -1,10 +1,39 @@
 import React, { useState, FC } from 'react';
-import { Row, Col, Typography, Card, Space, Button, Carousel } from 'antd';
+import { Row, Col, Typography, Card, Space, Button, Carousel,  UploadFile,  } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '@/shared/layouts/layout';
-import { AddressBuilderPresenter } from '@/widget/address/address-builder/presenter';
+import { HotelUpdateDto, useHotel } from '@/entities';
+import { HotelUpdatePageProps, UpdateHotelFormT } from '@/widget/hotel/form/UpdateHotelForm/model';
 
-export const HotelsPageHeader: FC = () => {
+export const HotelsPageHeader: FC<HotelUpdatePageProps> = (props) => {
+  const [hotel, setHotel] = useState<HotelUpdateDto>(new HotelUpdateDto(props.hotel))
+  const [cover, setCover] = useState<Array<UploadFile>>([{
+    uid: props.hotel?.cover?.id,
+    name: props.hotel?.cover?.id,
+    url: props.hotel?.cover?.link,
+    thumbUrl: props.hotel?.cover?.link
+  }])
+  const [images, setImages] = useState<Array<UploadFile>>(
+    () => {
+      if (props?.hotel?.images === null) {
+        return []
+      }
+
+      return props.hotel?.images?.map((file) => ({
+        uid: file?.id,
+        name: file?.id,
+        url: file?.link,
+        thumbUrl: file?.link
+      }))
+    }
+  )
+
+
+  const { updateHotel, deleteImage } = useHotel()
+
+  
+
+
   const navigate = useNavigate();
   return (
     <Row justify="space-between">
@@ -44,14 +73,6 @@ const Block: React.FC<BlockProps> = ({
   const handleImageChange = (index: number) => {
     setCurrentImageIndex(index);
   };
-
-  // const initialAddress = {
-  //   street: 'ул. Пушкина',
-  //   house: '10',
-  //   flat: '123',
-  //   city: 'Москва',
-  //   region: 'Россия',
-  // };
 
   return (
     <Col span={6}>
@@ -105,7 +126,6 @@ const Block: React.FC<BlockProps> = ({
             <Col key={index} style={{ background: '#AF0000', width: '20px', height: '20px', marginTop: '20px' }} />
           ))}
         </Col>
-        {/* <AddressBuilderPresenter address={initialAddress} /> */}
       </Card>
     </Col>
   );
