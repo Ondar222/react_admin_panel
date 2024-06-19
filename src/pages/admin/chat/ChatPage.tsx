@@ -13,7 +13,7 @@ import {
   Divider,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import io from "socket.io-client";
+import {io }from "socket.io-client";
 import { MainLayout } from "@/shared/layouts/layout";
 
 interface Message {
@@ -43,7 +43,7 @@ export const ChatPage: React.FC = () => {
 
   useEffect(() => {
     // Подключение к серверу Socket.IO
-    socket.current = io("http://localhost:3000"); // Замените на адрес вашего сервера
+    socket.current = io("http://localhost:4000");
 
     // Обработчик получения нового сообщения
     socket.current?.on("message", (message: Message) => {
@@ -97,52 +97,54 @@ export const ChatPage: React.FC = () => {
     setUserName(e.target.value);
   };
 
-  return (<MainLayout header={<Typography.Title level={2}>Чат</Typography.Title>}>
-    <div className="chat-app">
-      <Row justify="center" align="middle" style={{ height: "100%" }}>
-        <Col span={24}>
-          <Card title="Чат" bordered={true}>
-            <Space direction="vertical">
-              <Input
-                placeholder="Введите имя пользователя"
-                value={userName}
-                onChange={handleUserNameChange}
+  return (
+    <MainLayout header={<Typography.Title level={2}>Чат</Typography.Title>}>
+      <div className="chat-app">
+        <Row justify="center" align="middle" style={{ height: "100%" }}>
+          <Col span={24}>
+            <Card title="Чат" bordered={true}>
+              <Space direction="vertical">
+                <Input
+                  placeholder="Введите имя пользователя"
+                  value={userName}
+                  onChange={handleUserNameChange}
+                />
+              </Space>
+              <List
+                itemLayout="horizontal"
+                dataSource={messages}
+                renderItem={(item) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={
+                        <Avatar
+                          icon={<UserOutlined />}
+                          style={{ backgroundColor: "#87d068" }}
+                        />
+                      }
+                      title={item.sender}
+                      description={item.content}
+                    />
+                  </List.Item>
+                )}
               />
+              <div ref={messageEndRef} />
+            </Card>
+            <Space style={{ marginTop: 16 }}>
+              <Input
+                style={{ width: "70vw" }}
+                placeholder="Введите сообщение..."
+                value={newMessage}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+              />
+              <Button type="primary" onClick={sendMessage}>
+                Отправить
+              </Button>
             </Space>
-            <List
-              itemLayout="horizontal"
-              dataSource={messages}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar
-                        icon={<UserOutlined />}
-                        style={{ backgroundColor: "#87d068" }}
-                      />
-                    }
-                    title={item.sender}
-                    description={item.content}
-                  />
-                </List.Item>
-              )}
-            />
-            <div ref={messageEndRef} />
-          </Card>
-          <Space style={{ marginTop: 16 }}>
-            <Input style={{width: "70vw"}}
-              placeholder="Введите сообщение..."
-              value={newMessage}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-            <Button type="primary" onClick={sendMessage}>
-              Отправить
-            </Button>
-          </Space>
-        </Col>
-      </Row>
-    </div>
+          </Col>
+        </Row>
+      </div>
     </MainLayout>
   );
 };
